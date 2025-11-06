@@ -11,8 +11,6 @@ A comprehensive solution accelerator for power utilities to monitor and optimize
 - [Installation Instructions](#installation-instructions)
 - [Usage Instructions](#usage-instructions)
 - [Solution Components](#solution-components)
-- [Data Flow](#data-flow)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## 🎯 Overview
@@ -32,7 +30,6 @@ The solution simulates a realistic utility grid environment with:
 - **Grid Optimization**: Identify power quality issues, load imbalances, and infrastructure stress points
 - **Operational Efficiency**: Track field service vehicles and optimize crew dispatch
 - **Predictive Maintenance**: Detect meter failures, battery issues, and tamper events before they escalate
-- **Regulatory Compliance**: Comprehensive data retention and reporting capabilities
 
 ## ✨ Key Features
 
@@ -46,8 +43,10 @@ The solution simulates a realistic utility grid environment with:
 
 ## 🏛️ Solution Architecture
 
-### High-Level Architecture
+### High-Level Architectural Diagram
+![High-Level Solution Architecture](/media/RTI-Grid-Intelligenec-Solution-Diagram.png)
 
+Note that this diagram represents a hypothetical real-world solution. This solution accelerator replaces source systems with Spark notebooks that generate synthetic data.
 
 ### Component Details
 
@@ -57,8 +56,7 @@ The solution simulates a realistic utility grid environment with:
 - **Storm Simulator**: Create weather events that trigger correlated grid outages
 
 #### Ingestion
-- **Eventstreams**: Fabric-native streaming connectors with built-in Event Hub integration
-- **Custom Endpoint Source**: EventHub-compatible endpoints for secure data ingestion
+- **Eventstreams**: Fabric-native streaming connectors with built-in Event Hub endpoints.
 
 #### Storage
 - **Eventhouse (KQL Database)**: Hot path for real-time queries with minimal latency
@@ -69,12 +67,17 @@ The solution simulates a realistic utility grid environment with:
 - **Power BI Semantic Models**: DirectQuery mode connection to the eventhouse for real-time reporting
 - **Data Agent**: AI-powered natural language interface to query grid data
 
+#### Action
+- **Activator**: Event data is continuously analyzed and automated notification or actions are initiated when triger conditions are satisfied.
+
 ## 📦 Prerequisites
 
 ### Required
-- **Microsoft Fabric Capacity**: F16 or higher recommended (Power BI Premium capacity is also supported). Note: this solution includes AI features that are not available on a Fabric Trial capacity.
+- **Microsoft Fabric Capacity**: F16 or higher recommended (Power BI Premium capacity is also supported). Note: this solution includes AI features that are not available on a Fabric Trial capacity. While you will be albe to deploy the solution, to a workspace on a Trial capacity, some portions of this solution will not work properly.
+- **Automatic Page Refresh enabled**: Fabric and Power BI capacities must be configured to allow frequent automatic page refresh. Certain reports included in this solution are configured to refresh pages every 2 seconds to visualize streaming data. [Ensure that your capacity settings allow page refresh with this frequency](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-automatic-page-refresh#restrictions-on-refresh-intervals).
 - **Fabric Workspace**: A workspace with contributor or admin permissions
-- **Fabric License**: Fabric or Power BI Premium Per User license
+- **Power BI License**: Power BI Pro or Power BI Premium Per User license.
+
 
 ### Recommended Knowledge
 - Basic understanding of Microsoft Fabric concepts (lakehouses, eventhouses, eventstreams)
@@ -86,7 +89,7 @@ The solution simulates a realistic utility grid environment with:
 ### Step 1: Create Fabric Workspace
 1. Log in to [Microsoft Fabric](https://app.fabric.microsoft.com)
 2. Click **Workspaces** → **+ New workspace**
-3. Name your workspace (e.g., "Grid Intelligence Demo")
+3. Name your workspace (e.g., "Grid Intelligence")
 4. Assign a Fabric capacity or trial capacity
 5. Click **Apply**
 
@@ -119,9 +122,22 @@ This generates:
 - Meter metadata 
 - Network topology (substations, feeder lines, transformers)
 
-### Step 5: Configure Power BI Semantic Models
-1. Configure connections for deployed Power BI Semantic models [TODO]
-2. Perform a one-time refresh of each Power BI Semantic model [TODO]
+### Step 5: Edit Credentials for Power BI Semantic Models
+1. Navigate to the **Visualize and Chat** folder in your workspace
+1. Hover over the **Meter Analytics** semantic model and click on the **...** symbol used to access more options.
+1. Click on **Settings** in the drop-down menu
+1. Expand the section titled "**Data source credentials**
+1. Click on the **Edit credentials** link
+1. Set "Privacy level setting for this data source" to "Organizational" and click on the **Sign in** button
+1. Follow the prompts to complete the Sign-in process with your Entra Id credentials.
+
+[Note: this process needs to be performed for only one of the semantic models, and does not need to be repeated for other semantic models.]
+
+### Step 6: Perform a One-time Refresh of Power BI Semantic Models
+1. Navigate to the **Visualize and Chat** folder in your workspace
+1. Hover over the **Meter Analytics** semantic model and click on the **⟳** symbol, which will trigger a one-time refresh of reference data in the semantic model.
+1. Repeat this process for the remaining semantic models: **Tag Telemetry - Time Series Analysis** and **Vehicle Telemetry - Time Series Analysis**
+
 
 ## 📖 Usage Instructions
 
@@ -161,30 +177,31 @@ Data Generated: GPS coordinates and operational vehicle telemetry every 10 secon
 
 ```
 Location: Simulation/Storm Simulation
-Duration: Event-driven (triggers outages)
-Data Generated: Weather severity data correlated with grid events
+Duration: approximately 2 minutes (triggers outages)
+Data Generated: geospatial data representing the progression of a severe thunderstorm through the service area.
 ```
 
 1. Open the **Storm Simulation** notebook
 2. Click **Run all**
-3. Storm events will trigger correlated meter outages in the AMI simulation (when **AMI Telemetry and Outage Simulation** notebook is running)
+3. Observe progression of the storm by opening the **Meter Analytics** report and navigating to the **Meter Outages + Weather** page. Note that storm progression is accelerated -- it will take ~2 minutes for the storm to pass through the service area.
+4. Storm events will trigger correlated meter outages in the AMI simulation (when **AMI Telemetry and Outage Simulation** notebook is running)
 
-### Exploring Dashboards
+
+### Viewing Reports and Dashboards
 
 #### KQL Dashboards
 
 **Meter Statuses Dashboard**
 - Real-time meter health monitoring
 - Outage maps and timelines
-- Power quality alerts
-- Neighborhood-level aggregations
+- Power quality monitoring
 
 Access: Navigate to **Visualize and Chat** → **Meter Statuses**
 
 **Vehicle Tracking Dashboard**
 - Live vehicle locations on map
 - Route history and playback
-- Speed and telemetry metrics
+- Speed and vehicle telemetry metrics
 
 Access: Navigate to **Visualize and Chat** → **Vehicle Tracking**
 
@@ -192,7 +209,7 @@ Access: Navigate to **Visualize and Chat** → **Vehicle Tracking**
 
 **Meter Analytics Report**
 - Customer consumption patterns
-- Time-series trends and anomalies
+- Recent trends in power consumption and quality metrics
 - Outage statuses and weather events across the service area
 
 **Tag Telemetry - Time Series Analysis**
@@ -211,85 +228,27 @@ The **Meter_Data_Agent** enables natural language queries:
 
 Example queries:
 - "Show me all meters with outages in the last hour"
+- "What transformer has the highest number of meters impacted by an ougage?"
+- "Which vehicle is closest to transformer XYZ?"
 - "What's the average power consumption by feeder line and service class?"
 - "Which meters have low battery warnings?"
-- "Find customers with voltage anomalies today"
 
 Access: Navigate to **Visualize and Chat** → **Meter_Data_Agent**
 
+### Using Activator (for automated alerts and actions)
 
-## 🔧 Solution Components
+The **Meter Activator** enables automatic alerts when trigger conditions are met.
 
-### Eventstreams (Ingestion)
-| Name | Purpose | Source | Destination |
-|------|---------|--------|-------------|
-| **AMI_EventStream** | Smart meter telemetry | Custom Endpoint (Event Hub) | PowerUtilitiesEH.AMITelemetryRaw |
-| **Vehicle_EventStream** | GPS tracking data | Custom Endpoint (Event Hub) | PowerUtilitiesEH.VehicleTelemetry |
-| **Weather_EventStream** | Weather events | Custom Endpoint (Event Hub) | PowerUtilitiesEH.WeatherData |
+By default, the Activator is configured to generate alerts when the level of total harmonic distortions exceeds a specified threshold and stays at that level for an extended period of time. You may configure other triggers using the no-code authoring interface.
 
-### Eventhouse (Real-Time Analytics)
-| Database | Tables | Purpose |
-|----------|--------|---------|
-| **PowerUtilitiesEH** | AMITelemetryRaw, VehicleTelemetry, WeatherData | Hot storage for real-time queries |
+Access: Navigate to **Act** → **Meter Activator**
 
-### Lakehouse (Reference Data)
-| Lakehouse | Tables | Purpose |
-|-----------|--------|---------|
-| **ReferenceDataLH** | customers, meters, transformers, neighborhoods, settings | Reference data and configuration |
-
-### Notebooks (Simulation)
-| Notebook | Purpose |
-|----------|---------|
-| **AMI Reference Data Simulation** | Generate customer/meter reference data |
-| **AMI Telemetry and Outage Simulation** | Stream realistic meter telemetry |
-| **Vehicle Telemetry Simulator** | Stream GPS tracking data |
-| **Route Simulation** | Generate vehicle route patterns |
-| **Storm Simulation** | Create weather events that trigger outages |
-
-### Reports & Dashboards
-| Name | Type | Purpose |
-|------|------|---------|
-| **Meter Statuses** | KQL Dashboard | Real-time operational monitoring |
-| **Vehicle Tracking** | KQL Dashboard | Fleet tracking and management |
-| **Meter Analytics** | Power BI Report | Historical consumption analysis |
-| **Tag Telemetry - Time Series Analysis** | Power BI Report | Multi-meter trend analysis |
-| **Vehicle Telemetry - Time Series Analysis** | Power BI Report | Fleet performance analytics |
-
-### Data Agent
-| Name | Purpose |
-|------|---------|
-| **Meter_Data_Agent** | AI-powered natural language interface for querying grid data |
-
-## 🔄 Data Flow
-
-### AMI Telemetry Flow
-```
-Smart Meters (Simulated)
-    → Python Simulator generates telemetry
-    → Azure Event Hub (via connection string)
-    → Fabric Eventstream (AMI_EventStream)
-    → Eventhouse Table (AMITelemetryRaw)
-    → KQL Queries & Power BI Reports
-```
-
-### Vehicle Tracking Flow
-```
-Vehicle GPS (Simulated)
-    → Python Simulator reads route file
-    → Azure Event Hub (via connection string)
-    → Fabric Eventstream (Vehicle_EventStream)
-    → Eventhouse Table (VehicleTelemetry)
-    → KQL Dashboard (Vehicle Tracking)
-```
-
-### Reference Data Flow
-```
-Reference Data Simulator
-    → Generates customer/meter data
-    → Delta Tables in Lakehouse (ReferenceDataLH)
-    → Joined with telemetry for enrichment
-    → Power BI Semantic Models
-```
+## 🔧 Troubleshooting
+If you encounter challenges with the solution, consider the following steps:
+1. Ensure that all pre-requisites have been fully satisfied
+1. Ensure that all installation steps have been completed in order
+1. Ensure that simulation notebooks are actively running -- it may take a few minutes to simulated data generators to start producing simulated events.
+1. Ensure that simulation notebooks are actively running -- by default, meter and vehicle simulations will time out and terminate after 2 hours. Storm simulation will terminate after 2 minutes.
 
 ### Getting Help
 
@@ -327,6 +286,8 @@ Built with Microsoft Fabric's powerful real-time intelligence platform:
 - **Lakehouse**: For unified data storage
 - **Power BI**: For stunning visualizations
 - **Data Activator**: For intelligent alerting
----
 
-For questions or support, please open an issue in the GitHub repository.
+Advanced geospatial visualizations in Power BI reports are built using the **Icon Map PRO** visual from [Tekantis](https://www.tekantis.com/). Icon Map Pro is commercially-licensed software. Reach out to Tekantis to license the software for production use cases.
+
+
+---
