@@ -72,7 +72,7 @@ The solution simulates a realistic utility grid environment with:
 ## 📦 Prerequisites
 
 ### Required
-- **Microsoft Fabric Capacity**: F16 or higher recommended (Premium or Trial capacity also supported)
+- **Microsoft Fabric Capacity**: F16 or higher recommended (Power BI Premium capacity is also supported). Note: this solution includes AI features that are not available on a Fabric Trial capacity.
 - **Fabric Workspace**: A workspace with contributor or admin permissions
 - **Fabric License**: Fabric or Power BI Premium Per User license
 
@@ -119,9 +119,9 @@ This generates:
 - Meter metadata 
 - Network topology (substations, feeder lines, transformers)
 
-### Step 5: Generate Reference Data
+### Step 5: Configure Power BI Semantic Models
 1. Configure connections for deployed Power BI Semantic models [TODO]
-2. Perform a one-time refresh of Power BI Semantic models [TODO]
+2. Perform a one-time refresh of each Power BI Semantic model [TODO]
 
 ## 📖 Usage Instructions
 
