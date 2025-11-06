@@ -1,0 +1,42 @@
+# Parameter file for AMI (Advanced Metering Infrastructure) Solution
+# This file supports parameterization across different environments (DEV, TEST, PROD)
+# For use with fabric-cicd library
+
+find_replace:
+  # Replace Lakehouse GUID references in notebook metadata
+  - find_value: \#\s*META\s*"default_lakehouse":\s*"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+    replace_value:
+      _ALL_: "$items.Lakehouse.ReferenceDataLH.$id"
+    is_regex: "true"
+    item_type: "Notebook"
+    file_path: "**/notebook-content.py"
+
+  # Replace Lakehouse workspace ID references in notebook metadata
+  - find_value: \#\s*META\s*"default_lakehouse_workspace_id":\s*"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+    replace_value:
+      _ALL_: "$workspace.$id"
+    is_regex: "true"
+    item_type: "Notebook"
+    file_path: "**/notebook-content.py"
+
+  # Replace known lakehouse references in notebook metadata
+  - find_value: \#\s*META\s*"id":\s*"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+    replace_value:
+      _ALL_: "$items.Lakehouse.ReferenceDataLH.$id"
+    is_regex: "true"
+    item_type: "Notebook"
+    file_path: "**/notebook-content.py"
+
+  # Replace Eventhouse query service URI references
+  - find_value: "(https://[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+\\.kusto\\.fabric\\.microsoft\\.com)"
+    replace_value:
+      _ALL_: "$items.Eventhouse.PowerUtilitiesEH.$queryserviceuri"
+    is_regex: "true"
+
+key_value_replace:
+  # Update workspace references in platform files
+  - find_key: $.config.logicalId
+    replace_value:
+      _ALL_: "$workspace.$id"
+    item_type: ["Lakehouse", "Eventhouse", "KQLDatabase"]
+    file_path: "**/.platform"
