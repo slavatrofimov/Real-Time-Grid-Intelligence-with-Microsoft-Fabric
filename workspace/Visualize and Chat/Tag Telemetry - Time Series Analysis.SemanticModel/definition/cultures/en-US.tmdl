@@ -1,0 +1,146 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "dynamicquery.metric": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "DynamicQueryMain",
+			          "ConceptualProperty": "metric"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "metric": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dynamicquery.meter": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "DynamicQueryMain",
+			          "ConceptualProperty": "meter"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "meter": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dynamicquery.tag": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "DynamicQueryMain",
+			          "ConceptualProperty": "tag"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "dynamicquerystats.series_stats_value_avg": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "DynamicQueryStats",
+			          "ConceptualProperty": "series_stats_value_avg"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "average": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dynamicquerystats.series_stats_value_min": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "DynamicQueryStats",
+			          "ConceptualProperty": "series_stats_value_min"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "min": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dynamicquerystats.series_stats_value_stdev": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "DynamicQueryStats",
+			          "ConceptualProperty": "series_stats_value_stdev"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "stdev": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dynamicquerystats.series_stats_value_variance": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "DynamicQueryStats",
+			          "ConceptualProperty": "series_stats_value_variance"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "variance": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

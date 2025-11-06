@@ -1,0 +1,59 @@
+table Metric
+	lineageTag: 44916723-f3a8-4e9b-b544-aaf1697432b1
+
+	column Metric
+		lineageTag: 31574a84-e492-429b-b2b9-13b385d6a462
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: fe9f1c62-1982-403a-abcc-92e0965ec25a
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: f62ca010-1ef7-443f-be93-a74fedd207f6
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metric = calculated
+		mode: import
+		source =
+				{
+				    ("Active Power", NAMEOF('Meter Readings Binned'[Active Power]), 0),
+				    ("Apparent Power", NAMEOF('Meter Readings Binned'[Apparent Power]), 1),
+				    ("Battery Voltage", NAMEOF('Meter Readings Binned'[Battery Voltage]), 2),
+				    ("Current Amps", NAMEOF('Meter Readings Binned'[Current Amps]), 3),
+				    ("Energy Delivered kwh", NAMEOF('Meter Readings Binned'[Energy Delivered kwh]), 4),
+				    ("Energy Net kwh", NAMEOF('Meter Readings Binned'[Energy Net kwh]), 5),
+				    ("Energy Received kwh", NAMEOF('Meter Readings Binned'[Energy Received kwh]), 6),
+				    ("Frequency Hz", NAMEOF('Meter Readings Binned'[Frequency Hz]), 7),
+				    ("Power Factor", NAMEOF('Meter Readings Binned'[Power Factor]), 8),
+				    ("Reactive Power", NAMEOF('Meter Readings Binned'[Reactive Power]), 9),
+				    ("THD Current Percent", NAMEOF('Meter Readings Binned'[THD Current Percent]), 10),
+				    ("THD Voltage Percent", NAMEOF('Meter Readings Binned'[THD Voltage Percent]), 11),
+				    ("Voltage Volts", NAMEOF('Meter Readings Binned'[Voltage Volts]), 12)
+				}
+
+	annotation PBI_Id = af1681dcc5de414f97423596ff60a3a8
+

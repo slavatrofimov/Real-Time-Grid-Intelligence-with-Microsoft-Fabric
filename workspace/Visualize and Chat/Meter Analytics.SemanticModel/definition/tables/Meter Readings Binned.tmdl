@@ -1,0 +1,320 @@
+table 'Meter Readings Binned'
+	lineageTag: 92132c9f-b225-4186-a601-16640f9522b3
+
+	measure 'Active Power' = AVERAGE('Meter Readings Binned'[active_power_kw])
+		lineageTag: f06b3015-fad9-4046-a0be-f5ecc514b16f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Reactive Power' = AVERAGE('Meter Readings Binned'[reactive_power_kvar])
+		lineageTag: 47c62aad-7c98-43ae-a369-a4d93acab5ae
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Apparent Power' = AVERAGE('Meter Readings Binned'[apparent_power_kva])
+		lineageTag: e012a368-a124-4d3b-aad8-6a358d842f27
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Battery Voltage' = AVERAGE('Meter Readings Binned'[battery_voltage])
+		lineageTag: 2185fa9e-9249-41db-8cbc-b4cc1f933e0c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Current Amps' = AVERAGE('Meter Readings Binned'[current_amps])
+		lineageTag: b1e80d6a-6306-424d-8845-bdd2c1bd49f5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Energy Delivered kwh' = AVERAGE('Meter Readings Binned'[energy_delivered_kwh])
+		lineageTag: a06336b9-e141-4b49-8b0c-710fef2a16ce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Energy Net kwh' = AVERAGE('Meter Readings Binned'[energy_net_kwh])
+		lineageTag: 4497b52c-b4de-40c2-a77f-bee578c3d746
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Energy Received kwh' = AVERAGE('Meter Readings Binned'[energy_received_kwh])
+		lineageTag: 12a3360d-4964-4b51-be81-af29a6e0a0ea
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Frequency Hz' = AVERAGE('Meter Readings Binned'[frequency_hz])
+		lineageTag: a0f5cc3a-0c9e-4e4e-95fb-69ccae4d5f9e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Internal Temperature C' = AVERAGE('Meter Readings Binned'[internal_temperature_c])
+		lineageTag: 1014a23b-8132-4730-9b0b-fc667caca758
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Power Factor' = AVERAGE('Meter Readings Binned'[power_factor])
+		lineageTag: ef9e2c04-1d74-484d-93a3-6e9e8fa9123a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'THD Current Percent' = AVERAGE('Meter Readings Binned'[thd_current_percent])
+		lineageTag: 888b510e-9aa5-4bda-8df6-b7dce49d398d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'THD Voltage Percent' = AVERAGE('Meter Readings Binned'[thd_voltage_percent])
+		lineageTag: 4f02aceb-2179-4fb6-a7ab-0c8816956380
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Voltage Volts' = AVERAGE('Meter Readings Binned'[voltage_volts])
+		lineageTag: 31d25077-6b7f-45e5-9932-01de672aef7c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column meter_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 9fc97893-8907-4518-9d21-cd18fd6ba9cf
+		summarizeBy: none
+		sourceColumn: meter_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetimeoffset
+		lineageTag: 6f2b9d3d-86c4-441d-b92e-cc23a66f8ded
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column active_power_kw
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 2569cea0-d019-4ab5-8db2-6a290de1faf4
+		summarizeBy: sum
+		sourceColumn: active_power_kw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column reactive_power_kvar
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 83e9bf8a-2e45-4232-a1d8-91cdfd457e73
+		summarizeBy: sum
+		sourceColumn: reactive_power_kvar
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column apparent_power_kva
+		dataType: double
+		sourceProviderType: double
+		lineageTag: fbe98dff-a9b7-4825-88c2-16b3b675ac24
+		summarizeBy: sum
+		sourceColumn: apparent_power_kva
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column current_amps
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 9c69c478-9204-4716-bd03-ceeabf9141c5
+		summarizeBy: sum
+		sourceColumn: current_amps
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column voltage_volts
+		dataType: double
+		sourceProviderType: double
+		lineageTag: cbd09a67-2c5c-400b-9d75-f13c83086287
+		summarizeBy: sum
+		sourceColumn: voltage_volts
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column power_factor
+		dataType: double
+		sourceProviderType: double
+		lineageTag: d679fb7a-19ef-4290-bba5-e889bc38443e
+		summarizeBy: sum
+		sourceColumn: power_factor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column frequency_hz
+		dataType: double
+		sourceProviderType: double
+		lineageTag: d0ab2d3b-d1eb-4aef-8e87-5103240b5a4f
+		summarizeBy: sum
+		sourceColumn: frequency_hz
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column thd_voltage_percent
+		dataType: double
+		sourceProviderType: double
+		lineageTag: f690193e-0b7d-4b68-a892-f92fd758eb32
+		summarizeBy: sum
+		sourceColumn: thd_voltage_percent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column thd_current_percent
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 79b28e9b-5d6b-4132-8d50-c211a3136683
+		summarizeBy: sum
+		sourceColumn: thd_current_percent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column energy_delivered_kwh
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 9182104f-06a4-4c21-be1d-4fc25d2d021e
+		summarizeBy: sum
+		sourceColumn: energy_delivered_kwh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column energy_received_kwh
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 5a28f45b-fa68-4ab9-805c-bfc7409468d1
+		summarizeBy: sum
+		sourceColumn: energy_received_kwh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column energy_net_kwh
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 3ac16f5c-675c-4d0d-8123-95dd6e3eaf5a
+		summarizeBy: sum
+		sourceColumn: energy_net_kwh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cumulative_energy_kwh
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 33d27e03-a998-4f62-908f-008229ef6193
+		summarizeBy: sum
+		sourceColumn: cumulative_energy_kwh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column signal_strength_dbm
+		dataType: double
+		sourceProviderType: double
+		lineageTag: b1f70737-03d6-4cb0-8a6a-ba7d48533cb6
+		summarizeBy: sum
+		sourceColumn: signal_strength_dbm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column battery_voltage
+		dataType: double
+		sourceProviderType: double
+		lineageTag: b17c2397-d1b0-49f0-8937-8e0b3054018b
+		summarizeBy: sum
+		sourceColumn: battery_voltage
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column internal_temperature_c
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 6b6bc962-a6f6-4a61-954d-e2053ebae499
+		summarizeBy: sum
+		sourceColumn: internal_temperature_c
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tamper_detected
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 0c2e7869-0879-411d-9290-f5cce46fd237
+		summarizeBy: none
+		sourceColumn: tamper_detected
+
+		annotation SummarizationSetBy = Automatic
+
+	column power_outage
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: ad55d1a5-3e81-4e12-9a3d-50550efded96
+		summarizeBy: none
+		sourceColumn: power_outage
+
+		annotation SummarizationSetBy = Automatic
+
+	column communication_error
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 5e7b700f-47d7-42cd-b7dd-a2ffbc0cfe04
+		summarizeBy: none
+		sourceColumn: communication_error
+
+		annotation SummarizationSetBy = Automatic
+
+	column meter_error
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 7c48c0e5-c48c-41db-9290-bc4d4b5f33f6
+		summarizeBy: none
+		sourceColumn: meter_error
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Meter Readings Binned' = m
+		mode: directQuery
+		source =
+				let
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", "AMITelemetryIntervalReadings#(lf)| where timestamp >= ago(" & DurationParameter & ")#(lf)| project-away EventEnqueuedUtcTime, EventProcessedUtcTime, source, interval_minutes, sequence_number, data_quality, firmware_version#(lf)| extend timestamp = bin(timestamp, 1min)#(lf)#(lf)", [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

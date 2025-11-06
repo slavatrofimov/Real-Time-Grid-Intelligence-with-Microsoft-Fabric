@@ -1,0 +1,2072 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "e09969b4-e261-8ecd-44f5-30574ca3a859",
+  "workspaceId": "00000000-0000-0000-0000-000000000000",
+  "dataSourceInstructions": "- MeterContextualization table includes columns describing the properties of each meter and the details of which transformer, feeder line and substation it is connected to.\n- AMITelemetryIntervalReadings table includes most relevant telemetry data. \n- AMITelemetryOutageLastGasp table includes last gasp messages sent by meters in the event of an outage.\n- AMITelemetryWarnings table includes miscellaneous warnings.\n-meter_id field in the telemetry data is joined to the mtr_meter_id field in the MeterContextualization data.\n- By default, assume that the user is interested in data for the last 30 minutes, based on the timestamp column in each telemetry table (unless the user explicitly requests data for a different time period).\n--VehicleTelemetry table contains telemetry for repair trucks. This table includes lat and lon columns that can be used to determine the trucks' current location (based on the latest timestamp).",
+  "displayName": "PowerUtilitiesEH",
+  "type": "kusto",
+  "metadata": {},
+  "elements": [
+    {
+      "id": "d1257578-653b-46cb-b69e-7b07af4a0343",
+      "is_selected": true,
+      "display_name": "AMITelemetryIntervalReadings",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "active_power_kw",
+          "is_selected": true,
+          "display_name": "active_power_kw",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "apparent_power_kva",
+          "is_selected": true,
+          "display_name": "apparent_power_kva",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "battery_voltage",
+          "is_selected": true,
+          "display_name": "battery_voltage",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "communication_error",
+          "is_selected": true,
+          "display_name": "communication_error",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "cumulative_energy_kwh",
+          "is_selected": true,
+          "display_name": "cumulative_energy_kwh",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "current_amps",
+          "is_selected": true,
+          "display_name": "current_amps",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "data_quality",
+          "is_selected": true,
+          "display_name": "data_quality",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "energy_delivered_kwh",
+          "is_selected": true,
+          "display_name": "energy_delivered_kwh",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "energy_net_kwh",
+          "is_selected": true,
+          "display_name": "energy_net_kwh",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "energy_received_kwh",
+          "is_selected": true,
+          "display_name": "energy_received_kwh",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventEnqueuedUtcTime",
+          "is_selected": true,
+          "display_name": "EventEnqueuedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventProcessedUtcTime",
+          "is_selected": true,
+          "display_name": "EventProcessedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "firmware_version",
+          "is_selected": true,
+          "display_name": "firmware_version",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "frequency_hz",
+          "is_selected": true,
+          "display_name": "frequency_hz",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "internal_temperature_c",
+          "is_selected": true,
+          "display_name": "internal_temperature_c",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "interval_minutes",
+          "is_selected": true,
+          "display_name": "interval_minutes",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "meter_error",
+          "is_selected": true,
+          "display_name": "meter_error",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "meter_id",
+          "is_selected": true,
+          "display_name": "meter_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "power_factor",
+          "is_selected": true,
+          "display_name": "power_factor",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "power_outage",
+          "is_selected": true,
+          "display_name": "power_outage",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "reactive_power_kvar",
+          "is_selected": true,
+          "display_name": "reactive_power_kvar",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sequence_number",
+          "is_selected": true,
+          "display_name": "sequence_number",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "signal_strength_dbm",
+          "is_selected": true,
+          "display_name": "signal_strength_dbm",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "source",
+          "is_selected": true,
+          "display_name": "source",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "tamper_detected",
+          "is_selected": true,
+          "display_name": "tamper_detected",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "thd_current_percent",
+          "is_selected": true,
+          "display_name": "thd_current_percent",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "thd_voltage_percent",
+          "is_selected": true,
+          "display_name": "thd_voltage_percent",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "timestamp",
+          "is_selected": true,
+          "display_name": "timestamp",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "voltage_volts",
+          "is_selected": true,
+          "display_name": "voltage_volts",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "6a4a209f-87fe-4d4d-a8f4-dba8e4c2707c",
+      "is_selected": false,
+      "display_name": "AMITelemetryLastGasp",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "alert_code",
+          "is_selected": true,
+          "display_name": "alert_code",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "alert_description",
+          "is_selected": true,
+          "display_name": "alert_description",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "battery_voltage",
+          "is_selected": true,
+          "display_name": "battery_voltage",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "error_codes",
+          "is_selected": true,
+          "display_name": "error_codes",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventEnqueuedUtcTime",
+          "is_selected": true,
+          "display_name": "EventEnqueuedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventProcessedUtcTime",
+          "is_selected": true,
+          "display_name": "EventProcessedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "failure_type",
+          "is_selected": true,
+          "display_name": "failure_type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "final_energy_reading_kwh",
+          "is_selected": true,
+          "display_name": "final_energy_reading_kwh",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "firmware_version",
+          "is_selected": true,
+          "display_name": "firmware_version",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "internal_temperature_c",
+          "is_selected": true,
+          "display_name": "internal_temperature_c",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "last_successful_transmission",
+          "is_selected": true,
+          "display_name": "last_successful_transmission",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "meter_id",
+          "is_selected": true,
+          "display_name": "meter_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "priority",
+          "is_selected": true,
+          "display_name": "priority",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "requires_investigation",
+          "is_selected": true,
+          "display_name": "requires_investigation",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "retry_attempts",
+          "is_selected": true,
+          "display_name": "retry_attempts",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "signal_strength_dbm",
+          "is_selected": true,
+          "display_name": "signal_strength_dbm",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "source",
+          "is_selected": true,
+          "display_name": "source",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "timestamp",
+          "is_selected": true,
+          "display_name": "timestamp",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "53d3c49b-dd17-4746-88ed-87999a5cc04e",
+      "is_selected": true,
+      "display_name": "AMITelemetryOutageLastGasp",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "alert_code",
+          "is_selected": true,
+          "display_name": "alert_code",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "alert_description",
+          "is_selected": true,
+          "display_name": "alert_description",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "automatic_restoration_expected",
+          "is_selected": true,
+          "display_name": "automatic_restoration_expected",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "backup_power_available",
+          "is_selected": true,
+          "display_name": "backup_power_available",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "battery_voltage",
+          "is_selected": true,
+          "display_name": "battery_voltage",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "correlated_outage",
+          "is_selected": true,
+          "display_name": "correlated_outage",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "estimated_backup_hours",
+          "is_selected": true,
+          "display_name": "estimated_backup_hours",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventEnqueuedUtcTime",
+          "is_selected": true,
+          "display_name": "EventEnqueuedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventProcessedUtcTime",
+          "is_selected": true,
+          "display_name": "EventProcessedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "firmware_version",
+          "is_selected": true,
+          "display_name": "firmware_version",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "last_voltage_reading",
+          "is_selected": true,
+          "display_name": "last_voltage_reading",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "meter_id",
+          "is_selected": true,
+          "display_name": "meter_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "outage_id",
+          "is_selected": true,
+          "display_name": "outage_id",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "outage_type",
+          "is_selected": true,
+          "display_name": "outage_type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "power_at_outage",
+          "is_selected": true,
+          "display_name": "power_at_outage",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "priority",
+          "is_selected": true,
+          "display_name": "priority",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sequence_number",
+          "is_selected": true,
+          "display_name": "sequence_number",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "source",
+          "is_selected": true,
+          "display_name": "source",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "timestamp",
+          "is_selected": true,
+          "display_name": "timestamp",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "voltage_at_outage",
+          "is_selected": true,
+          "display_name": "voltage_at_outage",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "c46652cc-9931-4575-bf5f-c36fbf842b79",
+      "is_selected": false,
+      "display_name": "AMITelemetryRaw",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "correlationId",
+          "is_selected": true,
+          "display_name": "correlationId",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "deviceId",
+          "is_selected": true,
+          "display_name": "deviceId",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventEnqueuedUtcTime",
+          "is_selected": true,
+          "display_name": "EventEnqueuedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventProcessedUtcTime",
+          "is_selected": true,
+          "display_name": "EventProcessedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "messageId",
+          "is_selected": true,
+          "display_name": "messageId",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "messageType",
+          "is_selected": true,
+          "display_name": "messageType",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "PartitionId",
+          "is_selected": true,
+          "display_name": "PartitionId",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "partitionKey",
+          "is_selected": true,
+          "display_name": "partitionKey",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "priority",
+          "is_selected": true,
+          "display_name": "priority",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "source",
+          "is_selected": true,
+          "display_name": "source",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "telemetry",
+          "is_selected": true,
+          "display_name": "telemetry",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "timestamp",
+          "is_selected": true,
+          "display_name": "timestamp",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "version",
+          "is_selected": true,
+          "display_name": "version",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "ce08d2d7-8f42-41c3-ab77-85a1002febc8",
+      "is_selected": true,
+      "display_name": "AMITelemetryWarnings",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "alert_code",
+          "is_selected": true,
+          "display_name": "alert_code",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "alert_description",
+          "is_selected": true,
+          "display_name": "alert_description",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "battery_voltage",
+          "is_selected": true,
+          "display_name": "battery_voltage",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "estimated_remaining_hours",
+          "is_selected": true,
+          "display_name": "estimated_remaining_hours",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventEnqueuedUtcTime",
+          "is_selected": true,
+          "display_name": "EventEnqueuedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventProcessedUtcTime",
+          "is_selected": true,
+          "display_name": "EventProcessedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "firmware_version",
+          "is_selected": true,
+          "display_name": "firmware_version",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "internal_temperature_c",
+          "is_selected": true,
+          "display_name": "internal_temperature_c",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "messageType",
+          "is_selected": true,
+          "display_name": "messageType",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "meter_id",
+          "is_selected": true,
+          "display_name": "meter_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "priority",
+          "is_selected": true,
+          "display_name": "priority",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "requires_maintenance",
+          "is_selected": true,
+          "display_name": "requires_maintenance",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sequence_number",
+          "is_selected": true,
+          "display_name": "sequence_number",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "signal_strength_dbm",
+          "is_selected": true,
+          "display_name": "signal_strength_dbm",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "source",
+          "is_selected": true,
+          "display_name": "source",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "timestamp",
+          "is_selected": true,
+          "display_name": "timestamp",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "dc13e2b6-2ed6-4d6b-a189-e75f8d4049bb",
+      "is_selected": true,
+      "display_name": "MeterContextualization",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "fdr_conductor_type",
+          "is_selected": true,
+          "display_name": "fdr_conductor_type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fdr_feeder_name",
+          "is_selected": true,
+          "display_name": "fdr_feeder_name",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fdr_length_miles",
+          "is_selected": true,
+          "display_name": "fdr_length_miles",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fdr_max_load_kw",
+          "is_selected": true,
+          "display_name": "fdr_max_load_kw",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fdr_protection_scheme",
+          "is_selected": true,
+          "display_name": "fdr_protection_scheme",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fdr_scada_monitored",
+          "is_selected": true,
+          "display_name": "fdr_scada_monitored",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fdr_substation_id",
+          "is_selected": true,
+          "display_name": "fdr_substation_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fdr_voltage_level",
+          "is_selected": true,
+          "display_name": "fdr_voltage_level",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_accuracy_class",
+          "is_selected": true,
+          "display_name": "mtr_accuracy_class",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_city",
+          "is_selected": true,
+          "display_name": "mtr_city",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_communication_type",
+          "is_selected": true,
+          "display_name": "mtr_communication_type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_customer_id",
+          "is_selected": true,
+          "display_name": "mtr_customer_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_customer_type",
+          "is_selected": true,
+          "display_name": "mtr_customer_type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_firmware_version",
+          "is_selected": true,
+          "display_name": "mtr_firmware_version",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_h3cell_5",
+          "is_selected": true,
+          "display_name": "mtr_h3cell_5",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_h3cell_6",
+          "is_selected": true,
+          "display_name": "mtr_h3cell_6",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_h3cell_7",
+          "is_selected": true,
+          "display_name": "mtr_h3cell_7",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_install_date",
+          "is_selected": true,
+          "display_name": "mtr_install_date",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_last_maintenance",
+          "is_selected": true,
+          "display_name": "mtr_last_maintenance",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_latitude",
+          "is_selected": true,
+          "display_name": "mtr_latitude",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_load_profile_interval",
+          "is_selected": true,
+          "display_name": "mtr_load_profile_interval",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_longitude",
+          "is_selected": true,
+          "display_name": "mtr_longitude",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_manufacturer",
+          "is_selected": true,
+          "display_name": "mtr_manufacturer",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_max_amps",
+          "is_selected": true,
+          "display_name": "mtr_max_amps",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_meter_id",
+          "is_selected": true,
+          "display_name": "mtr_meter_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_meter_type",
+          "is_selected": true,
+          "display_name": "mtr_meter_type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_model",
+          "is_selected": true,
+          "display_name": "mtr_model",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_phases",
+          "is_selected": true,
+          "display_name": "mtr_phases",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_power_quality_monitoring",
+          "is_selected": true,
+          "display_name": "mtr_power_quality_monitoring",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_pulse_output",
+          "is_selected": true,
+          "display_name": "mtr_pulse_output",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_register_type",
+          "is_selected": true,
+          "display_name": "mtr_register_type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_serial_number",
+          "is_selected": true,
+          "display_name": "mtr_serial_number",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_service_class",
+          "is_selected": true,
+          "display_name": "mtr_service_class",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_state",
+          "is_selected": true,
+          "display_name": "mtr_state",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_status",
+          "is_selected": true,
+          "display_name": "mtr_status",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_street_address",
+          "is_selected": true,
+          "display_name": "mtr_street_address",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_tamper_detection",
+          "is_selected": true,
+          "display_name": "mtr_tamper_detection",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_transformer_id",
+          "is_selected": true,
+          "display_name": "mtr_transformer_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_voltage",
+          "is_selected": true,
+          "display_name": "mtr_voltage",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "mtr_zip_code",
+          "is_selected": true,
+          "display_name": "mtr_zip_code",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sub_capacity_mva",
+          "is_selected": true,
+          "display_name": "sub_capacity_mva",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sub_commissioned_date",
+          "is_selected": true,
+          "display_name": "sub_commissioned_date",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sub_latitude",
+          "is_selected": true,
+          "display_name": "sub_latitude",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sub_longitude",
+          "is_selected": true,
+          "display_name": "sub_longitude",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sub_substation_name",
+          "is_selected": true,
+          "display_name": "sub_substation_name",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sub_voltage_level",
+          "is_selected": true,
+          "display_name": "sub_voltage_level",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_feeder_id",
+          "is_selected": true,
+          "display_name": "trnsf_feeder_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_install_date",
+          "is_selected": true,
+          "display_name": "trnsf_install_date",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_kva_rating",
+          "is_selected": true,
+          "display_name": "trnsf_kva_rating",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_latitude",
+          "is_selected": true,
+          "display_name": "trnsf_latitude",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_load_tap_changer",
+          "is_selected": true,
+          "display_name": "trnsf_load_tap_changer",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_longitude",
+          "is_selected": true,
+          "display_name": "trnsf_longitude",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_manufacturer",
+          "is_selected": true,
+          "display_name": "trnsf_manufacturer",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_phase_config",
+          "is_selected": true,
+          "display_name": "trnsf_phase_config",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_primary_voltage",
+          "is_selected": true,
+          "display_name": "trnsf_primary_voltage",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_secondary_voltage",
+          "is_selected": true,
+          "display_name": "trnsf_secondary_voltage",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_temperature_monitoring",
+          "is_selected": true,
+          "display_name": "trnsf_temperature_monitoring",
+          "type": "kusto.column",
+          "data_type": "System.SByte",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "trnsf_transformer_type",
+          "is_selected": true,
+          "display_name": "trnsf_transformer_type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "d64ebea8-3121-4597-a0cf-12ba6faa525b",
+      "is_selected": true,
+      "display_name": "VehicleTelemetry",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "accelerator_pedal_position",
+          "is_selected": true,
+          "display_name": "accelerator_pedal_position",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "brake_pedal_position",
+          "is_selected": true,
+          "display_name": "brake_pedal_position",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "door_status",
+          "is_selected": true,
+          "display_name": "door_status",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "DriverID",
+          "is_selected": true,
+          "display_name": "DriverID",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "engine_rpm",
+          "is_selected": true,
+          "display_name": "engine_rpm",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "engine_temp",
+          "is_selected": true,
+          "display_name": "engine_temp",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventCategoryID",
+          "is_selected": true,
+          "display_name": "EventCategoryID",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventEnqueuedUtcTime",
+          "is_selected": true,
+          "display_name": "EventEnqueuedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventID",
+          "is_selected": true,
+          "display_name": "EventID",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventProcessedUtcTime",
+          "is_selected": true,
+          "display_name": "EventProcessedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fuel_level",
+          "is_selected": true,
+          "display_name": "fuel_level",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "gear_lever_position",
+          "is_selected": true,
+          "display_name": "gear_lever_position",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "headlamp_status",
+          "is_selected": true,
+          "display_name": "headlamp_status",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "high_beam_status",
+          "is_selected": true,
+          "display_name": "high_beam_status",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ignition_status",
+          "is_selected": true,
+          "display_name": "ignition_status",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "JourneyID",
+          "is_selected": true,
+          "display_name": "JourneyID",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "lat",
+          "is_selected": true,
+          "display_name": "lat",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "lon",
+          "is_selected": true,
+          "display_name": "lon",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "odometer",
+          "is_selected": true,
+          "display_name": "odometer",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "parking_brake_status",
+          "is_selected": true,
+          "display_name": "parking_brake_status",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "PartitionId",
+          "is_selected": true,
+          "display_name": "PartitionId",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "steering_wheel_angle",
+          "is_selected": true,
+          "display_name": "steering_wheel_angle",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "timestamp",
+          "is_selected": true,
+          "display_name": "timestamp",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "tire_pressure",
+          "is_selected": true,
+          "display_name": "tire_pressure",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "torque_at_transmission",
+          "is_selected": true,
+          "display_name": "torque_at_transmission",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "transmission_gear_position",
+          "is_selected": true,
+          "display_name": "transmission_gear_position",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "transmission_temp",
+          "is_selected": true,
+          "display_name": "transmission_temp",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "vehicle_speed",
+          "is_selected": true,
+          "display_name": "vehicle_speed",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "VehicleID",
+          "is_selected": true,
+          "display_name": "VehicleID",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "windshield_wiper_status",
+          "is_selected": true,
+          "display_name": "windshield_wiper_status",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "9a993b69-fa9d-4e91-ae94-c536765f7b4e",
+      "is_selected": false,
+      "display_name": "VehicleTelemetryRaw",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "accelerator_pedal_position",
+          "is_selected": true,
+          "display_name": "accelerator_pedal_position",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "brake_pedal_position",
+          "is_selected": true,
+          "display_name": "brake_pedal_position",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "door_status",
+          "is_selected": true,
+          "display_name": "door_status",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "DriverID",
+          "is_selected": true,
+          "display_name": "DriverID",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "engine_rpm",
+          "is_selected": true,
+          "display_name": "engine_rpm",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "engine_temp",
+          "is_selected": true,
+          "display_name": "engine_temp",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventCategoryID",
+          "is_selected": true,
+          "display_name": "EventCategoryID",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventEnqueuedUtcTime",
+          "is_selected": true,
+          "display_name": "EventEnqueuedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventID",
+          "is_selected": true,
+          "display_name": "EventID",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventProcessedUtcTime",
+          "is_selected": true,
+          "display_name": "EventProcessedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fuel_level",
+          "is_selected": true,
+          "display_name": "fuel_level",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "gear_lever_position",
+          "is_selected": true,
+          "display_name": "gear_lever_position",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "headlamp_status",
+          "is_selected": true,
+          "display_name": "headlamp_status",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "high_beam_status",
+          "is_selected": true,
+          "display_name": "high_beam_status",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ignition_status",
+          "is_selected": true,
+          "display_name": "ignition_status",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "JourneyID",
+          "is_selected": true,
+          "display_name": "JourneyID",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "lat",
+          "is_selected": true,
+          "display_name": "lat",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "lon",
+          "is_selected": true,
+          "display_name": "lon",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "odometer",
+          "is_selected": true,
+          "display_name": "odometer",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "parking_brake_status",
+          "is_selected": true,
+          "display_name": "parking_brake_status",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "PartitionId",
+          "is_selected": true,
+          "display_name": "PartitionId",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "steering_wheel_angle",
+          "is_selected": true,
+          "display_name": "steering_wheel_angle",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "timestamp",
+          "is_selected": true,
+          "display_name": "timestamp",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "tire_pressure",
+          "is_selected": true,
+          "display_name": "tire_pressure",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "torque_at_transmission",
+          "is_selected": true,
+          "display_name": "torque_at_transmission",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "transmission_gear_position",
+          "is_selected": true,
+          "display_name": "transmission_gear_position",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "transmission_temp",
+          "is_selected": true,
+          "display_name": "transmission_temp",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "vehicle_speed",
+          "is_selected": true,
+          "display_name": "vehicle_speed",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "VehicleID",
+          "is_selected": true,
+          "display_name": "VehicleID",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "windshield_wiper_status",
+          "is_selected": true,
+          "display_name": "windshield_wiper_status",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "3b9a830c-6f13-44d7-873b-33ccc0767858",
+      "is_selected": false,
+      "display_name": "WeatherRaw",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "EventEnqueuedUtcTime",
+          "is_selected": true,
+          "display_name": "EventEnqueuedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "EventProcessedUtcTime",
+          "is_selected": true,
+          "display_name": "EventProcessedUtcTime",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "features",
+          "is_selected": true,
+          "display_name": "features",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "PartitionId",
+          "is_selected": true,
+          "display_name": "PartitionId",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "properties",
+          "is_selected": true,
+          "display_name": "properties",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "type",
+          "is_selected": true,
+          "display_name": "type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        }
+      ]
+    }
+  ]
+}

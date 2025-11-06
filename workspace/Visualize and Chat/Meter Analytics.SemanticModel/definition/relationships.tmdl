@@ -1,0 +1,13 @@
+relationship a1103431-39e2-7bc8-bcf3-94cdc68b23f4
+	crossFilteringBehavior: bothDirections
+	relyOnReferentialIntegrity
+	toCardinality: many
+	fromColumn: 'Meter Contextualization'.mtr_meter_id
+	toColumn: 'Meter Latest Reading'.meter_id
+
+relationship d550c8a7-076c-c2be-c562-4847fa5f24bf
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'Meter Contextualization'.mtr_meter_id
+	toColumn: 'Meter Readings Binned'.meter_id
+

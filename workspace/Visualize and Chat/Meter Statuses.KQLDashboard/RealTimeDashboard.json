@@ -1,0 +1,562 @@
+{
+  "schema_version": "60",
+  "autoRefresh": {
+    "enabled": true,
+    "defaultInterval": "10s",
+    "minInterval": "10s"
+  },
+  "tiles": [
+    {
+      "id": "ebed1a40-c704-410c-b844-a1b2cdb84168",
+      "title": "Meter Status Map",
+      "visualType": "map",
+      "pageId": "53e91b76-8a20-4512-b769-66d069570ad0",
+      "layout": {
+        "x": 0,
+        "y": 9,
+        "width": 9,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "abe06a4b-39bb-48fe-8e1e-fdff01320ad7"
+      },
+      "visualOptions": {
+        "map__type": "bubble",
+        "map__latitudeColumn": "h3cell_latitude",
+        "map__longitudeColumn": "h3cell_longitude",
+        "map__labelColumn": "Status",
+        "map__sizeColumn": "unresponsive_meters",
+        "map__sizeDisabled": true,
+        "map__geoType": "numeric",
+        "map__geoPointColumn": null
+      }
+    },
+    {
+      "id": "29406607-6975-419b-86ef-2b6df06750ed",
+      "title": "Meter Telemetry Details",
+      "visualType": "table",
+      "pageId": "cdd470ad-9b9c-4235-acdc-7eec98f1a59b",
+      "layout": {
+        "x": 7,
+        "y": 0,
+        "width": 17,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "3cc67c74-4b8c-49f6-9665-2d6827d7dbfd"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": [
+          {
+            "id": "8fd902c9-12e8-4277-8c97-6634564fc2f3",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": ">",
+                "column": "thd_voltage_percent",
+                "values": [
+                  "2.5"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "red",
+            "tag": "",
+            "icon": null,
+            "ruleName": "",
+            "visualType": "table"
+          },
+          {
+            "id": "5a544a53-6ef9-43c2-a702-552b7d642c3f",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": ">",
+                "column": "thd_current_percent",
+                "values": [
+                  "5"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "red",
+            "tag": "",
+            "icon": "warning",
+            "ruleName": "",
+            "visualType": "table"
+          }
+        ]
+      }
+    },
+    {
+      "id": "5992d720-37ce-4dea-8214-2cee636ee51e",
+      "title": "Net Energy Delivered (kwh) by Feeder Line and Service Class",
+      "visualType": "heatmap",
+      "pageId": "53e91b76-8a20-4512-b769-66d069570ad0",
+      "layout": {
+        "x": 9,
+        "y": 9,
+        "width": 9,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "27f9ccbc-0138-4e42-98b3-750537a9f48a"
+      },
+      "visualOptions": {
+        "xColumn": "mtr_service_class",
+        "xColumnTitle": "",
+        "yColumnTitle": "Feeder Line",
+        "heatMap__dataColumn": "energy_net_kwh",
+        "heatMap__colorPaletteKey": "blue",
+        "yColumns": null
+      }
+    },
+    {
+      "id": "fbd4bec5-b1ed-4e1e-8b63-16583b4a31fb",
+      "title": "Meter Summaries",
+      "visualType": "multistat",
+      "pageId": "53e91b76-8a20-4512-b769-66d069570ad0",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 6,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "5811fc08-0a6d-4d74-9ae4-a0cae5bd41ca"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": "Value",
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "multiStat__displayOrientation": "vertical",
+        "multiStat__labelColumn": null,
+        "multiStat__slot": {
+          "width": 2,
+          "height": 3
+        },
+        "colorRules": []
+      }
+    },
+    {
+      "id": "15f100de-a5f1-4f14-83a8-23ef597066f9",
+      "title": "Net Energy Delivered (kwh)",
+      "visualType": "stackedarea",
+      "pageId": "53e91b76-8a20-4512-b769-66d069570ad0",
+      "layout": {
+        "x": 6,
+        "y": 0,
+        "width": 12,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b428d00a-867f-44fb-9f44-b9f7e9a4dbb7"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    },
+    {
+      "id": "95ace3d9-9c80-4f37-9cf6-5f1fd6243a7c",
+      "title": "Meter Context",
+      "visualType": "table",
+      "pageId": "cdd470ad-9b9c-4235-acdc-7eec98f1a59b",
+      "layout": {
+        "x": 0,
+        "y": 3,
+        "width": 7,
+        "height": 20
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b169dc7e-bbda-4a12-86b3-2e822cfd1983"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "13e56e5c-157d-4bfa-b55a-bc7e4f78e48f",
+      "title": "Power Output",
+      "visualType": "timechart",
+      "pageId": "cdd470ad-9b9c-4235-acdc-7eec98f1a59b",
+      "layout": {
+        "x": 7,
+        "y": 9,
+        "width": 17,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "379761f6-2c2a-42a0-bcd7-1d23a3669f69"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "right",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": [
+          "active_power_kw",
+          "reactive_power_kvar"
+        ],
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    },
+    {
+      "id": "5b2a3493-1852-4740-983d-083088bd2cff",
+      "title": "Meter Id",
+      "visualType": "card",
+      "pageId": "cdd470ad-9b9c-4235-acdc-7eec98f1a59b",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 7,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "6e95d551-a41b-403c-8fe8-45350b529ba9"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "4a58e9b4-537d-4f9b-9b05-50205a3a147d",
+      "title": "Total Harmonic Distortions for Voltage and Current",
+      "visualType": "timechart",
+      "pageId": "cdd470ad-9b9c-4235-acdc-7eec98f1a59b",
+      "layout": {
+        "x": 7,
+        "y": 16,
+        "width": 17,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "c8974c95-ffa2-42dd-9402-138ae6d4a03c"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "right",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": [
+          "thd_current_percent",
+          "thd_voltage_percent"
+        ],
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    }
+  ],
+  "baseQueries": [
+    {
+      "id": "5248eb05-f703-4c91-b2e2-45eda3feaf73",
+      "queryId": "749b7b9c-35fc-437b-8df1-25ebbf6f38b3",
+      "variableName": "_SummaryByMeter"
+    }
+  ],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "2eb133dd-5717-4389-9b54-836f2a41696c",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    },
+    {
+      "kind": "string",
+      "id": "f7779152-52f2-443c-b2a5-b591c1c885e1",
+      "displayName": "Meter Id",
+      "description": "",
+      "variableName": "_meter_id",
+      "selectionType": "scalar",
+      "includeAllOption": false,
+      "defaultValue": {
+        "kind": "query-result"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "mtr_meter_id"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "f068bf72-033c-4dbb-93f2-41eecac12a2c"
+        }
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "cdd470ad-9b9c-4235-acdc-7eec98f1a59b"
+        ]
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "",
+      "database": "e09969b4-e261-8ecd-44f5-30574ca3a859",
+      "name": "PowerUtilitiesEH",
+      "id": "1b91b980-72ae-4bd1-a166-ddd11b87aebe",
+      "workspace": "00000000-0000-0000-0000-000000000000",
+      "queryResultsCacheMaxAge": 30000
+    }
+  ],
+  "pages": [
+    {
+      "name": "Meter Summary",
+      "id": "53e91b76-8a20-4512-b769-66d069570ad0"
+    },
+    {
+      "name": "Meter Detail",
+      "id": "cdd470ad-9b9c-4235-acdc-7eec98f1a59b"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "meter_latest_reading(5)\n| summarize meter_count = count(), \nunresponsive_meters = countif(time_since_last_reading_minutes > 2) by h3cell_longitude, h3cell_latitude\n| extend unresponsive_ratio = unresponsive_meters/todouble(meter_count)\n| extend Status = case(unresponsive_meters > 0, \"Red\", \"Green\")\n",
+      "id": "abe06a4b-39bb-48fe-8e1e-fdff01320ad7",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "AMITelemetryIntervalReadings\n| where timestamp between (_startTime .. _endTime)\n| where meter_id in(_meter_id)\n| project-away EventEnqueuedUtcTime, EventProcessedUtcTime, source, interval_minutes, sequence_number, data_quality, firmware_version\n\n",
+      "id": "3cc67c74-4b8c-49f6-9665-2d6827d7dbfd",
+      "usedVariables": [
+        "_endTime",
+        "_meter_id",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "MeterContextualization\n| join kind = leftouter _SummaryByMeter on $left.mtr_meter_id == $right.meter_id\n| summarize meter_count = count(), unresponsive_meter_count = countif(isnull( is_unresponsive) or is_unresponsive), energy_delivered_kwh =  round(sum(energy_delivered_kwh),2), energy_net_kwh = round(sum(energy_net_kwh),2), min_frequency_hz = min(min_frequency_hz), max_frequency_hz = max(max_frequency_hz) by mtr_service_class, fdr_feeder_name\n",
+      "id": "27f9ccbc-0138-4e42-98b3-750537a9f48a",
+      "usedVariables": [
+        "_SummaryByMeter"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "_SummaryByMeter \n| summarize active_meter_count = count(), unresponsive_meter_count = countif(isnull( is_unresponsive) or is_unresponsive), energy_delivered_kwh =  round(sum(energy_delivered_kwh),2), energy_net_kwh = round(sum(energy_net_kwh),2), min_frequency_hz = min(min_frequency_hz), max_frequency_hz = max(max_frequency_hz)\n| evaluate narrow()\n\n",
+      "id": "5811fc08-0a6d-4d74-9ae4-a0cae5bd41ca",
+      "usedVariables": [
+        "_SummaryByMeter"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "let summary = AMITelemetryIntervalReadings\n| where timestamp between (_startTime .. _endTime)\n| summarize energy_net_kwh = sum(energy_net_kwh) by meter_id, bin(timestamp, 1min);\nMeterContextualization\n| join kind = inner summary on $left.mtr_meter_id == $right.meter_id\n| summarize energy_net_kwh = round(sum(energy_net_kwh),2) by mtr_service_class, timestamp\n",
+      "id": "b428d00a-867f-44fb-9f44-b9f7e9a4dbb7",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "MeterContextualization\n| where mtr_meter_id in (_meter_id)\n| evaluate narrow()\n| project-away  Row",
+      "id": "b169dc7e-bbda-4a12-86b3-2e822cfd1983",
+      "usedVariables": [
+        "_meter_id"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "AMITelemetryIntervalReadings\n| where timestamp between (_startTime .. _endTime) and meter_id in (_meter_id)\n| project timestamp, energy_net_kwh, frequency_hz, active_power_kw, reactive_power_kvar, power_factor, current_amps, thd_current_percent, thd_voltage_percent, voltage_volts\n\n\n",
+      "id": "379761f6-2c2a-42a0-bcd7-1d23a3669f69",
+      "usedVariables": [
+        "_endTime",
+        "_meter_id",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "MeterContextualization\n| where mtr_meter_id in (_meter_id)\n| project mtr_meter_id",
+      "id": "6e95d551-a41b-403c-8fe8-45350b529ba9",
+      "usedVariables": [
+        "_meter_id"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "AMITelemetryIntervalReadings\n| where timestamp between (_startTime .. _endTime) and meter_id in (_meter_id)\n| project timestamp, energy_net_kwh, frequency_hz, active_power_kw, reactive_power_kvar, power_factor, current_amps, thd_current_percent, thd_voltage_percent, voltage_volts\n\n\n",
+      "id": "c8974c95-ffa2-42dd-9402-138ae6d4a03c",
+      "usedVariables": [
+        "_endTime",
+        "_meter_id",
+        "_startTime"
+      ]
+    },
+    {
+      "id": "749b7b9c-35fc-437b-8df1-25ebbf6f38b3",
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "AMITelemetryIntervalReadings\n| where timestamp between (_startTime .. _endTime)\n| summarize energy_delivered_kwh = sum(energy_delivered_kwh), energy_net_kwh = sum(energy_net_kwh), min_frequency_hz = min(frequency_hz), max_frequency_hz = max(frequency_hz), time_since_last_reading = datetime_diff('minute', now(), max(timestamp)) by meter_id\n| extend is_unresponsive = iif(time_since_last_reading > 2, true, false)",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "1b91b980-72ae-4bd1-a166-ddd11b87aebe"
+      },
+      "text": "MeterContextualization\n| project mtr_meter_id",
+      "id": "f068bf72-033c-4dbb-93f2-41eecac12a2c",
+      "usedVariables": []
+    }
+  ]
+}

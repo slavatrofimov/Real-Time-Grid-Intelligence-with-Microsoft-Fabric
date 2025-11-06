@@ -1,0 +1,63 @@
+table ServiceArea+Weather
+	lineageTag: b6cd6fca-45f0-4fcb-a42e-eb0750782203
+
+	column Polygon
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: ad77f83d-6267-414b-97d5-e2847af3c0e9
+		summarizeBy: none
+		sourceColumn: Polygon
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolygonColor
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: a0d8d6b7-4a48-4707-9024-f7f1c56121f7
+		summarizeBy: none
+		sourceColumn: PolygonColor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meters
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 20d26598-07b0-4ee6-a6ba-ea1ed0dfe105
+		summarizeBy: sum
+		sourceColumn: Meters
+
+		annotation SummarizationSetBy = Automatic
+
+	column OutageMeters
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 0503857a-2031-4059-bcb9-384bcbb35b4b
+		summarizeBy: sum
+		sourceColumn: OutageMeters
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: d7b17cbd-23fa-458e-9b86-8d71efe6a2b6
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ServiceArea+Weather = m
+		mode: directQuery
+		source =
+				let
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", "let Weather = WeatherCurrent #(lf)    | where EventEnqueuedUtcTime >= ago(2m)#(lf)    | project PolygonColor = color, Polygon = tostring(todynamic(features).geometry), rainfall_rate;#(lf)let OutageMeters = AMITelemetryOutageLastGasp#(lf)    | where timestamp >= ago(3min)#(lf)    | summarize by meter_id;#(lf)MeterContextualization#(lf)| join kind = leftouter OutageMeters on $left.mtr_meter_id == $right.meter_id#(lf)| summarize Meters = count(), OutageMeters = countif(not(isempty(meter_id))) by mtr_h3cell_6#(lf)| extend Polygon = tostring(geo_h3cell_to_polygon(mtr_h3cell_6)), PolygonColor = case(OutageMeters>5, ""#FF8066"",OutageMeters >0, ""#FFEECC"",""#D5FFCC"")#(lf)| union Weather#(lf)| order by rainfall_rate asc#(lf)| project-away mtr_h3cell_6, rainfall_rate#(lf)| serialize#(lf)| extend Id = row_number()#(lf)#(lf)", [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

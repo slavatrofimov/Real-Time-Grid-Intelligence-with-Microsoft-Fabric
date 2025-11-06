@@ -1,0 +1,8 @@
+expression DurationParameter = "1min" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 63ff8b30-30be-421c-bea3-6903713374cd
+	parameterValuesColumn: Duration.Duration
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

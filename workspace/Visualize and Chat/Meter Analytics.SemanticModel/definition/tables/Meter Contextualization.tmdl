@@ -1,0 +1,566 @@
+table 'Meter Contextualization'
+	lineageTag: 4c65570c-daeb-4668-8e6d-dc5f96e621ea
+
+	column mtr_meter_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 3b68c314-8716-4999-a2a6-56da35577299
+		summarizeBy: none
+		sourceColumn: mtr_meter_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_serial_number
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 11b551fa-c4e9-4519-93ae-5507cf415dc2
+		summarizeBy: none
+		sourceColumn: mtr_serial_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_manufacturer
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 90fc2fef-f608-4745-bafe-6df0c0558bca
+		summarizeBy: none
+		sourceColumn: mtr_manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_model
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: e512a961-7c83-4239-ac14-e4200762ce62
+		summarizeBy: none
+		sourceColumn: mtr_model
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_meter_type
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 865dacbe-38d2-4031-9c49-13b13dcdc895
+		summarizeBy: none
+		sourceColumn: mtr_meter_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_max_amps
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 38c69d5a-6bb4-4470-b71d-e89c3da57022
+		summarizeBy: sum
+		sourceColumn: mtr_max_amps
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_voltage
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 2ac1e4f5-ac7c-4041-a25c-4f0e5903146d
+		summarizeBy: sum
+		sourceColumn: mtr_voltage
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_phases
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 4bebd6f4-a01f-43f4-b63b-fc965e872fb4
+		summarizeBy: sum
+		sourceColumn: mtr_phases
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_install_date
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 8e5bc7e5-ac83-48db-93dc-491a9858b88a
+		summarizeBy: none
+		sourceColumn: mtr_install_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_firmware_version
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: ce2fd340-0584-478b-aa7a-7d876b336f5c
+		summarizeBy: none
+		sourceColumn: mtr_firmware_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_communication_type
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: c617a1f3-9927-4d84-868d-c9f2cae1ad19
+		summarizeBy: none
+		sourceColumn: mtr_communication_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_street_address
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: ac9c7758-3caa-43d0-ba19-0cd0e0a6e7a5
+		summarizeBy: none
+		sourceColumn: mtr_street_address
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_city
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: cce68d2a-3f48-4997-816e-cdce1dc46de7
+		summarizeBy: none
+		sourceColumn: mtr_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_state
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: cff09160-96b5-45c4-96aa-b3d469cfa09f
+		summarizeBy: none
+		sourceColumn: mtr_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_zip_code
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 27e7fde1-3387-4cad-b014-2085693b2570
+		summarizeBy: none
+		sourceColumn: mtr_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_latitude
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 1d1b03b7-4146-4798-90d1-7c68b456e011
+		summarizeBy: sum
+		sourceColumn: mtr_latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mtr_longitude
+		dataType: double
+		sourceProviderType: double
+		lineageTag: baac9faf-f860-4684-8192-215ef0e29052
+		summarizeBy: sum
+		sourceColumn: mtr_longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mtr_customer_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: c402b4f3-512c-4e2a-ab41-24ec9c77ed7a
+		summarizeBy: none
+		sourceColumn: mtr_customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_customer_type
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 33df8f86-ff82-4e61-9059-ae376bb20d68
+		summarizeBy: none
+		sourceColumn: mtr_customer_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_service_class
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: d85676c2-c299-490a-99f4-04fe0ed03d34
+		summarizeBy: none
+		sourceColumn: mtr_service_class
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_accuracy_class
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: f20d454d-8d83-4874-992c-74cf95d903be
+		summarizeBy: none
+		sourceColumn: mtr_accuracy_class
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_register_type
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 3c805dc7-b212-44c7-98be-a3776105f889
+		summarizeBy: none
+		sourceColumn: mtr_register_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_pulse_output
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 243f8a70-1a7f-49a7-bfa6-d8e1f545a410
+		summarizeBy: none
+		sourceColumn: mtr_pulse_output
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_tamper_detection
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 4311498e-59bb-45d2-b5b0-3319cebce9cf
+		summarizeBy: none
+		sourceColumn: mtr_tamper_detection
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_power_quality_monitoring
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 4887100f-f0b9-43de-8edd-32fe356a6cb3
+		summarizeBy: none
+		sourceColumn: mtr_power_quality_monitoring
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_load_profile_interval
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 9178b194-6aec-40c7-88af-b6a566047420
+		summarizeBy: sum
+		sourceColumn: mtr_load_profile_interval
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_status
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: cb289998-81b4-4a45-b8aa-3f99159e092f
+		summarizeBy: none
+		sourceColumn: mtr_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_last_maintenance
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: c4213670-c08f-4d26-be10-1c03089f7a49
+		summarizeBy: none
+		sourceColumn: mtr_last_maintenance
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_transformer_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 1898d4e6-a314-4a82-b94e-82db466d722d
+		summarizeBy: none
+		sourceColumn: mtr_transformer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnsf_feeder_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 13d52352-fd5a-4caa-8852-b176f0e46167
+		summarizeBy: none
+		sourceColumn: trnsf_feeder_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnsf_transformer_type
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: b5a7eeeb-9bb6-4c16-bae7-640698c4c206
+		summarizeBy: none
+		sourceColumn: trnsf_transformer_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnsf_primary_voltage
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 07489900-949c-4f8b-b6d1-590124be6c4c
+		summarizeBy: sum
+		sourceColumn: trnsf_primary_voltage
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnsf_secondary_voltage
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 72ab1db9-1bc8-41b0-af6d-9c7095c09ea4
+		summarizeBy: sum
+		sourceColumn: trnsf_secondary_voltage
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnsf_kva_rating
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 7347084e-5f8d-46c6-996b-ad2fbcc30c0d
+		summarizeBy: sum
+		sourceColumn: trnsf_kva_rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnsf_phase_config
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 40275efb-000c-4ffb-97b1-1e00e007705b
+		summarizeBy: none
+		sourceColumn: trnsf_phase_config
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnsf_install_date
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: ce4854f8-5a43-42b5-a414-fb243005e3df
+		summarizeBy: none
+		sourceColumn: trnsf_install_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnsf_manufacturer
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 9cdbc131-4d7d-479f-bb59-d3f778320db3
+		summarizeBy: none
+		sourceColumn: trnsf_manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnsf_latitude
+		dataType: double
+		sourceProviderType: double
+		lineageTag: f4364f27-91b9-4532-8caf-2ebde313d847
+		summarizeBy: sum
+		sourceColumn: trnsf_latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column trnsf_longitude
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 1bf74297-bfcf-45cc-88eb-2009ab9a1574
+		summarizeBy: sum
+		sourceColumn: trnsf_longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column trnsf_load_tap_changer
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 7a51d6fc-93ca-414a-8822-fd1a82b554c5
+		summarizeBy: none
+		sourceColumn: trnsf_load_tap_changer
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnsf_temperature_monitoring
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: f70045c4-0389-489d-a9a4-7e223757a654
+		summarizeBy: none
+		sourceColumn: trnsf_temperature_monitoring
+
+		annotation SummarizationSetBy = Automatic
+
+	column fdr_feeder_name
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: ffd9b66e-4a2c-4a0f-b413-e2946f6be2e1
+		summarizeBy: none
+		sourceColumn: fdr_feeder_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column fdr_substation_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: bfbb33c6-3429-43de-8cb0-3306e52eb55a
+		summarizeBy: none
+		sourceColumn: fdr_substation_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column fdr_voltage_level
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 59b2b4e3-a65a-415d-a3a1-1fd7c261442f
+		summarizeBy: none
+		sourceColumn: fdr_voltage_level
+
+		annotation SummarizationSetBy = Automatic
+
+	column fdr_max_load_kw
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: f2a67a05-9c3f-422d-b1f8-b52c7696632a
+		summarizeBy: sum
+		sourceColumn: fdr_max_load_kw
+
+		annotation SummarizationSetBy = Automatic
+
+	column fdr_length_miles
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 1da5f1af-b3fb-40dc-a7a9-cb55dd4fda99
+		summarizeBy: sum
+		sourceColumn: fdr_length_miles
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fdr_conductor_type
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: b72c8d5b-cfa1-4de3-9c73-111fd71241cd
+		summarizeBy: none
+		sourceColumn: fdr_conductor_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column fdr_protection_scheme
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: ead973d8-ef98-4e83-96b7-2e73e6d420b2
+		summarizeBy: none
+		sourceColumn: fdr_protection_scheme
+
+		annotation SummarizationSetBy = Automatic
+
+	column fdr_scada_monitored
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 88a55c86-1ed8-4e58-859c-09c7a18573e4
+		summarizeBy: none
+		sourceColumn: fdr_scada_monitored
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_substation_name
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 177dee68-c7d2-4536-ac06-69a807913fb8
+		summarizeBy: none
+		sourceColumn: sub_substation_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_voltage_level
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: b7b36803-839e-4cf1-adb1-1501358e0901
+		summarizeBy: none
+		sourceColumn: sub_voltage_level
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_capacity_mva
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: e54132bb-f072-42fa-9944-c39bc8d11374
+		summarizeBy: sum
+		sourceColumn: sub_capacity_mva
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_latitude
+		dataType: double
+		sourceProviderType: double
+		lineageTag: c5862692-d63a-4b97-a15c-04017038c442
+		summarizeBy: sum
+		sourceColumn: sub_latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sub_longitude
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 910f614e-b8db-41ec-a002-ea67de364e0c
+		summarizeBy: sum
+		sourceColumn: sub_longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sub_commissioned_date
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 8dd168f4-e243-4d86-9332-3e7b30c22ad9
+		summarizeBy: none
+		sourceColumn: sub_commissioned_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_h3cell_5
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 3dd916b8-64c4-40b3-b4af-fcca20aba447
+		summarizeBy: none
+		sourceColumn: mtr_h3cell_5
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_h3cell_6
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 7c9c21b3-9f59-417d-97a9-0fee4816c360
+		summarizeBy: none
+		sourceColumn: mtr_h3cell_6
+
+		annotation SummarizationSetBy = Automatic
+
+	column mtr_h3cell_7
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: b1defe23-33ba-40e0-aa84-c960ac9b8d65
+		summarizeBy: none
+		sourceColumn: mtr_h3cell_7
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Meter Contextualization' = m
+		mode: directQuery
+		source =
+				let
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", "MeterContextualization", [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,39 @@
+table MaxBinsOptions
+	isHidden
+	lineageTag: 7b617df7-298c-454d-a028-461e5b33fbbf
+
+	column MaxBins
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 91aab98e-2c25-434a-a7e7-abe3ad245709
+		summarizeBy: sum
+		sourceColumn: MaxBins
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 2,
+				  "kind": 1,
+				  "selectAllValue": "__SelectAll__"
+				}
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MaxBinsOptions = m
+		mode: import
+		queryGroup: DynamicParameterInputs
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMjQwUIrViVYygtKmUBooDmWARWIB", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [MaxBins = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"MaxBins", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

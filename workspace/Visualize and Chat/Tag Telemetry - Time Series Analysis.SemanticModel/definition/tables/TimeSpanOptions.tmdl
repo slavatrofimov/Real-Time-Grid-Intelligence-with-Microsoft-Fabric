@@ -1,0 +1,53 @@
+table TimeSpanOptions
+	isHidden
+	lineageTag: c719061e-a619-419d-a066-a05792d2d9ba
+
+	column Seconds
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d6a9fc3d-67b9-40c6-9a2c-795cb88937d8
+		summarizeBy: none
+		sourceColumn: Seconds
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column TimespanLabel
+		dataType: string
+		isHidden
+		lineageTag: 2f0c2140-db33-4ff4-9fb7-973eb213597f
+		summarizeBy: none
+		sourceColumn: TimespanLabel
+		sortByColumn: Seconds
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 2,
+				  "kind": 1,
+				  "selectAllValue": "__SelectAll__"
+				}
+
+		changedProperty = SortByColumn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TimeSpanOptions = m
+		mode: import
+		queryGroup: DynamicParameterInputs
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("RY47DsJADETv4tqF7f0klJxjtUUEkaCASIQU3J792SnfG8/IKQEBwvX4bpAxARfgfb01kAKiEAoEBa4lJsMasqWups7S2I5fz3e/lYqi6KhiUIzUl5UvnS1nnKmv2wCOzmM7Ps1MKM2IGSatmRIevWjKu1HkszlH9N3dl9/40I+xqagdcv4D", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Seconds = _t, TimespanLabel = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Seconds", Int64.Type}, {"TimespanLabel", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

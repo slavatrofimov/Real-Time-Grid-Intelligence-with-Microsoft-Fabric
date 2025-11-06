@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Reflex",
+    "displayName": "Meter Activator"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "16c5fae5-344d-a655-4c12-881eefe7f222"
+  }
+}

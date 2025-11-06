@@ -1,0 +1,42 @@
+table Duration
+	lineageTag: af3836e6-6e6d-4c34-bc3f-3962d91912a0
+
+	column Duration
+		dataType: string
+		lineageTag: a543be67-de39-4380-9f05-82dd138a2c47
+		summarizeBy: none
+		sourceColumn: Duration
+		sortByColumn: SortKey
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 2,
+				  "kind": 1,
+				  "selectAllValue": "__SelectAll__"
+				}
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortKey
+		dataType: string
+		lineageTag: 115ebd9d-07eb-48b4-9915-bf096182c35c
+		summarizeBy: none
+		sourceColumn: SortKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Duration = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("LcoxEoAwCETRu1CnyAKJ3oVJr4UW3r8ww1K++T9C8NyvNIGsFjKIkUAJpHXSOuv1bUxCE1DKqJOaKasTXI9a1fm6b68f", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Duration = _t, SortKey = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Duration", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

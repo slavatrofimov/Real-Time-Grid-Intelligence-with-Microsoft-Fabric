@@ -1,0 +1,49 @@
+table LegendConfig
+	lineageTag: 98bd505b-f91e-40aa-8ef7-f9c0c3669093
+
+	column LegendConfig
+		lineageTag: 0b288632-6c14-4dc1-8022-5b9f9f7a423e
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'LegendConfig Order'
+
+		relatedColumnDetails
+			groupByColumn: 'LegendConfig Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'LegendConfig Fields'
+		isHidden
+		lineageTag: be95ef03-3167-4293-a29c-67d39de50e60
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'LegendConfig Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'LegendConfig Order'
+		isHidden
+		formatString: 0
+		lineageTag: f78fa9e0-e89f-496e-a414-1e42137d402c
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LegendConfig = calculated
+		mode: import
+		source =
+				{
+				    ("tag", NAMEOF('DynamicQueryMain'[tag]), 0),
+				    ("meter", NAMEOF('DynamicQueryMain'[meter]), 1),
+				    ("metric", NAMEOF('DynamicQueryMain'[metric]), 2)
+				}
+
+	annotation PBI_Id = 6076a9301a114e36ab132894a1e38271
+

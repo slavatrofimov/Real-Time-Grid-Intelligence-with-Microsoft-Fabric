@@ -1,0 +1,34 @@
+table BinTimespan
+	lineageTag: b3d50560-7bef-4d7f-9864-9c9587ee0c4f
+
+	measure 'Effective Time Grain Warning' =
+			
+			VAR preferred = SELECTEDVALUE(TimeSpanOptions[TimespanLabel])
+			VAR effective = SELECTEDVALUE(BinTimespan[bin_timespan])
+			RETURN
+			IF(not preferred = effective && not preferred = "auto", "#EFABA6", "#FFFFFF")
+		lineageTag: 9dea14c2-bd52-4def-a4b2-efa4af85cfbf
+
+	column bin_timespan
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 26721164-3501-47b4-943f-2da50a2654d8
+		summarizeBy: none
+		sourceColumn: bin_timespan
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BinTimespan = m
+		mode: directQuery
+		source =
+				let
+				    relative_time_period = Text.AfterDelimiter(_relative_time_period, " - "),
+				    Query = "get_bin_timespan('" & relative_time_period & "', '" & DateTime.ToText(_start_date) & "', '" & DateTime.ToText(_end_date) & "', '" & _bin_timespan & "', " & Number.ToText(_max_bins) & ")",
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", Query, [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

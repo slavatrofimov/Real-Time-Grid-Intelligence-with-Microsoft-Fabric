@@ -1,0 +1,276 @@
+{
+  "sources": [
+    {
+      "id": "b23ebbd1-98e0-4d4e-b6fa-1d927602e77f",
+      "name": "WeatherSource",
+      "type": "CustomEndpoint",
+      "properties": {}
+    }
+  ],
+  "destinations": [
+    {
+      "id": "a1e0e919-a464-4cb8-9f67-d26c09b291fa",
+      "name": "Eventhouse",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "ProcessedIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "e09969b4-e261-8ecd-44f5-30574ca3a859",
+        "databaseName": "PowerUtilitiesEH",
+        "tableName": "WeatherRaw",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      },
+      "inputNodes": [
+        {
+          "name": "Weather_EventStream-stream"
+        }
+      ],
+      "inputSchemas": [
+        {
+          "name": "Weather_EventStream-stream",
+          "schema": {
+            "columns": [
+              {
+                "name": "type",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "properties",
+                "type": "Record",
+                "fields": [
+                  {
+                    "name": "storm_system_id",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "frame_number",
+                    "type": "BigInt",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "total_frames",
+                    "type": "BigInt",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "timestamp",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "location",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "storm_phase",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "storm_center",
+                    "type": "Record",
+                    "fields": [
+                      {
+                        "name": "lat",
+                        "type": "Float",
+                        "fields": null,
+                        "items": null
+                      },
+                      {
+                        "name": "lon",
+                        "type": "Float",
+                        "fields": null,
+                        "items": null
+                      }
+                    ],
+                    "items": null
+                  },
+                  {
+                    "name": "overall_intensity",
+                    "type": "Float",
+                    "fields": null,
+                    "items": null
+                  }
+                ],
+                "items": null
+              },
+              {
+                "name": "features",
+                "type": "Array",
+                "fields": null,
+                "items": {
+                  "name": null,
+                  "type": "Record",
+                  "fields": [
+                    {
+                      "name": "type",
+                      "type": "Nvarchar(max)",
+                      "fields": null,
+                      "items": null
+                    },
+                    {
+                      "name": "geometry",
+                      "type": "Record",
+                      "fields": [
+                        {
+                          "name": "type",
+                          "type": "Nvarchar(max)",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "coordinates",
+                          "type": "Array",
+                          "fields": null,
+                          "items": {
+                            "name": null,
+                            "type": "Array",
+                            "fields": null,
+                            "items": {
+                              "name": null,
+                              "type": "Array",
+                              "fields": null,
+                              "items": {
+                                "name": null,
+                                "type": "Float",
+                                "fields": null,
+                                "items": null
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "items": null
+                    },
+                    {
+                      "name": "properties",
+                      "type": "Record",
+                      "fields": [
+                        {
+                          "name": "intensity_level",
+                          "type": "Nvarchar(max)",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "color",
+                          "type": "Nvarchar(max)",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "name",
+                          "type": "Nvarchar(max)",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "rainfall_rate_mm_per_hour",
+                          "type": "Float",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "storm_intensity",
+                          "type": "Float",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "frame_number",
+                          "type": "BigInt",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "timestamp",
+                          "type": "Nvarchar(max)",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "center_lat",
+                          "type": "Float",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "center_lon",
+                          "type": "Float",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "storm_width_degrees",
+                          "type": "Float",
+                          "fields": null,
+                          "items": null
+                        },
+                        {
+                          "name": "storm_height_degrees",
+                          "type": "Float",
+                          "fields": null,
+                          "items": null
+                        }
+                      ],
+                      "items": null
+                    }
+                  ],
+                  "items": null
+                }
+              },
+              {
+                "name": "EventProcessedUtcTime",
+                "type": "DateTime",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "PartitionId",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "EventEnqueuedUtcTime",
+                "type": "DateTime",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "a9dfd0f3-3d98-4d74-ba0f-f41ff5908fb9",
+      "name": "Weather_EventStream-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "WeatherSource"
+        }
+      ]
+    }
+  ],
+  "operators": [],
+  "compatibilityLevel": "1.1"
+}

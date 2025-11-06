@@ -1,0 +1,31 @@
+table Metric2Options
+	lineageTag: 1ebf95dd-5a9b-4c64-b5db-5d80f2c5a482
+
+	column Metric
+		dataType: string
+		lineageTag: e5027cfa-babf-4e16-89f7-1b3a60826bea
+		summarizeBy: none
+		sourceColumn: Metric
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 2,
+				  "kind": 1,
+				  "selectAllValue": "__SelectAll__"
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metric2Options = m
+		mode: import
+		queryGroup: DynamicParameterInputs
+		source =
+				let
+				    Source = Metric1Options
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

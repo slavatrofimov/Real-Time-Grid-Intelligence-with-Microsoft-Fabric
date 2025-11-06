@@ -1,0 +1,49 @@
+table SmallMultiplesConfig
+	lineageTag: e5033285-d4db-4d43-bb42-153cd66f0d23
+
+	column SmallMultiplesConfig
+		lineageTag: 0b406741-ec9f-45f7-901b-c39082bcce69
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'SmallMultiplesConfig Order'
+
+		relatedColumnDetails
+			groupByColumn: 'SmallMultiplesConfig Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SmallMultiplesConfig Fields'
+		isHidden
+		lineageTag: d9d47fc9-a6fc-4ad9-88a6-93e6f66c2579
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'SmallMultiplesConfig Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SmallMultiplesConfig Order'
+		isHidden
+		formatString: 0
+		lineageTag: af7d70ea-aefb-430a-abab-5ad575919942
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SmallMultiplesConfig = calculated
+		mode: import
+		source =
+				{
+				    ("meter", NAMEOF('DynamicQueryMain'[meter]), 0),
+				    ("metric", NAMEOF('DynamicQueryMain'[metric]), 1),
+				    ("tag", NAMEOF('DynamicQueryMain'[tag]), 2)
+				}
+
+	annotation PBI_Id = 39a735be0c874415bfbfb487d4e93a3d
+

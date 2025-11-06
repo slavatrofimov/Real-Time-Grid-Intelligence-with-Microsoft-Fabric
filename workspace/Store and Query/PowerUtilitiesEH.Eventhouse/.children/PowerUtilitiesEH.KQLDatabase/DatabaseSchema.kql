@@ -1,0 +1,351 @@
+// KQL script
+// Use management commands in this script to configure your database items, such as tables, functions, materialized views, and more.
+
+
+.create-merge table WeatherRaw (type:string, properties:dynamic, features:dynamic, EventProcessedUtcTime:datetime, PartitionId:long, EventEnqueuedUtcTime:datetime) 
+.create-merge table AMITelemetryRaw (messageId:string, messageType:string, deviceId:string, timestamp:string, version:string, source:string, telemetry:dynamic, partitionKey:string, priority:string, correlationId:string, EventProcessedUtcTime:datetime, PartitionId:long, EventEnqueuedUtcTime:datetime) 
+.create-merge table AMITelemetryIntervalReadings (meter_id:string, timestamp:datetime, EventEnqueuedUtcTime:datetime, EventProcessedUtcTime:datetime, source:string, interval_minutes:real, active_power_kw:real, reactive_power_kvar:real, apparent_power_kva:real, current_amps:real, voltage_volts:real, power_factor:real, frequency_hz:real, thd_voltage_percent:real, thd_current_percent:real, energy_delivered_kwh:real, energy_received_kwh:real, energy_net_kwh:real, cumulative_energy_kwh:real, signal_strength_dbm:real, battery_voltage:real, internal_temperature_c:real, tamper_detected:bool, power_outage:bool, communication_error:bool, meter_error:bool, sequence_number:real, data_quality:string, firmware_version:string) 
+.create-merge table AMITelemetryLastGasp (meter_id:string, timestamp:datetime, EventEnqueuedUtcTime:datetime, EventProcessedUtcTime:datetime, source:string, signal_strength_dbm:real, battery_voltage:real, internal_temperature_c:real, firmware_version:string, alert_code:string, alert_description:string, failure_type:string, final_energy_reading_kwh:real, error_codes:dynamic, retry_attempts:int, last_successful_transmission:datetime, priority:string, requires_investigation:bool) 
+.create-merge table AMITelemetryOutageLastGasp (meter_id:string, timestamp:datetime, EventEnqueuedUtcTime:datetime, EventProcessedUtcTime:datetime, source:string, battery_voltage:real, sequence_number:real, firmware_version:real, alert_code:string, alert_description:string, priority:string, outage_id:real, voltage_at_outage:real, last_voltage_reading:real, power_at_outage:real, backup_power_available:bool, estimated_backup_hours:real, outage_type:string, correlated_outage:bool, automatic_restoration_expected:bool) 
+.create-merge table AMITelemetryWarnings (meter_id:string, timestamp:datetime, EventEnqueuedUtcTime:datetime, EventProcessedUtcTime:datetime, source:string, messageType:string, signal_strength_dbm:real, battery_voltage:real, internal_temperature_c:real, sequence_number:real, firmware_version:string, alert_code:string, alert_description:string, priority:string, estimated_remaining_hours:real, requires_maintenance:bool) 
+.create-merge table MeterContextualization (mtr_meter_id:string, mtr_serial_number:string, mtr_manufacturer:string, mtr_model:string, mtr_meter_type:string, mtr_max_amps:int, mtr_voltage:int, mtr_phases:int, mtr_install_date:string, mtr_firmware_version:string, mtr_communication_type:string, mtr_street_address:string, mtr_city:string, mtr_state:string, mtr_zip_code:string, mtr_latitude:real, mtr_longitude:real, mtr_customer_id:string, mtr_customer_type:string, mtr_service_class:string, mtr_accuracy_class:string, mtr_register_type:string, mtr_pulse_output:bool, mtr_tamper_detection:bool, mtr_power_quality_monitoring:bool, mtr_load_profile_interval:int, mtr_status:string, mtr_last_maintenance:string, mtr_transformer_id:string, trnsf_feeder_id:string, trnsf_transformer_type:string, trnsf_primary_voltage:int, trnsf_secondary_voltage:int, trnsf_kva_rating:int, trnsf_phase_config:string, trnsf_install_date:string, trnsf_manufacturer:string, trnsf_latitude:real, trnsf_longitude:real, trnsf_load_tap_changer:bool, trnsf_temperature_monitoring:bool, fdr_feeder_name:string, fdr_substation_id:string, fdr_voltage_level:string, fdr_max_load_kw:int, fdr_length_miles:real, fdr_conductor_type:string, fdr_protection_scheme:string, fdr_scada_monitored:bool, sub_substation_name:string, sub_voltage_level:string, sub_capacity_mva:int, sub_latitude:real, sub_longitude:real, sub_commissioned_date:string, mtr_h3cell_5:string, mtr_h3cell_6:string, mtr_h3cell_7:string) 
+.create-merge table VehicleTelemetryRaw (EventID:string, JourneyID:string, VehicleID:string, DriverID:dynamic, EventCategoryID:long, timestamp:string, odometer:dynamic, tire_pressure:dynamic, lat:dynamic, lon:dynamic, vehicle_speed:dynamic, engine_rpm:dynamic, transmission_gear_position:long, gear_lever_position:long, accelerator_pedal_position:dynamic, brake_pedal_position:dynamic, torque_at_transmission:dynamic, engine_temp:dynamic, transmission_temp:dynamic, steering_wheel_angle:dynamic, door_status:string, ignition_status:long, headlamp_status:long, high_beam_status:long, windshield_wiper_status:long, fuel_level:dynamic, parking_brake_status:string, EventProcessedUtcTime:datetime, PartitionId:long, EventEnqueuedUtcTime:datetime) 
+.create-or-alter table VehicleTelemetryRaw ingestion json mapping 'VehicleTelemetryRaw_mapping'
+```
+[{"Properties":{"Path":"$['EventID']"},"column":"EventID","datatype":""},{"Properties":{"Path":"$['JourneyID']"},"column":"JourneyID","datatype":""},{"Properties":{"Path":"$['VehicleID']"},"column":"VehicleID","datatype":""},{"Properties":{"Path":"$['DriverID']"},"column":"DriverID","datatype":""},{"Properties":{"Path":"$['EventCategoryID']"},"column":"EventCategoryID","datatype":""},{"Properties":{"Path":"$['timestamp']"},"column":"timestamp","datatype":""},{"Properties":{"Path":"$['odometer']"},"column":"odometer","datatype":""},{"Properties":{"Path":"$['tire_pressure']"},"column":"tire_pressure","datatype":""},{"Properties":{"Path":"$['lat']"},"column":"lat","datatype":""},{"Properties":{"Path":"$['lon']"},"column":"lon","datatype":""},{"Properties":{"Path":"$['vehicle_speed']"},"column":"vehicle_speed","datatype":""},{"Properties":{"Path":"$['engine_rpm']"},"column":"engine_rpm","datatype":""},{"Properties":{"Path":"$['transmission_gear_position']"},"column":"transmission_gear_position","datatype":""},{"Properties":{"Path":"$['gear_lever_position']"},"column":"gear_lever_position","datatype":""},{"Properties":{"Path":"$['accelerator_pedal_position']"},"column":"accelerator_pedal_position","datatype":""},{"Properties":{"Path":"$['brake_pedal_position']"},"column":"brake_pedal_position","datatype":""},{"Properties":{"Path":"$['torque_at_transmission']"},"column":"torque_at_transmission","datatype":""},{"Properties":{"Path":"$['engine_temp']"},"column":"engine_temp","datatype":""},{"Properties":{"Path":"$['transmission_temp']"},"column":"transmission_temp","datatype":""},{"Properties":{"Path":"$['steering_wheel_angle']"},"column":"steering_wheel_angle","datatype":""},{"Properties":{"Path":"$['door_status']"},"column":"door_status","datatype":""},{"Properties":{"Path":"$['ignition_status']"},"column":"ignition_status","datatype":""},{"Properties":{"Path":"$['headlamp_status']"},"column":"headlamp_status","datatype":""},{"Properties":{"Path":"$['high_beam_status']"},"column":"high_beam_status","datatype":""},{"Properties":{"Path":"$['windshield_wiper_status']"},"column":"windshield_wiper_status","datatype":""},{"Properties":{"Path":"$['fuel_level']"},"column":"fuel_level","datatype":""},{"Properties":{"Path":"$['parking_brake_status']"},"column":"parking_brake_status","datatype":""}]
+```
+.create-merge table VehicleTelemetry (EventID:string, JourneyID:string, VehicleID:string, DriverID:dynamic, EventCategoryID:long, timestamp:datetime, odometer:dynamic, tire_pressure:dynamic, lat:dynamic, lon:dynamic, vehicle_speed:dynamic, engine_rpm:dynamic, transmission_gear_position:long, gear_lever_position:long, accelerator_pedal_position:dynamic, brake_pedal_position:dynamic, torque_at_transmission:dynamic, engine_temp:dynamic, transmission_temp:dynamic, steering_wheel_angle:dynamic, door_status:string, ignition_status:long, headlamp_status:long, high_beam_status:long, windshield_wiper_status:long, fuel_level:dynamic, parking_brake_status:string, EventProcessedUtcTime:datetime, PartitionId:long, EventEnqueuedUtcTime:datetime) 
+.create-merge table TagTelemetry (timestamp:datetime, tag:string, Value:real) 
+.create-or-alter function with (folder = "Weather", docstring = "Gets top N feeder lines affected by the latest storm.", skipvalidation = "true") GetFeedersAffectedByLatestStorm(RecordsToReturn:int) {
+    let StormH3Cells =
+        WeatherRaw
+        | where EventEnqueuedUtcTime >= ago(10min)
+        | order by EventEnqueuedUtcTime
+        | take 35
+        | project    
+            center_lat = todouble(properties.storm_center.lat), 
+            center_lon = todouble(properties.storm_center.lon)
+        | project H3Cell = geo_point_to_h3cell(center_lon, center_lat, 6)
+        | distinct H3Cell;
+     external_table('Transformers')
+    | project transformer_id, feeder_id, H3Cell = geo_point_to_h3cell(longitude, latitude, 6)
+    | join kind = inner StormH3Cells on H3Cell
+    | summarize TransformerCount = count() by feeder_id
+    | order by TransformerCount 
+    | project feeder_id
+    | take RecordsToReturn
+}
+.create-or-alter function with (folder = "Weather", docstring = "Gets top N transformers affected by the latest storm.", skipvalidation = "true") GetTransformersAffectedByLatestStorm(RecordsToReturn:int) {
+    let StormH3Cells =
+        WeatherRaw
+        | where EventEnqueuedUtcTime >= ago(10min)
+        | order by EventEnqueuedUtcTime
+        | take 35
+        | project    
+            center_lat = todouble(properties.storm_center.lat), 
+            center_lon = todouble(properties.storm_center.lon)
+        | project H3Cell = geo_point_to_h3cell(center_lon, center_lat, 6)
+        | distinct H3Cell;
+    let AffectedTransfomers = external_table('Transformers')
+    | project transformer_id, feeder_id, H3Cell = geo_point_to_h3cell(longitude, latitude, 6)
+    | join kind = inner StormH3Cells on H3Cell
+    | project-away H3Cell1;
+    let AffectedFeeders = AffectedTransfomers
+    | summarize affected_transfomer_count = count() by feeder_id;
+    AffectedTransfomers
+    | join kind=inner AffectedFeeders on feeder_id
+    | order by affected_transfomer_count asc, feeder_id desc
+    | project transformer_id
+    | take RecordsToReturn
+}
+.create-or-alter function with (folder = "Telemetry", docstring = "Parse raw AMI telemetry data corresponding to periodic meter readings", skipvalidation = "true") AMITelemetryParseIntervalReadings() {
+    AMITelemetryRaw
+    | where messageType == "interval_reading"
+    | project
+        meter_id = deviceId,
+        timestamp = todatetime(timestamp),
+        EventEnqueuedUtcTime,
+        EventProcessedUtcTime,
+        source, 
+        interval_minutes = todouble(telemetry.interval_minutes), 
+        active_power_kw = todouble(telemetry.active_power_kw),
+        reactive_power_kvar = todouble(telemetry.reactive_power_kvar),
+        apparent_power_kva = todouble(telemetry.apparent_power_kva),
+        current_amps = todouble(telemetry.current_amps),
+        voltage_volts = todouble(telemetry.voltage_volts),
+        power_factor = todouble(telemetry.power_factor),
+        frequency_hz = todouble(telemetry.frequency_hz),
+        thd_voltage_percent = todouble(telemetry.thd_voltage_percent),
+        thd_current_percent = todouble(telemetry.thd_current_percent),
+        energy_delivered_kwh = todouble(telemetry.energy_delivered_kwh),
+        energy_received_kwh = todouble(telemetry.energy_received_kwh),
+        energy_net_kwh = todouble(telemetry.energy_net_kwh),
+        cumulative_energy_kwh = todouble(telemetry.cumulative_energy_kwh),
+        signal_strength_dbm = todouble(telemetry.signal_strength_dbm),
+        battery_voltage = todouble(telemetry.battery_voltage),
+        internal_temperature_c = todouble(telemetry.internal_temperature_c),
+        tamper_detected = tobool(telemetry.tamper_detected),
+        power_outage = tobool(telemetry.power_outage),
+        communication_error = tobool(telemetry.communication_error),
+        meter_error = tobool(telemetry.meter_error),
+        sequence_number = todouble(telemetry.sequence_number),
+        data_quality = tostring(telemetry.data_quality),
+        firmware_version = tostring(telemetry.firmware_version)
+}
+.create-or-alter function with (folder = "Telemetry", docstring = "Parse raw AMI telemetry data corresponding to outage-related last gasp messages", skipvalidation = "true") AMITelemetryParseOutageLastGasp() {
+    AMITelemetryRaw
+    | where messageType == "outage_last_gasp"
+    | project
+        meter_id = deviceId,
+        timestamp = todatetime(timestamp),
+        EventEnqueuedUtcTime,
+        EventProcessedUtcTime,
+        source, 
+        battery_voltage = todouble(telemetry.battery_voltage),
+        sequence_number = todouble(telemetry.sequence_number),
+        firmware_version = todouble(telemetry.firmware_version),
+        alert_code = tostring(telemetry.alert_code),
+        alert_description = tostring(telemetry.alert_description),
+        priority = tostring(telemetry.priority),
+        outage_id = todouble(telemetry.outage_id),
+        voltage_at_outage = todouble(telemetry.voltage_at_outage),
+        last_voltage_reading = todouble(telemetry.last_voltage_reading),
+        power_at_outage = todouble(telemetry.power_at_outage),
+        backup_power_available = tobool(telemetry.backup_power_available),
+        estimated_backup_hours = todouble(telemetry.estimated_backup_hours),
+        outage_type = tostring(telemetry.outage_type),
+        correlated_outage = tobool(telemetry.correlated_outage),
+        automatic_restoration_expected = tobool(telemetry.automatic_restoration_expected)
+}
+.create-or-alter function with (folder = "Telemetry", docstring = "Parse raw AMI telemetry data corresponding to last gasp messages unrelated to outages", skipvalidation = "true") AMITelemetryParseLastGasp() {
+     AMITelemetryRaw
+    | where messageType == "last_gasp"
+    | project
+        meter_id = deviceId,
+        timestamp = todatetime(timestamp),
+        EventEnqueuedUtcTime,
+        EventProcessedUtcTime,
+        source, 
+        signal_strength_dbm = todouble(telemetry.signal_strength_dbm),
+        battery_voltage = todouble(telemetry.battery_voltage),
+        internal_temperature_c = todouble(telemetry.internal_temperature_c),
+        firmware_version = tostring(telemetry.firmware_version),
+        alert_code = tostring(telemetry.alert_code),
+        alert_description = tostring(telemetry.alert_description),
+        failure_type = tostring(telemetry.failure_type),
+        final_energy_reading_kwh = todouble(telemetry.final_energy_reading_kwh),
+        error_codes = telemetry.error_codes,
+        retry_attempts = toint(telemetry.retry_attempts),
+        last_successful_transmission = todatetime(telemetry.last_successful_transmission),
+        priority = tostring(telemetry.priority),
+        requires_investigation = tobool(telemetry.requires_investigation)
+ }
+.create-or-alter function with (folder = "Telemetry", docstring = "Parse raw AMI telemetry data corresponding to warning messages", skipvalidation = "true") AMITelemetryParseWarnings() {
+    AMITelemetryRaw
+    | where messageType == "battery_warning"
+    | project
+        meter_id = deviceId,
+        timestamp = todatetime(timestamp),
+        EventEnqueuedUtcTime,
+        EventProcessedUtcTime,
+        source, 
+        messageType = messageType,
+        signal_strength_dbm = todouble(telemetry.signal_strength_dbm),
+        battery_voltage = todouble(telemetry.battery_voltage),
+        internal_temperature_c = todouble(telemetry.internal_temperature_c),
+        sequence_number = todouble(telemetry.sequence_number),
+        firmware_version = tostring(telemetry.firmware_version),
+        alert_code = tostring(telemetry.alert_code),
+        alert_description = tostring(telemetry.alert_description),
+        priority = tostring(telemetry.priority),
+        estimated_remaining_hours = todouble(telemetry.estimated_remaining_hours),
+        requires_maintenance = tobool(telemetry.requires_maintenance)
+}
+.create-or-alter function with (skipvalidation = "true") meter_latest_reading(_accuracy_class:int=6) {
+     external_table('Meters')
+    | where status == 'active'
+    | extend h3cell = geo_point_to_h3cell(longitude, latitude, toint(_accuracy_class))
+    | join kind=leftouter AMITelemetryLatestReading on meter_id
+    | extend time_since_last_reading_minutes = datetime_diff('minute', now(), timestamp)
+    | extend h3cell_centroid = geo_h3cell_to_central_point(h3cell)
+    | extend
+        h3cell_longitude = todouble(h3cell_centroid.coordinates[0]),
+        h3cell_latitude = todouble(h3cell_centroid.coordinates[1])
+    | project-away h3cell_centroid, data_quality
+ }
+.create-or-alter function with (docstring = "Combine all reference data for meters, transformers, feeders and substations into a single flattened table. This function can be used with a \".set-or-replace MeterContextualization <| MeterContextualizationFunction()\" statement to populate the MeterContextualization table when reference data changes.", skipvalidation = "true") MeterContextualizationFunction() {
+     let mtr = external_table('Meters')
+        | project-rename
+            mtr_meter_id = meter_id,
+            mtr_serial_number = serial_number,
+            mtr_manufacturer = manufacturer,
+            mtr_model = model,
+            mtr_meter_type = meter_type,
+            mtr_max_amps = max_amps,
+            mtr_voltage = voltage,
+            mtr_phases = phases,
+            mtr_install_date = install_date,
+            mtr_firmware_version = firmware_version,
+            mtr_communication_type = communication_type,
+            mtr_street_address = street_address,
+            mtr_city = city,
+            mtr_state = state,
+            mtr_zip_code = zip_code,
+            mtr_latitude = latitude,
+            mtr_longitude = longitude,
+            mtr_customer_id = customer_id,
+            mtr_customer_type = customer_type,
+            mtr_service_class = service_class,
+            mtr_accuracy_class = accuracy_class,
+            mtr_register_type = register_type,
+            mtr_pulse_output = pulse_output,
+            mtr_tamper_detection = tamper_detection,
+            mtr_power_quality_monitoring = power_quality_monitoring,
+            mtr_load_profile_interval = load_profile_interval,
+            mtr_status = status,
+            mtr_last_maintenance = last_maintenance,
+            mtr_transformer_id = transformer_id;
+     let trnsf = external_table('Transformers')
+        | project-rename 
+            trnsf_transformer_id = transformer_id,
+            trnsf_feeder_id = feeder_id,
+            trnsf_transformer_type = transformer_type,
+            trnsf_primary_voltage = primary_voltage,
+            trnsf_secondary_voltage = secondary_voltage,
+            trnsf_kva_rating = kva_rating,
+            trnsf_phase_config = phase_config,
+            trnsf_install_date = install_date,
+            trnsf_manufacturer = manufacturer,
+            trnsf_latitude = latitude,
+            trnsf_longitude = longitude,
+            trnsf_load_tap_changer = load_tap_changer,
+            trnsf_temperature_monitoring = temperature_monitoring;
+     let fdr = external_table("Feeders")
+        | project-rename 
+            fdr_feeder_id = feeder_id,
+            fdr_feeder_name = feeder_name,
+            fdr_substation_id = substation_id,
+            fdr_voltage_level = voltage_level,
+            fdr_max_load_kw = max_load_kw,
+            fdr_length_miles = length_miles,
+            fdr_conductor_type = conductor_type,
+            fdr_protection_scheme = protection_scheme,
+            fdr_scada_monitored = scada_monitored;
+     let sub = external_table("Substations")
+        | project-rename 
+            sub_substation_id = substation_id,
+            sub_substation_name = substation_name,
+            sub_voltage_level = voltage_level,
+            sub_capacity_mva = capacity_mva,
+            sub_latitude = latitude,
+            sub_longitude = longitude,
+            sub_commissioned_date = commissioned_date;
+     mtr
+    | join kind = inner trnsf on $left.mtr_transformer_id == $right.trnsf_transformer_id
+    | project-away trnsf_transformer_id
+    | join kind = inner fdr on $left.trnsf_feeder_id == $right.fdr_feeder_id
+    | project-away fdr_feeder_id
+    | join kind = inner sub on $left.fdr_substation_id == $right.sub_substation_id
+    | project-away sub_substation_id
+    | extend mtr_h3cell_5 = geo_point_to_h3cell(mtr_longitude, mtr_latitude, 5), mtr_h3cell_6 = geo_point_to_h3cell(mtr_longitude, mtr_latitude, 6), mtr_h3cell_7 = geo_point_to_h3cell(mtr_longitude, mtr_latitude, 7)
+ }
+.create-or-alter function with (skipvalidation = "true") VehicleTelemetryParse() {
+VehicleTelemetryRaw
+| extend timestamp = todatetime(timestamp)
+}
+.create-or-alter function with (docstring = "Calculate a suitable timespan for breaking up a time period", skipvalidation = "true") get_bin_timespan(relative_time:string, start:string, end:string, bin_timespan:string, max_bins:int=2000, anchor_date:datetime=datetime(null)) {
+    let _start = iff(relative_time == '*custom*', todatetime(start), iff(isempty(anchor_date), now(), anchor_date) - totimespan(relative_time));
+     let _end = iff(relative_time == '*custom*', todatetime(end), iff(isempty(anchor_date), now(), anchor_date));
+     let _bin_timespan = bin_timespan;
+     let _max_bins = max_bins;
+     let _bins = (_end - _start) / totimespan(_bin_timespan);
+     let _duration = abs(datetime_diff('second', _end, _start));
+     let _standard_timespans = datatable (seconds_per_bin: int, bin_timespan_label: string) [
+    1, '1sec',
+    2, '2sec',
+    5, '5sec',
+    10, '10sec',
+    15, '15sec',
+    30, '30sec',
+    60, '1min',
+    120, '2min',
+    300, '5min',
+    600, '10min',
+    900, '15min',
+    1800, '30min',
+    3600, '1hour',
+    7200, '2hour',
+    10800, '3hour',
+    21600, '6hour',
+    43200, '12hour',
+    86400, '1day',
+    604800, '7days'
+];
+     let _standard_timespan = toscalar(
+        _standard_timespans
+        | extend duration = _duration, bins = _duration / seconds_per_bin 
+        | where bins <= _max_bins
+        | project bin_timespan = bin_timespan_label
+        | sort by _duration desc 
+        | take 1
+        );
+     let result = datatable (id: int) [1];
+     result
+    | project bin_timespan = case(_bins <= _max_bins, _bin_timespan, isnotempty(_standard_timespan), _standard_timespan, strcat(tostring(toint(_duration / (_max_bins - 1))), 'sec'))
+}
+.create-or-alter function with (folder = "Telemetry", docstring = "Parse numeric interval reading data to tag-based representaion", skipvalidation = "true") AMIIntervalReadingsToTags() {
+AMITelemetryIntervalReadings
+| extend properties = bag_pack_columns(
+                          interval_minutes,
+                          active_power_kw,
+                          reactive_power_kvar,
+                          apparent_power_kva,
+                          current_amps,
+                          voltage_volts,
+                          power_factor,
+                          frequency_hz,
+                          thd_voltage_percent,
+                          thd_current_percent,
+                          energy_delivered_kwh,
+                          energy_received_kwh,
+                          energy_net_kwh,
+                          cumulative_energy_kwh,
+                          signal_strength_dbm,
+                          battery_voltage,
+                          internal_temperature_c
+                      )
+| project meter_id, timestamp, properties
+| mv-expand kind=array properties
+| project
+    timestamp,
+    tag = strcat(meter_id, '_', tostring(properties[0])),
+    value = toreal(properties[1])
+}
+.create-or-alter function with (skipvalidation = "true") TagMetadata() {
+     let meters = MeterContextualization
+        | project meter = mtr_meter_id, join_key = 1;
+     AMITelemetryIntervalReadings
+    | getschema 
+    | where ColumnType == 'real' and ColumnName != 'sequence_number'
+    | project join_key = 1, metric = ColumnName
+    | join kind=inner meters on join_key
+    | project tag = strcat(meter, '_', metric), meter, metric
+ }
+.create-or-alter materialized-view  WeatherCurrent on table WeatherRaw { WeatherRaw
+| mv-expand features
+| extend color = tostring(features.properties.color),
+    rainfall_rate = todecimal(features.properties.rainfall_rate_mm_per_hour)
+| project EventEnqueuedUtcTime, features = tostring(features), color, rainfall_rate
+| summarize arg_max(EventEnqueuedUtcTime, *) by color }
+.create-or-alter materialized-view  AMITelemetryLatestReading on table AMITelemetryIntervalReadings { AMITelemetryIntervalReadings
+| summarize arg_max(timestamp, *) by meter_id }
+.alter column AMITelemetryRaw.['messageId'] policy encoding type = 'Identifier'
+.alter column VehicleTelemetryRaw.['EventID'] policy encoding type = 'Identifier'
+.alter column VehicleTelemetryRaw.['timestamp'] policy encoding type = 'Identifier'
+.alter column VehicleTelemetry.['EventID'] policy encoding type = 'Identifier'
+.alter table AMITelemetryIntervalReadings policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseIntervalReadings\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table AMITelemetryLastGasp policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseLastGasp\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table AMITelemetryOutageLastGasp policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseOutageLastGasp\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table AMITelemetryWarnings policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseWarnings\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table VehicleTelemetry policy update "[{\"IsEnabled\":true,\"Source\":\"VehicleTelemetryRaw\",\"Query\":\"VehicleTelemetryParse()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table TagTelemetry policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryIntervalReadings\",\"Query\":\"AMIIntervalReadingsToTags\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"

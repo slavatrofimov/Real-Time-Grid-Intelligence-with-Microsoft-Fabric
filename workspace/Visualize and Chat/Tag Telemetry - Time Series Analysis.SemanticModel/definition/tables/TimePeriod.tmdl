@@ -1,0 +1,37 @@
+table TimePeriod
+	lineageTag: 8369a7be-81f9-4219-a257-5fd71add5175
+
+	column TimePeriod
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 773fd9dd-c23c-4d60-bd94-63ef69dde484
+		summarizeBy: none
+		sourceColumn: TimePeriod
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TimePeriod = m
+		mode: directQuery
+		source = ```
+				let
+				    anchor_date = if _anchor_date = #datetime(9999, 12, 31, 0, 0, 0) then DateTime.LocalNow() else _anchor_date,
+				    relative_time_period = Text.AfterDelimiter(_relative_time_period, " - "),
+				    Query = "
+				    let relative_time = '" & relative_time_period & "';
+				    let start = todatetime('" & DateTime.ToText(_start_date) & "');
+				    let end = todatetime('" & DateTime.ToText(_end_date) & "');
+				    let _start = iff(relative_time == '*custom*', todatetime(start), todatetime('" & DateTime.ToText(anchor_date) & "') - totimespan(relative_time));
+				    let _end = iff(relative_time == '*custom*', todatetime(end), todatetime('" & DateTime.ToText(anchor_date) & "'));      
+				    let result = datatable (id: int) [1];
+				    result
+				        | project TimePeriod = replace_string(strcat(tostring(bin(_start, 1sec)), ' - ', tostring(bin(_end, 1sec))), '.0000000Z', '')
+				    ",
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", Query, [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

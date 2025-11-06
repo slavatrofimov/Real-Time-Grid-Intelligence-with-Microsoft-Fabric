@@ -1,0 +1,164 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "meter_contextualization.fdr_substation_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Meter Contextualization",
+			          "ConceptualProperty": "fdr_substation_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "substation_id": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "meter_contextualization.trnsf_feeder_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Meter Contextualization",
+			          "ConceptualProperty": "trnsf_feeder_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "feeder_id": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "meter_contextualization.mtr_transformer_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Meter Contextualization",
+			          "ConceptualProperty": "mtr_transformer_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "transformer_id": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "meter_readings_binned.active_power": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Meter Readings Binned",
+			          "ConceptualProperty": "Active Power"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "meter_readings_binned.apparent_power": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Meter Readings Binned",
+			          "ConceptualProperty": "Apparent Power"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "meter_readings_binned.reactive_power": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Meter Readings Binned",
+			          "ConceptualProperty": "Reactive Power"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "meter_contextualization.mtr_service_class": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Meter Contextualization",
+			          "ConceptualProperty": "mtr_service_class"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Service Class": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "meter_readings_binned.thd_voltage_percent": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Meter Readings Binned",
+			          "ConceptualProperty": "THD Voltage Percent"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "THD Voltage Percent": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "meter_readings_binned.thd_current_percent": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Meter Readings Binned",
+			          "ConceptualProperty": "THD Current Percent"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "THD Current Percent": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

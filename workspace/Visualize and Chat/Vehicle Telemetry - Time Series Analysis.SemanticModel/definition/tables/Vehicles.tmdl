@@ -1,0 +1,45 @@
+table Vehicles
+	lineageTag: 1698df3f-fcb1-4dfe-bce6-c4e1b7df42e5
+
+	column VehicleID
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 318f87ba-a329-497f-a072-7c9fdc4acd8d
+		summarizeBy: none
+		sourceColumn: VehicleID
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 2,
+				  "kind": 1,
+				  "supportsMultipleValues": true,
+				  "selectAllValue": "__SelectAll__"
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column FleetId
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 00633559-dadd-479a-806d-49153385773f
+		summarizeBy: none
+		sourceColumn: FleetId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Vehicles = m
+		mode: directQuery
+		source =
+				let
+				    Query = "
+				    VehicleTelemetry
+				        | summarize by VehicleID
+				        | extend FleetId = iif(VehicleID contains '20', 'Fleet A', 'Fleet B')",
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", Query, [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,204 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "c1b9a9a7527b447e6022",
+  "position": {
+    "x": 309.27513639906465,
+    "y": 66.843335931410749,
+    "z": 2000,
+    "height": 176.58612626656273,
+    "width": 970.72486360093524,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Meter Contextualization"
+                        }
+                      },
+                      "Property": "mtr_meter_id"
+                    }
+                  },
+                  "Function": 5
+                }
+              },
+              "queryRef": "Min(Meter Contextualization.mtr_meter_id)",
+              "nativeQueryRef": "Meters",
+              "displayName": "Meters"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Meter Readings Binned"
+                        }
+                      },
+                      "Property": "energy_net_kwh"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Meter Readings 30 min.energy_net_kwh)",
+              "nativeQueryRef": "Net Energy kwh",
+              "displayName": "Net Energy kwh"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Meter Readings Binned"
+                        }
+                      },
+                      "Property": "frequency_hz"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Sum(Meter Readings 30 min.frequency_hz)",
+              "nativeQueryRef": "Min Frequency Hz",
+              "displayName": "Min Frequency Hz"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Meter Readings Binned"
+                        }
+                      },
+                      "Property": "frequency_hz"
+                    }
+                  },
+                  "Function": 4
+                }
+              },
+              "queryRef": "Sum(Meter Readings 30 min.frequency_hz)1",
+              "nativeQueryRef": "Max Frequency Hz",
+              "displayName": "Max Frequency Hz"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "Meter Contextualization"
+                      }
+                    },
+                    "Property": "mtr_meter_id"
+                  }
+                },
+                "Function": 5
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "layout": [
+        {
+          "properties": {
+            "orientation": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "columnCount": {
+              "expr": {
+                "Literal": {
+                  "Value": "4L"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "backgroundShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "backgroundFillColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 6,
+                      "Percent": 0.6
+                    }
+                  }
+                }
+              }
+            },
+            "rectangleRoundedCurve": {
+              "expr": {
+                "Literal": {
+                  "Value": "10L"
+                }
+              }
+            },
+            "rectangleRoundedCurveCustomStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

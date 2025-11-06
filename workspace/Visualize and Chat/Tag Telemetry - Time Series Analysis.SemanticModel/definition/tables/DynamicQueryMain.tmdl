@@ -1,0 +1,138 @@
+table DynamicQueryMain
+	lineageTag: ca8dd070-6b8e-438b-a4f4-b3dc1c88e14a
+
+	measure 'Chart Title' =
+			
+			VAR tagCount = COUNTROWS(Tags)
+			RETURN "Observations " & IF(SELECTEDVALUE(ChartConfig[SplitBy]) = "tag", "and anomalies ", "") & "for " & IF(tagCount>1, tagCount & " tags", SELECTEDVALUE(Tags[tag]))
+		lineageTag: 6264ec8f-b8e3-4686-872d-a64239e70d9f
+
+	measure Color = IF(COUNT(DynamicQueryMain[anomaly])>0 && SELECTEDVALUE(ChartConfig[SplitBy])="tag", "FireBrick", BLANK())
+		lineageTag: 67d8d61a-b9e7-4d04-a820-3668e0bd5aec
+
+	column timestamp
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetimeoffset
+		lineageTag: 70b4ed65-b48e-4ef7-acf7-e7ff4537766f
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column tag
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: d4b992ef-6d59-481d-9368-06c21e8de060
+		summarizeBy: none
+		sourceColumn: tag
+
+		annotation SummarizationSetBy = Automatic
+
+	column metric
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: bc185836-81e9-414e-ac21-57b4e6782e64
+		summarizeBy: none
+		sourceColumn: metric
+
+		annotation SummarizationSetBy = Automatic
+
+	column value
+		dataType: double
+		sourceProviderType: double
+		lineageTag: a9ce8e24-2870-4cc7-b585-498987bdb80f
+		summarizeBy: sum
+		sourceColumn: value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column meter
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: a5026ded-2796-48f5-87ec-ac770d3aff27
+		summarizeBy: none
+		sourceColumn: meter
+
+		annotation SummarizationSetBy = Automatic
+
+	column anomaly
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 91c8ad39-9929-48c0-89ce-67635d09f67c
+		summarizeBy: sum
+		sourceColumn: anomaly
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column anomaly_indicator
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 36c52460-9955-4a3d-9d26-62f328874c91
+		summarizeBy: none
+		sourceColumn: anomaly_indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DynamicQueryMain = m
+		mode: directQuery
+		source = ```
+				let
+				    _tags = 
+				    if 
+				    //check to see if the parameter is a list
+				      Type.Is(
+				        Value.Type(_tag), 
+				        List.Type
+				      ) then 
+				        //if it is a list
+				        let
+				          //add single quotes around each value in the list
+				          AddSingleQuotes = List.Transform(
+				              _tag, 
+				              each "'" & _ & "'"
+				            ),
+				          //then turn it into a comma-delimited list
+				          DelimitedList = Text.Combine(
+				              AddSingleQuotes, 
+				              ","
+				            )
+				        in
+				          DelimitedList
+				    else 
+				      //if the parameter isn't a list
+				      //just add single quotes around the parameter value
+				      "'" & _tag & "'",
+				    anchor_date = if _anchor_date = #datetime(9999, 12, 31, 0, 0, 0) then DateTime.LocalNow() else _anchor_date,
+				    relative_time_period = Text.AfterDelimiter(_relative_time_period, " - "),
+				    Query = "
+				    let relative_time = '" & relative_time_period & "';
+				    let start = todatetime('" & DateTime.ToText(_start_date) & "');
+				    let end = todatetime('" & DateTime.ToText(_end_date) & "');
+				    let _start = iff(relative_time == '*custom*', todatetime(start), todatetime('" & DateTime.ToText(anchor_date) & "') - totimespan(relative_time));
+				    let _end = iff(relative_time == '*custom*', todatetime(end), todatetime('" & DateTime.ToText(anchor_date) & "'));    
+				    let bin_timespan_label = toscalar(get_bin_timespan('" & relative_time_period & "', '" & DateTime.ToText(_start_date) & "', '" & DateTime.ToText(_end_date) & "', '" & _bin_timespan & "', " & Number.ToText(_max_bins) & "));
+				    let bin_timespan = totimespan(bin_timespan_label);
+				    TagTelemetry
+				    | where timestamp  between (_start .. _end)
+				    | where tag in (" & _tags & ")
+				    | make-series value = " & _aggregation & "(Value) default=double(null), record_count = count() on timestamp step bin_timespan by tag 
+				    | project tag, value = series_fill_linear(value), timestamp
+				    | extend anomaly = series_decompose_anomalies(value, 1.5, -1, 'linefit')
+				    | mv-expand timestamp, value, anomaly
+				    | project tag, todatetime(timestamp), todouble(value), todouble(anomaly)
+				    | project tag, timestamp, value, anomaly = iif(anomaly != 0, value, double(null)), anomaly_indicator = iif(anomaly != 0, '●', '')
+				    | lookup kind=leftouter (TagMetadata) on tag",
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", Query, [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

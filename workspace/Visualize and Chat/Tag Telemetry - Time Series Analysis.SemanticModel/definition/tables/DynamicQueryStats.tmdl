@@ -1,0 +1,140 @@
+table DynamicQueryStats
+	lineageTag: 26db5ee4-2c7a-4799-acde-b4ef255fd66a
+
+	column tag
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: f97380bb-3a97-49b1-9db5-861daa456753
+		summarizeBy: none
+		sourceColumn: tag
+
+		annotation SummarizationSetBy = Automatic
+
+	column series_stats_value_min
+		dataType: double
+		sourceProviderType: double
+		lineageTag: f3261b89-8f65-48bb-89d0-7b4205f2206a
+		summarizeBy: sum
+		sourceColumn: series_stats_value_min
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column series_stats_value_min_idx
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: e36693a3-69f8-46c5-a0df-4ab3c68efbca
+		summarizeBy: sum
+		sourceColumn: series_stats_value_min_idx
+
+		annotation SummarizationSetBy = Automatic
+
+	column series_stats_value_max
+		dataType: double
+		sourceProviderType: double
+		lineageTag: c114258b-1513-4b7a-b99a-1716446f37f0
+		summarizeBy: sum
+		sourceColumn: series_stats_value_max
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column series_stats_value_max_idx
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 78b26ac9-80e9-4f09-bdb3-4820683f747c
+		summarizeBy: sum
+		sourceColumn: series_stats_value_max_idx
+
+		annotation SummarizationSetBy = Automatic
+
+	column series_stats_value_avg
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 8d225ae4-b1bb-46db-8b49-40b8b8e7903a
+		summarizeBy: sum
+		sourceColumn: series_stats_value_avg
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column series_stats_value_stdev
+		dataType: double
+		sourceProviderType: double
+		lineageTag: fe16cb01-5eb9-4cb3-91fa-fdb8351d2b3f
+		summarizeBy: sum
+		sourceColumn: series_stats_value_stdev
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column series_stats_value_variance
+		dataType: double
+		sourceProviderType: double
+		lineageTag: cd074dfc-10c1-4719-800b-1dcdcd905515
+		summarizeBy: sum
+		sourceColumn: series_stats_value_variance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DynamicQueryStats = m
+		mode: directQuery
+		source = ```
+				let
+				    _tags = 
+				    if 
+				    //check to see if the parameter is a list
+				      Type.Is(
+				        Value.Type(_tag), 
+				        List.Type
+				      ) then 
+				        //if it is a list
+				        let
+				          //add single quotes around each value in the list
+				          AddSingleQuotes = List.Transform(
+				              _tag, 
+				              each "'" & _ & "'"
+				            ),
+				          //then turn it into a comma-delimited list
+				          DelimitedList = Text.Combine(
+				              AddSingleQuotes, 
+				              ","
+				            )
+				        in
+				          DelimitedList
+				    else 
+				      //if the parameter isn't a list
+				      //just add single quotes around the parameter value
+				      "'" & _tag & "'",
+				    anchor_date = if _anchor_date = #datetime(9999, 12, 31, 0, 0, 0) then DateTime.LocalNow() else _anchor_date,
+				    relative_time_period = Text.AfterDelimiter(_relative_time_period, " - "),
+				    Query = "
+				    let relative_time = '" & relative_time_period & "';
+				    let start = todatetime('" & DateTime.ToText(_start_date) & "');
+				    let end = todatetime('" & DateTime.ToText(_end_date) & "');
+				    let _start = iff(relative_time == '*custom*', todatetime(start), todatetime('" & DateTime.ToText(anchor_date) & "') - totimespan(relative_time));
+				    let _end = iff(relative_time == '*custom*', todatetime(end), todatetime('" & DateTime.ToText(anchor_date) & "'));    
+				    let bin_timespan_label = toscalar(get_bin_timespan('" & relative_time_period & "', '" & DateTime.ToText(_start_date) & "', '" & DateTime.ToText(_end_date) & "', '" & _bin_timespan & "', " & Number.ToText(_max_bins) & "));
+				    let bin_timespan = totimespan(bin_timespan_label);
+				    TagTelemetry
+				    | where timestamp  between (_start .. _end)
+				    | where tag in (" & _tags & ")
+				    | make-series value = " & _aggregation & "(Value), record_count = count() on timestamp step bin_timespan by tag
+				    | project tag, series_stats(value)",
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", Query, [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

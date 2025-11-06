@@ -1,0 +1,248 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "3e6f97907e0057cd1d53",
+  "position": {
+    "x": 847.31054977711744,
+    "y": 244.39821693907876,
+    "z": 5000,
+    "height": 475.48291233283805,
+    "width": 432.68945022288261,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "iconMapProE938B1CED4834168A55864E1F8E7242E",
+    "query": {
+      "queryState": {
+        "H3Weight": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Meter Readings Binned"
+                        }
+                      },
+                      "Property": "energy_net_kwh"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Meter Readings 30 min.energy_net_kwh)",
+              "nativeQueryRef": "Sum of energy_net_kwh"
+            }
+          ]
+        },
+        "category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Meter Contextualization"
+                    }
+                  },
+                  "Property": "mtr_h3cell_7"
+                }
+              },
+              "queryRef": "Meter Contextualization.mtr_h3cell_7",
+              "nativeQueryRef": "mtr_h3cell_7",
+              "active": true
+            }
+          ]
+        },
+        "tooltip": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Meter Contextualization"
+                        }
+                      },
+                      "Property": "mtr_meter_id"
+                    }
+                  },
+                  "Function": 5
+                }
+              },
+              "queryRef": "Min(Meter Contextualization.mtr_meter_id)",
+              "nativeQueryRef": "Number of Meters",
+              "displayName": "Number of Meters"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "Meter Readings Binned"
+                      }
+                    },
+                    "Property": "energy_net_kwh"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "circlesConfiguration": [
+        {
+          "properties": {
+            "includeCircleLayer": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "h3Configuration": [
+        {
+          "properties": {
+            "includeH3Layer": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "h3Source": {
+              "expr": {
+                "Literal": {
+                  "Value": "'indexes'"
+                }
+              }
+            },
+            "fillTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "30D"
+                }
+              }
+            },
+            "usePowerBIFormatting": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "outlineWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "startColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 2,
+                      "Percent": 0.6
+                    }
+                  }
+                }
+              }
+            },
+            "endColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 9,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "midColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 8,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0.4
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "iconMapStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"url\":\"https://styles.iconmappro.com/styles/datavizgrey.json\", \"attribution\":\"&copy; <a href=''https://www.tekantis.com''>Tekantis</a> | <a href=''https://github.com/protomaps/basemaps''>Protomaps</a> | &copy; <a href=''http://www.openstreetmap.org/copyright''>OpenStreetMap</a>\", \"multilanguage\":\"true\", \"buildingheight\":\"true\", \"thumbnail\":\"\", \"landuse\":\"true\", \"pois\":\"true\"}'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Energy Delivered by Meter'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

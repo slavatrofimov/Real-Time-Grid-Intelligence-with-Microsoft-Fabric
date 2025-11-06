@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Tag Telemetry - Time Series Analysis"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4cefb2a0-8a1e-8337-4196-e240ce05ccdd"
+  }
+}

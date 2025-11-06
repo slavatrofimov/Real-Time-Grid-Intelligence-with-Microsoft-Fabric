@@ -1,0 +1,129 @@
+table DynamicQuery
+	lineageTag: ca8dd070-6b8e-438b-a4f4-b3dc1c88e14a
+
+	measure 'Chart Title' =
+			
+			VAR M1 = SELECTEDVALUE(Metric1Options[Metric])
+			VAR M2 = SELECTEDVALUE(Metric2Options[Metric])
+			RETURN "Metrics and anomalies for " & IF(M1 = "*none*", "", M1) & IF(M2 = "*none*" || M2 = M1, "", " and " & M2)
+		lineageTag: 6264ec8f-b8e3-4686-872d-a64239e70d9f
+
+	column metric1
+		dataType: double
+		sourceProviderType: double
+		lineageTag: daaebbe7-e061-40b3-96c7-b82e81ab20ae
+		summarizeBy: sum
+		sourceColumn: metric1
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column metric2
+		dataType: double
+		sourceProviderType: double
+		lineageTag: cf1200d8-4ed6-4286-986b-8e4ff8d33899
+		summarizeBy: sum
+		sourceColumn: metric2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column anomalies1
+		dataType: double
+		sourceProviderType: double
+		lineageTag: bb4788e8-47e5-434c-bc27-60334bd5d542
+		summarizeBy: sum
+		sourceColumn: anomalies1
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column anomalies2
+		dataType: double
+		sourceProviderType: double
+		lineageTag: bd61db9e-8cfc-4c01-9527-61ff9489fce2
+		summarizeBy: sum
+		sourceColumn: anomalies2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column VehicleID
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 8bf6c7a4-51c6-497f-92cb-13c04ee940c0
+		summarizeBy: none
+		sourceColumn: VehicleID
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetimeoffset
+		lineageTag: 70b4ed65-b48e-4ef7-acf7-e7ff4537766f
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DynamicQuery = m
+		mode: directQuery
+		source = ```
+				let
+				    VehicleList = 
+				    if 
+				    //check to see if the parameter is a list
+				      Type.Is(
+				        Value.Type(_vehicle_id), 
+				        List.Type
+				      ) then 
+				        //if it is a list
+				        let
+				          //add single quotes around each value in the list
+				          AddSingleQuotes = List.Transform(
+				              _vehicle_id, 
+				              each "'" & _ & "'"
+				            ),
+				          //then turn it into a comma-delimited list
+				          DelimitedList = Text.Combine(
+				              AddSingleQuotes, 
+				              ","
+				            )
+				        in
+				          DelimitedList
+				    else 
+				      //if the parameter isn't a list
+				      //just add single quotes around the parameter value
+				      "'" & _vehicle_id & "'",
+				    Query = "
+				    let relative_time = '" & _relateive_time_period & "';
+				    let start = todatetime('" & DateTime.ToText(_start_date) & "');
+				    let end = todatetime('" & DateTime.ToText(_end_date) & "');
+				    let _start = iff(relative_time == '*custom*', todatetime(start), now() - totimespan(relative_time));
+				    let _end = iff(relative_time == '*custom*', todatetime(end), now());    
+				    let bin_timespan_label = toscalar(get_bin_timespan('" & _relateive_time_period & "', '" & DateTime.ToText(_start_date) & "', '" & DateTime.ToText(_end_date) & "', '" & _bin_timespan & "', " & Number.ToText(_max_bins) & "));
+				    let bin_timespan = totimespan(bin_timespan_label);
+				    VehicleTelemetry
+				    | where timestamp  between (_start .. _end)
+				    | where VehicleID in (" & VehicleList & ")
+				    | make-series metric1 = " & _aggregation & "(todouble(" & (if _metric1 = "*none*" then "double(null)" else _metric1) &")) default=double(null), metric2 = " & _aggregation & "(todouble(" & (if _metric2 = "*none*" or _metric1 = _metric2 then "double(null)" else _metric2) &")) default=double(null) on timestamp step bin_timespan by VehicleID 
+				    | project metric1 = series_fill_linear(metric1), metric2 = series_fill_linear(metric2), timestamp, VehicleID
+				    | extend anomalies1 = series_decompose_anomalies(metric1, 1.5, -1, 'linefit')
+				    | extend anomalies2 = series_decompose_anomalies(metric2, 1.5, -1, 'linefit')
+				    | mv-expand timestamp, metric1, anomalies1, metric2, anomalies2
+				    | project VehicleID, todatetime(timestamp), todouble(metric1), todouble(anomalies1), todouble(metric2), todouble(anomalies2)
+				    | project VehicleID, timestamp, metric1, metric2, anomalies1 = iif(anomalies1 != 0, metric1, double(null)), anomalies2 = iif(anomalies2 != 0, metric2, double(null))",
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", Query, [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

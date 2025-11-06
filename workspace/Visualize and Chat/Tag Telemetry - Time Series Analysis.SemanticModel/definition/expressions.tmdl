@@ -1,0 +1,72 @@
+expression _start_date = #datetime(2025, 8, 29, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 52bfbd73-de3d-498a-8dd0-f7befb9a0a0f
+	queryGroup: Parameters
+	parameterValuesColumn: DateOptions.StartDate
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = DateTime
+
+expression _end_date = #datetime(2025, 8, 30, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: c216a96d-d561-41c0-92c7-bc3b7814989a
+	queryGroup: Parameters
+	parameterValuesColumn: DateOptions.EndDate
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = DateTime
+
+expression _max_bins = 1000 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
+	lineageTag: 012df529-5981-44e8-b48c-072b16beaca1
+	queryGroup: Parameters
+	parameterValuesColumn: MaxBinsOptions.MaxBins
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Number
+
+expression _bin_timespan = "Auto" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 39eface5-cb7e-4857-b204-047a0f30d99a
+	queryGroup: Parameters
+	parameterValuesColumn: TimeSpanOptions.TimespanLabel
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression _aggregation = "avg" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 717e0657-4889-485b-a5bf-31265904ca2a
+	queryGroup: Parameters
+	parameterValuesColumn: AggregationOptions.Aggregation
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression _tag = "N/A" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 0c82bb51-45c8-4bab-bf33-eca2541e75b5
+	queryGroup: Parameters
+	parameterValuesColumn: Tags.tag
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression _relative_time_period = "a - 1hour" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 4deadde5-665a-47de-9973-c1f24d7be688
+	queryGroup: Parameters
+	parameterValuesColumn: RelativeTime.RelativeTime
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression _anchor_date = #datetime(9999, 12, 31, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 98360765-e6ef-4d30-a391-69792b07b725
+	queryGroup: Parameters
+	parameterValuesColumn: DateOptions.AnchorDate
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = DateTime
+

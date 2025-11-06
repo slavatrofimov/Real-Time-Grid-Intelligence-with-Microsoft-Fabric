@@ -1,0 +1,38 @@
+table AggregationOptions
+	isHidden
+	lineageTag: 8ed54783-9dee-47cf-ad51-3e8cecda3b04
+
+	column Aggregation
+		dataType: string
+		isHidden
+		lineageTag: 8e912a68-f95b-4616-bbba-73ca98093996
+		summarizeBy: none
+		sourceColumn: Aggregation
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 2,
+				  "kind": 1,
+				  "selectAllValue": "__SelectAll__"
+				}
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AggregationOptions = m
+		mode: import
+		queryGroup: DynamicParameterInputs
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WSixLV4rViVZKzi/NK0Gw4lMyi0sy85IhQrmZeRA6sQJMF5fmKsXGAgA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Aggregation = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Aggregation", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

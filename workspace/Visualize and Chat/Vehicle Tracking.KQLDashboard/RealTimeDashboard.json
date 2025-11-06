@@ -1,0 +1,346 @@
+{
+  "schema_version": "60",
+  "tiles": [
+    {
+      "id": "52b55c14-c469-4ff7-95a7-81178ae69f15",
+      "title": "Vehicle Map",
+      "visualType": "map",
+      "pageId": "23b05340-3165-4057-8670-ef1e1d01c414",
+      "layout": {
+        "x": 0,
+        "y": 2,
+        "width": 11,
+        "height": 14
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "349166a3-4e86-448f-975d-117e9c881e8b"
+      },
+      "visualOptions": {
+        "map__type": "bubble",
+        "map__latitudeColumn": "lat",
+        "map__longitudeColumn": "lon",
+        "map__labelColumn": "VehicleID",
+        "map__sizeColumn": null,
+        "map__sizeDisabled": true,
+        "map__geoType": "numeric",
+        "map__geoPointColumn": null
+      }
+    },
+    {
+      "id": "17b3781f-0741-48e1-8d95-86c05b981770",
+      "title": "Vehicle Speed, RPM and Accelerator Position",
+      "visualType": "line",
+      "pageId": "23b05340-3165-4057-8670-ef1e1d01c414",
+      "layout": {
+        "x": 11,
+        "y": 0,
+        "width": 13,
+        "height": 16
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "736779d5-fd7e-4bde-9c3c-46d065de9f0c"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [
+            {
+              "id": "8143d3df-069f-45fb-8f1b-e93c26ff888b",
+              "columns": [
+                "vehicle_speed"
+              ],
+              "label": "",
+              "yAxisMaximumValue": null,
+              "yAxisMinimumValue": 0,
+              "yAxisScale": "linear",
+              "horizontalLines": []
+            },
+            {
+              "id": "f30933f1-0a6a-4e4f-a29c-42f74b2dc9ea",
+              "columns": [
+                "accelerator_pedal_position"
+              ],
+              "label": "",
+              "yAxisMaximumValue": null,
+              "yAxisMinimumValue": 0,
+              "yAxisScale": "linear",
+              "horizontalLines": []
+            }
+          ],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "timestamp",
+        "yColumns": [
+          "engine_rpm",
+          "accelerator_pedal_position",
+          "vehicle_speed"
+        ],
+        "seriesColumns": [
+          "VehicleID"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": true,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "EventEnqueuedUtcTime",
+            "parameterId": "906fbb52-08e4-44d3-a2b7-0818b3696df8",
+            "disabled": false
+          }
+        ],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "23974450-7e42-492e-917c-7a519a501ff9",
+      "title": "Real-Time Intelligence",
+      "visualType": "markdownCard",
+      "pageId": "23b05340-3165-4057-8670-ef1e1d01c414",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 11,
+        "height": 2
+      },
+      "markdownText": "# Vehicle Location and Telemetry",
+      "visualOptions": {}
+    },
+    {
+      "id": "de27b66b-2d90-4cc7-9493-f75297b85a4d",
+      "title": "Latest Telemetry",
+      "visualType": "table",
+      "pageId": "23b05340-3165-4057-8670-ef1e1d01c414",
+      "layout": {
+        "x": 0,
+        "y": 16,
+        "width": 24,
+        "height": 10
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "552b1cbb-09c9-49b9-a960-23e68e6a1cda"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    }
+  ],
+  "baseQueries": [
+    {
+      "id": "6dabfc38-fbbf-4f91-8224-8646ae0a27e4",
+      "queryId": "fa214678-2c95-4872-b2fb-172b902b5583",
+      "variableName": "LatestEvents"
+    }
+  ],
+  "parameters": [
+    {
+      "kind": "string",
+      "id": "8df0b866-f20b-45a9-ad12-4bd941743a5b",
+      "displayName": "VehicleId",
+      "description": "Vehicle ID",
+      "variableName": "_vehicleId",
+      "selectionType": "array",
+      "includeAllOption": false,
+      "defaultValue": {
+        "kind": "query-result"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "VehicleID"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "9602b8dd-d303-4766-9e76-0009834e94eb"
+        }
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    },
+    {
+      "kind": "int",
+      "id": "9beb706c-ad0c-4a31-87bc-fcfde38c751f",
+      "displayName": "Additional Time Range Filter (Minutes)",
+      "description": "Additional time range filter",
+      "variableName": "_timeRangeMinutes",
+      "selectionType": "scalar",
+      "includeAllOption": false,
+      "defaultValue": {
+        "kind": "value",
+        "value": 5
+      },
+      "dataSource": {
+        "kind": "static",
+        "values": [
+          {
+            "value": 1
+          },
+          {
+            "value": 2
+          },
+          {
+            "value": 3
+          },
+          {
+            "value": 4
+          },
+          {
+            "value": 5
+          },
+          {
+            "value": 6
+          },
+          {
+            "value": 7
+          },
+          {
+            "value": 8
+          },
+          {
+            "value": 9
+          },
+          {
+            "value": 10
+          },
+          {
+            "value": 11
+          },
+          {
+            "value": 12
+          },
+          {
+            "value": 13
+          },
+          {
+            "value": 14
+          },
+          {
+            "value": 15
+          },
+          {
+            "displayText": "Unlimited",
+            "value": 10000000
+          }
+        ]
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    },
+    {
+      "kind": "duration",
+      "id": "906fbb52-08e4-44d3-a2b7-0818b3696df8",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "",
+      "database": "e09969b4-e261-8ecd-44f5-30574ca3a859",
+      "name": "PowerUtilitiesEH",
+      "id": "0a90c82d-fb18-423d-989f-148d6c168eba",
+      "workspace": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Vehicle Monitoring",
+      "id": "23b05340-3165-4057-8670-ef1e1d01c414"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "0a90c82d-fb18-423d-989f-148d6c168eba"
+      },
+      "text": "LatestEvents\n| project VehicleID, EventEnqueuedUtcTime, lat = toreal(lat), lon = toreal(lon)\n| order by VehicleID, EventEnqueuedUtcTime",
+      "id": "349166a3-4e86-448f-975d-117e9c881e8b",
+      "usedVariables": [
+        "LatestEvents"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "0a90c82d-fb18-423d-989f-148d6c168eba"
+      },
+      "text": "LatestEvents\n| project VehicleID, timestamp, engine_rpm = toreal(engine_rpm), vehicle_speed = toreal(vehicle_speed), engine_temp = toreal(engine_temp), accelerator_pedal_position = toreal(accelerator_pedal_position), brake_pedal_position = toreal(brake_pedal_position), fuel_level = toreal(fuel_level), transmission_gear_position = toint(transmission_gear_position)\n",
+      "id": "736779d5-fd7e-4bde-9c3c-46d065de9f0c",
+      "usedVariables": [
+        "LatestEvents"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "0a90c82d-fb18-423d-989f-148d6c168eba"
+      },
+      "text": "LatestEvents\n| order by EventEnqueuedUtcTime desc , VehicleID ",
+      "id": "552b1cbb-09c9-49b9-a960-23e68e6a1cda",
+      "usedVariables": [
+        "LatestEvents"
+      ]
+    },
+    {
+      "id": "fa214678-2c95-4872-b2fb-172b902b5583",
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "0a90c82d-fb18-423d-989f-148d6c168eba"
+      },
+      "text": "VehicleTelemetry\n| where timestamp  between (_startTime .. _endTime)\n| where timestamp >= datetime_add('minute', -_timeRangeMinutes, now())\n| where VehicleID in (_vehicleId)",
+      "usedVariables": [
+        "_endTime",
+        "_startTime",
+        "_timeRangeMinutes",
+        "_vehicleId"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "0a90c82d-fb18-423d-989f-148d6c168eba"
+      },
+      "text": "VehicleTelemetry\n| where timestamp >= ago(10min)\n| distinct VehicleID\n| order by VehicleID\n",
+      "id": "9602b8dd-d303-4766-9e76-0009834e94eb",
+      "usedVariables": []
+    }
+  ]
+}

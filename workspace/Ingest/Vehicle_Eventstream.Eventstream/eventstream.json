@@ -1,0 +1,45 @@
+{
+  "sources": [
+    {
+      "id": "44090088-5da0-4b1d-80a8-8afb89865768",
+      "name": "VehicleTelemetrySource",
+      "type": "CustomEndpoint",
+      "properties": {}
+    }
+  ],
+  "destinations": [
+    {
+      "id": "573960c1-113c-4758-be0a-15393b6a216d",
+      "name": "Eventhouse",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "DirectIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "e09969b4-e261-8ecd-44f5-30574ca3a859",
+        "tableName": "VehicleTelemetryRaw",
+        "connectionName": "Vehicle_Eventstream_PowerUtilitiesEH-Veh",
+        "mappingRuleName": "VehicleTelemetryRaw_mapping"
+      },
+      "inputNodes": [
+        {
+          "name": "Vehicle_Eventstream-stream"
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "93879fb0-b326-47f0-b923-bb26bda3d0cd",
+      "name": "Vehicle_Eventstream-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "VehicleTelemetrySource"
+        }
+      ]
+    }
+  ],
+  "operators": [],
+  "compatibilityLevel": "1.1"
+}

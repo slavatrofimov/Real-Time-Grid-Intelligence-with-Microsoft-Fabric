@@ -1,0 +1,13 @@
+relationship 62f542bd-983d-7bf3-b89a-0afa1c1b8aff
+	relyOnReferentialIntegrity
+	fromColumn: Tags.meter
+	toColumn: Assets.mtr_meter_id
+
+relationship 870b66eb-0e2c-4c37-f733-fc1c784f28e7
+	fromColumn: LegendConfig.LegendConfig
+	toColumn: ChartConfig.LegendBy
+
+relationship 06cc29b7-3eae-07bf-27e1-fc5d93541209
+	fromColumn: SmallMultiplesConfig.SmallMultiplesConfig
+	toColumn: ChartConfig.SplitBy
+

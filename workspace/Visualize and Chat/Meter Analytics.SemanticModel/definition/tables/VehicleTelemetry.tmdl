@@ -1,0 +1,35 @@
+table VehicleTelemetry
+	lineageTag: 4bb083fb-8a75-4797-9a3b-142685696ef5
+
+	column VehicleID
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 720698ac-b746-474b-bf34-268d3f80538a
+		summarizeBy: none
+		sourceColumn: VehicleID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Route
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 76741da7-1cda-4cb5-b803-6cd89538548d
+		summarizeBy: none
+		sourceColumn: Route
+
+		annotation SummarizationSetBy = Automatic
+
+	partition VehicleTelemetry = m
+		mode: directQuery
+		source =
+				let
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", "VehicleTelemetry#(lf)| where timestamp > ago(30min)#(lf)| project VehicleID, timestamp , lat = round(toreal(lat), 9), lon = round(toreal(lon), 9)#(lf)| order by VehicleID asc, timestamp asc#(lf)| summarize coordinates = make_list(pack_array(pack_array(lon, lat))) by VehicleID#(lf)| extend Route = tostring(pack(""type"", ""LineString"", ""coordinates"", coordinates))#(lf)| project-away coordinates", [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

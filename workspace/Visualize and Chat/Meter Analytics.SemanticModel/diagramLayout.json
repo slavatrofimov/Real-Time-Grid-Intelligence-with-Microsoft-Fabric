@@ -1,0 +1,112 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 852.36163941535983,
+            "y": 102.12994172754628
+          },
+          "nodeIndex": "Duration",
+          "nodeLineageTag": "af3836e6-6e6d-4c34-bc3f-3962d91912a0",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 334.1847511806298,
+            "y": -31.065109177344169
+          },
+          "nodeIndex": "Meter Contextualization",
+          "nodeLineageTag": "4c65570c-daeb-4668-8e6d-dc5f96e621ea",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 618.36163941535983,
+            "y": -17.740116544907437
+          },
+          "nodeIndex": "Meter Latest Reading",
+          "nodeLineageTag": "4fbccfec-a1a4-4d63-96f7-a6db5b7cdfa7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": -49.999999999999972
+          },
+          "nodeIndex": "Meter Readings Binned",
+          "nodeLineageTag": "92132c9f-b225-4186-a601-16640f9522b3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1136.3616394153598,
+            "y": 90.129941727546282
+          },
+          "nodeIndex": "Metric",
+          "nodeLineageTag": "44916723-f3a8-4e9b-b544-aaf1697432b1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1704.3616394153598,
+            "y": 102.12994172754628
+          },
+          "nodeIndex": "VehicleTelemetry",
+          "nodeLineageTag": "4bb083fb-8a75-4797-9a3b-142685696ef5",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1420.3616394153598,
+            "y": 66.129941727546282
+          },
+          "nodeIndex": "ServiceArea+Weather",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

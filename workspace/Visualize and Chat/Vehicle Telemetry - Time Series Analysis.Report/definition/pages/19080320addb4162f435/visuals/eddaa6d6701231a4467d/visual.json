@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "eddaa6d6701231a4467d",
+  "position": {
+    "x": 11.67120338704771,
+    "y": 20.772190241479688,
+    "z": 7000,
+    "height": 46.430338004946414,
+    "width": 911.72300082440233,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Vehicle Telemetry Analytics",
+                    "textStyle": {
+                      "fontSize": "20pt",
+                      "color": "#336c75"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

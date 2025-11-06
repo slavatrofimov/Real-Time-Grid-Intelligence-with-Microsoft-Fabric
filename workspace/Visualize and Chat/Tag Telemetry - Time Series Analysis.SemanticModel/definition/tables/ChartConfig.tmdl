@@ -1,0 +1,51 @@
+table ChartConfig
+	lineageTag: b64ea08a-c524-49f6-91ea-4bd766412599
+
+	column SplitBy
+		dataType: string
+		lineageTag: 4be077cd-3a54-4b74-b416-fd89cc5db07d
+		summarizeBy: none
+		sourceColumn: SplitBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column LegendBy
+		dataType: string
+		lineageTag: d7bc690d-7e79-4686-b8eb-189b3f6f0d9e
+		summarizeBy: none
+		sourceColumn: LegendBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortKey
+		dataType: string
+		lineageTag: a1326531-1283-4e25-bcac-04374e973d7d
+		summarizeBy: none
+		sourceColumn: SortKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Configuration
+		dataType: string
+		lineageTag: 5965f74b-d71e-49bb-a17a-56800c4c1d79
+		summarizeBy: none
+		sourceColumn: Configuration
+		sortByColumn: SortKey
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ChartConfig = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlTSUQouyMksUUiqtFLITS0pyky2VnDOz8kvAoskFhenlgDVQGQgjNQipVidaCVjFK15+XmpyBpLEtOB8iBRIAXigLSYoGgBiipolGeWZCgk5uXnJuZUKqQADU8uyczP04RqgpoA0muEohfsLmT70BwId3FsLAA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [SortKey = _t, Configuration = _t, SplitBy = _t, LegendBy = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"SplitBy", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,122 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "87181210bde038d9d2bc",
+  "position": {
+    "x": 308.9655172413793,
+    "y": 322.90381125226861,
+    "z": 1000,
+    "height": 397.24137931034483,
+    "width": 537.78584392014523,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Meter Readings Binned"
+                    }
+                  },
+                  "Property": "timestamp"
+                }
+              },
+              "queryRef": "Meter Readings 30 min.timestamp",
+              "nativeQueryRef": "timestamp",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Meter Readings Binned"
+                    }
+                  },
+                  "Property": "THD Voltage Percent"
+                }
+              },
+              "queryRef": "Meter Readings Binned.THD Voltage Percent",
+              "nativeQueryRef": "THD Voltage Percent",
+              "displayName": "THD Voltage Percent"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Meter Readings Binned"
+                    }
+                  },
+                  "Property": "THD Current Percent"
+                }
+              },
+              "queryRef": "Meter Readings Binned.THD Current Percent",
+              "nativeQueryRef": "THD Current Percent",
+              "displayName": "THD Current Percent"
+            }
+          ],
+          "fieldParameters": [
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Metric"
+                    }
+                  },
+                  "Property": "Metric"
+                }
+              },
+              "index": 0,
+              "length": 2
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Meter Readings Binned"
+                  }
+                },
+                "Property": "timestamp"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "valueAxis": [
+        {
+          "properties": {
+            "start": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

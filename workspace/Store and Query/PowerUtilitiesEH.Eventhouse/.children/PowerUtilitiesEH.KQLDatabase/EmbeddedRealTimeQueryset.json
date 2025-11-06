@@ -1,0 +1,53 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "4c13f88a-697a-4bc0-9686-f243495bcb4c",
+        "clusterUri": "https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com",
+        "type": "Fabric",
+        "databaseItemId": "7bfa6060-2ce7-43c1-ab60-991bec8c92df",
+        "databaseItemName": "PowerUtilitiesEH"
+      },
+      {
+        "id": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98",
+        "clusterUri": "https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com",
+        "type": "Fabric",
+        "databaseItemId": "4ca3a859-3057-44f5-8ecd-e261e09969b4",
+        "databaseItemName": "PowerUtilitiesEH"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "23c27c9a-fa0c-4a87-a14f-4b03a5db5ad9",
+        "content": ".create-or-alter function with (folder = \"Telemetry\", docstring = \"Parse raw AMI telemetry data corresponding to last gasp messages unrelated to outages\", skipvalidation = \"true\") AMITelemetryParseLastGasp() {\n     AMITelemetryRaw\n    | where messageType == \"last_gasp\"\n    | project\n        meter_id = deviceId,\n        timestamp = todatetime(timestamp),\n        EventEnqueuedUtcTime,\n        EventProcessedUtcTime,\n        source, \n        signal_strength_dbm = todouble(telemetry.signal_strength_dbm),\n        battery_voltage = todouble(telemetry.battery_voltage),\n        internal_temperature_c = todouble(telemetry.internal_temperature_c),\n        firmware_version = tostring(telemetry.firmware_version),\n        alert_code = tostring(telemetry.alert_code),\n        alert_description = tostring(telemetry.alert_description),\n        failure_type = tostring(telemetry.failure_type),\n        final_energy_reading_kwh = todouble(telemetry.final_energy_reading_kwh),\n        error_codes = telemetry.error_codes,\n        retry_attempts = toint(telemetry.retry_attempts),\n        last_successful_transmission = todatetime(telemetry.last_successful_transmission),\n        priority = tostring(telemetry.priority),\n        requires_investigation = tobool(telemetry.requires_investigation)\n }\n\n",
+        "title": "",
+        "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
+      },
+      {
+        "id": "caafeb7c-d21e-4209-a076-2da232bd77d3",
+        "content": ".create-or-alter function with (folder = \"Telemetry\", docstring = \"Parse raw AMI telemetry data corresponding to periodic meter readings\", skipvalidation = \"true\") AMITelemetryParseIntervalReadings() {\n    AMITelemetryRaw\n    | where messageType == \"interval_reading\"\n    | project\n        meter_id = deviceId,\n        timestamp = todatetime(timestamp),\n        EventEnqueuedUtcTime,\n        EventProcessedUtcTime,\n        source, \n        interval_minutes = todouble(telemetry.interval_minutes), \n        active_power_kw = todouble(telemetry.active_power_kw),\n        reactive_power_kvar = todouble(telemetry.reactive_power_kvar),\n        apparent_power_kva = todouble(telemetry.apparent_power_kva),\n        current_amps = todouble(telemetry.current_amps),\n        voltage_volts = todouble(telemetry.voltage_volts),\n        power_factor = todouble(telemetry.power_factor),\n        frequency_hz = todouble(telemetry.frequency_hz),\n        thd_voltage_percent = todouble(telemetry.thd_voltage_percent),\n        thd_current_percent = todouble(telemetry.thd_current_percent),\n        energy_delivered_kwh = todouble(telemetry.energy_delivered_kwh),\n        energy_received_kwh = todouble(telemetry.energy_received_kwh),\n        energy_net_kwh = todouble(telemetry.energy_net_kwh),\n        cumulative_energy_kwh = todouble(telemetry.cumulative_energy_kwh),\n        signal_strength_dbm = todouble(telemetry.signal_strength_dbm),\n        battery_voltage = todouble(telemetry.battery_voltage),\n        internal_temperature_c = todouble(telemetry.internal_temperature_c),\n        tamper_detected = tobool(telemetry.tamper_detected),\n        power_outage = tobool(telemetry.power_outage),\n        communication_error = tobool(telemetry.communication_error),\n        meter_error = tobool(telemetry.meter_error),\n        sequence_number = todouble(telemetry.sequence_number),\n        data_quality = tostring(telemetry.data_quality),\n        firmware_version = tostring(telemetry.firmware_version)\n}\n\n .alter table AMITelemetryIntervalReadings policy update \"[{\\\"IsEnabled\\\":true,\\\"Source\\\":\\\"AMITelemetryRaw\\\",\\\"Query\\\":\\\"AMITelemetryParseIntervalReadings\\\",\\\"IsTransactional\\\":true,\\\"PropagateIngestionProperties\\\":false,\\\"ManagedIdentity\\\":null}]\"",
+        "title": "",
+        "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
+      },
+      {
+        "id": "12ef8ebd-fd41-42b0-9c4a-aeeaed47638c",
+        "content": "let Weather = WeatherCurrent \n| where EventEnqueuedUtcTime >= ago(2m)\n| project PolygonColor = color, Polygon = tostring(todynamic(features).geometry), rainfall_rate;\nlet OutageMeters = AMITelemetryOutageLastGasp\n| where timestamp >= ago(3min)\n| summarize by meter_id;\n//MeterContextualization\n//| join kind = leftouter OutageMeters on $left.mtr_meter_id == $right.meter_id\n//| summarize Meters = count(), OutageMeters = countif(not(isempty(meter_id))) by mtr_h3cell_6\n//| extend Polygon = tostring(geo_h3cell_to_polygon(mtr_h3cell_6)), PolygonColor = case(OutageMeters>5, \"#FF8066\",OutageMeters >0, \"#FFEECC\",\"#D5FFCC\")\n//| union \nWeather\n| order by rainfall_rate asc\n//| project-away mtr_h3cell_6, rainfall_rate\n| serialize\n| extend Id = row_number()",
+        "title": "",
+        "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
+      },
+      {
+        "id": "06f340d8-cc0e-49af-b3b1-db42010915ed",
+        "content": ".create-or-alter function with (folder = \"Telemetry\", docstring = \"Parse numeric interval reading data to tag-based representaion\", skipvalidation = \"true\") AMIIntervalReadingsToTags() {\n     AMITelemetryIntervalReadings\n    | extend properties = bag_pack_columns(\n                              interval_minutes,\n                              active_power_kw,\n                              reactive_power_kvar,\n                              apparent_power_kva,\n                              current_amps,\n                              voltage_volts,\n                              power_factor,\n                              frequency_hz,\n                              thd_voltage_percent,\n                              thd_current_percent,\n                              energy_delivered_kwh,\n                              energy_received_kwh,\n                              energy_net_kwh,\n                              cumulative_energy_kwh,\n                              signal_strength_dbm,\n                              battery_voltage,\n                              internal_temperature_c\n                          )\n    | project meter_id, timestamp, properties\n    | mv-expand kind=array properties\n    | project\n        timestamp,\n        tag = strcat(meter_id, '_', tostring(properties[0])),\n        value = toreal(properties[1])\n }\n\n.alter table TagTelemetry policy update \"[{\\\"IsEnabled\\\":true,\\\"Source\\\":\\\"AMITelemetryIntervalReadings\\\",\\\"Query\\\":\\\"AMIIntervalReadingsToTags\\\",\\\"IsTransactional\\\":true,\\\"PropagateIngestionProperties\\\":false,\\\"ManagedIdentity\\\":null}]\"\n\n.create function TagMetadata() {\n     let meters = MeterContextualization\n        | project meter = mtr_meter_id, join_key = 1;\n     AMITelemetryIntervalReadings\n    | getschema \n    | where ColumnType == 'real' and ColumnName != 'sequence_number'\n    | project join_key = 1, metric = ColumnName\n    | join kind=inner meters on join_key\n    | project tag = strcat(meter, '_', metric), meter, metric\n }\n\n",
+        "title": "",
+        "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
+      },
+      {
+        "id": "e35994d2-1bd6-4c2c-b584-679e734fe07c",
+        "content": "// Use 'take' to view a sample number of records in the table and check the data.\nTagMetadata\n| take 100\n",
+        "title": "",
+        "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
+      }
+    ]
+  }
+}

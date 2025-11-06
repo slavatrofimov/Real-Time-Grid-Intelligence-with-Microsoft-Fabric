@@ -1,0 +1,274 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "3dbd4518cb989efb6464",
+  "position": {
+    "x": 0,
+    "y": 67.368421052631575,
+    "z": 0,
+    "height": 653.03904923599328,
+    "width": 1280,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "iconMapProE938B1CED4834168A55864E1F8E7242E",
+    "query": {
+      "queryState": {
+        "imageWKT": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ServiceArea+Weather"
+                        }
+                      },
+                      "Property": "Polygon"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Min(WeatherCurrent.Polygon)",
+              "nativeQueryRef": "First Polygon"
+            }
+          ]
+        },
+        "category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ServiceArea+Weather"
+                    }
+                  },
+                  "Property": "Id"
+                }
+              },
+              "queryRef": "Polygons.Id",
+              "nativeQueryRef": "Id",
+              "active": true
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "ServiceArea+Weather"
+                  }
+                },
+                "Property": "Id"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "circlesConfiguration": [
+        {
+          "properties": {
+            "includeCircleLayer": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "wktConfiguration": [
+        {
+          "properties": {
+            "includeWktLayer": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "includeInZoom": {
+              "expr": {
+                "Literal": {
+                  "Value": "'yes'"
+                }
+              }
+            },
+            "allowSelection": {
+              "expr": {
+                "Literal": {
+                  "Value": "'no'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "wktFormatting": [
+        {
+          "properties": {
+            "fillColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "ServiceArea+Weather"
+                            }
+                          },
+                          "Property": "PolygonColor"
+                        }
+                      },
+                      "Function": 3
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "outlineWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0.6
+                    }
+                  }
+                }
+              }
+            },
+            "fillTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "39D"
+                }
+              }
+            },
+            "fillStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'solid'"
+                }
+              }
+            },
+            "hatchWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "7D"
+                }
+              }
+            },
+            "outlineTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "62D"
+                }
+              }
+            },
+            "lineBlur": {
+              "expr": {
+                "Literal": {
+                  "Value": "4D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "iconMapStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"url\":\"https://iconmappropublictiles.blob.core.windows.net/styles/datavizgrey.json\", \"attribution\":\"&copy; <a href=''https://www.tekantis.com''>Tekantis</a> | <a href=''https://github.com/protomaps/basemaps''>Protomaps</a> | &copy; <a href=''http://www.openstreetmap.org/copyright''>OpenStreetMap</a>\", \"multilanguage\":\"true\", \"buildingheight\":\"true\", \"thumbnail\":\"\", \"landuse\":\"true\", \"pois\":\"true\"}'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "h3Configuration": [
+        {
+          "properties": {
+            "includeH3Layer": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "h3Source": {
+              "expr": {
+                "Literal": {
+                  "Value": "'coordinates'"
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": -0.1
+                    }
+                  }
+                }
+              }
+            },
+            "resolution": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
+            "fillTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "53D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

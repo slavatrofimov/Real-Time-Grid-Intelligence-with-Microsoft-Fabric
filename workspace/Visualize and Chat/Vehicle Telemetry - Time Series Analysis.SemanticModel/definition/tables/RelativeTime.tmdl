@@ -1,0 +1,42 @@
+table RelativeTime
+	lineageTag: b030fa30-a2fc-4c3a-bf0b-c644750bb22f
+
+	column RelativeTime
+		dataType: string
+		lineageTag: 5cca19d9-cf62-4296-a423-0c6904b2789d
+		summarizeBy: none
+		sourceColumn: RelativeTime
+		sortByColumn: SortKey
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 2,
+				  "kind": 1,
+				  "selectAllValue": "__SelectAll__"
+				}
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortKey
+		dataType: string
+		lineageTag: 05316f43-33f2-431a-ba03-c07106fb418d
+		summarizeBy: none
+		sourceColumn: SortKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition RelativeTime = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("Pc4xDoAgDIXhu3QkDoACehbiYHTQQUlEBm9vaanjxyvJHyOoteQnnQo60DB3Ecx5XAhDcAzLi2b1pL5p4G1P5UY5kq3KSE8chIHohSN//a8n9ra8NYBzLKpuhoOC0LYIcYvyTh6wa/4A", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [RelativeTime = _t, SortKey = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"RelativeTime", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

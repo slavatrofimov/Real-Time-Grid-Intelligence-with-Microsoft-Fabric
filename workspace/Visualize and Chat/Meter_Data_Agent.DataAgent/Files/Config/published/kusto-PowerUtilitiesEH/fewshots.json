@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/fewShots/1.0.0/schema.json",
+  "fewShots": [
+    {
+      "id": "9a33bd96-73e2-40a1-8a76-6f19736e4636",
+      "question": "Find the closest vehicle for each transformer",
+      "query": "let Transfomers = MeterContextualization\r\n    | summarize take_any(trnsf_latitude, trnsf_longitude) by mtr_transformer_id //Get a list of transfomers and their coordinates\r\n    | project\r\n        lat = trnsf_latitude,\r\n        lon = trnsf_longitude,\r\n        transfomer_id = mtr_transformer_id,\r\n        JoinKey = 1;\r\nlet VehicleCurrentLocation = VehicleTelemetry\r\n    | summarize arg_max(timestamp, todouble(lat), todouble(lon)) by VehicleID, JoinKey = 1;\r\nTransfomers\r\n| join kind= inner VehicleCurrentLocation on JoinKey\r\n| extend VehicleDistance = geo_distance_2points(lon, lat, lon1, lat1)\r\n| summarize arg_min(VehicleDistance, VehicleID) by transfomer_id\r\n| extend VehicleDistance_Miles = VehicleDistance/1609.344\r\n\r\n"
+    }
+  ]
+}

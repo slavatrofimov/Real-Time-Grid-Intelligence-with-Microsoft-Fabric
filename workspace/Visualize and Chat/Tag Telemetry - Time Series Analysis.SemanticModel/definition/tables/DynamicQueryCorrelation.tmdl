@@ -1,0 +1,90 @@
+table DynamicQueryCorrelation
+	lineageTag: 480bd883-324f-47c8-b60d-c4523d3920dd
+
+	column tag
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: b5d751ca-a3b2-4bcc-b000-e78f074a42d5
+		summarizeBy: none
+		sourceColumn: tag
+
+		annotation SummarizationSetBy = Automatic
+
+	column tag1
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: b19604f2-cfa1-41d7-9c44-8484cd93daf6
+		summarizeBy: none
+		sourceColumn: tag1
+
+		annotation SummarizationSetBy = Automatic
+
+	column correlation_coefficient
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 6163e0f8-7076-4603-8e72-738db5778d20
+		summarizeBy: sum
+		sourceColumn: correlation_coefficient
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DynamicQueryCorrelation = m
+		mode: directQuery
+		source = ```
+				let
+				    _tags = 
+				    if 
+				    //check to see if the parameter is a list
+				      Type.Is(
+				        Value.Type(_tag), 
+				        List.Type
+				      ) then 
+				        //if it is a list
+				        let
+				          //add single quotes around each value in the list
+				          AddSingleQuotes = List.Transform(
+				              _tag, 
+				              each "'" & _ & "'"
+				            ),
+				          //then turn it into a comma-delimited list
+				          DelimitedList = Text.Combine(
+				              AddSingleQuotes, 
+				              ","
+				            )
+				        in
+				          DelimitedList
+				    else 
+				      //if the parameter isn't a list
+				      //just add single quotes around the parameter value
+				      "'" & _tag & "'",
+				    anchor_date = if _anchor_date = #datetime(9999, 12, 31, 0, 0, 0) then DateTime.LocalNow() else _anchor_date,
+				    relative_time_period = Text.AfterDelimiter(_relative_time_period, " - "),
+				    Query = "
+				    let relative_time = '" & relative_time_period & "';
+				    let start = todatetime('" & DateTime.ToText(_start_date) & "');
+				    let end = todatetime('" & DateTime.ToText(_end_date) & "');
+				    let _start = iff(relative_time == '*custom*', todatetime(start), todatetime('" & DateTime.ToText(anchor_date) & "') - totimespan(relative_time));
+				    let _end = iff(relative_time == '*custom*', todatetime(end), todatetime('" & DateTime.ToText(anchor_date) & "'));    
+				    let bin_timespan_label = toscalar(get_bin_timespan('" & relative_time_period & "', '" & DateTime.ToText(_start_date) & "', '" & DateTime.ToText(_end_date) & "', '" & _bin_timespan & "', " & Number.ToText(_max_bins) & "));
+				    let bin_timespan = totimespan(bin_timespan_label);
+				    let time_series = TagTelemetry
+				    | where timestamp  between (_start .. _end)
+				    | where tag in (" & _tags & ")
+				    | extend join_key = '1'
+				    | make-series value = " & _aggregation & "(Value), record_count = count() default= double(null) on timestamp from _start to _end step bin_timespan by tag, join_key;
+				    time_series
+				    | join kind=inner time_series on join_key
+				    | where strcmp(tag, tag1) <= 0
+				    | extend correlation_coefficient = series_pearson_correlation(value, value1)
+				    | project tag, tag1, correlation_coefficient",
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", Query, [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

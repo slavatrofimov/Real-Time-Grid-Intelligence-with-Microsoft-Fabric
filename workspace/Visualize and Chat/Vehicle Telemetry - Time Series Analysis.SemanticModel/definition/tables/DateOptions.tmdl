@@ -1,0 +1,58 @@
+table DateOptions
+	isHidden
+	lineageTag: a8649e27-9d10-4d3a-a214-ad70936fcc54
+
+	column StartDate
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 53783519-eb25-4909-b0ab-e4d2d9f8b10d
+		summarizeBy: none
+		sourceColumn: StartDate
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 2,
+				  "kind": 1,
+				  "selectAllValue": "__SelectAll__"
+				}
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EndDate
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 793a93a2-2a74-47a4-8804-f64dbeee5ae1
+		summarizeBy: none
+		sourceColumn: EndDate
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 2,
+				  "kind": 1,
+				  "selectAllValue": "__SelectAll__"
+				}
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DateOptions = m
+		mode: import
+		queryGroup: DynamicParameterInputs
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [StartDate = _t, EndDate = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"StartDate", type datetime}, {"EndDate", type datetime}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,35 @@
+table TimePeriod
+	lineageTag: 8369a7be-81f9-4219-a257-5fd71add5175
+
+	column TimePeriod
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 773fd9dd-c23c-4d60-bd94-63ef69dde484
+		summarizeBy: none
+		sourceColumn: TimePeriod
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TimePeriod = m
+		mode: directQuery
+		source = ```
+				let
+				    Query = "
+				    let relative_time = '" & _relateive_time_period & "';
+				    let start = todatetime('" & DateTime.ToText(_start_date) & "');
+				    let end = todatetime('" & DateTime.ToText(_end_date) & "');
+				     let _start = iff(relative_time == '*custom*', todatetime(start), now() - totimespan(relative_time));
+				     let _end = iff(relative_time == '*custom*', todatetime(end), now());    
+				    let result = datatable (id: int) [1];
+				    result
+				        | project TimePeriod = replace_string(strcat(tostring(bin(_start, 1sec)), ' - ', tostring(bin(_end, 1sec))), '.0000000Z', '')
+				    ",
+				    Source = AzureDataExplorer.Contents("https://trd-1efz2jhhxb9cgmwcyx.z6.kusto.fabric.microsoft.com", "PowerUtilitiesEH", Query, [MaxRows=null, MaxSize=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
