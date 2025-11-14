@@ -476,31 +476,6 @@ else:
 
 # MARKDOWN ********************
 
-# ## View Sample Data
-
-# CELL ********************
-
-print("Sample Substations:")
-display(substations_df.limit(5))
-
-print("\nSample Feeders:")
-display(feeders_df.limit(5))
-
-print("\nSample Transformers:")
-display(transformers_df.limit(5))
-
-print("\nSample Meters:")
-display(meters_df.limit(5))
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# MARKDOWN ********************
-
 # ## Create KQL Database Shortcuts
 # 
 # Creates shortcuts and accelerated external tables in the KQL Database for query access.
