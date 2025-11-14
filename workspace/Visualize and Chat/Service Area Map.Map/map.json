@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/map/definition/1.0.0/schema.json",
   "basemap": {
-    "options": "{\"center\":[-86.3128947,39.7372309],\"zoom\":\"10.6\",\"pitch\":\"50\",\"bearing\":\"0\",\"style\":\"grayscale_light\"}",
+    "options": "{\"center\":[-86.2703226,39.5936291],\"zoom\":\"10.6\",\"pitch\":\"50\",\"bearing\":\"0\",\"style\":\"grayscale_light\"}",
     "controls": {
       "zoom": true,
       "pitch": true,

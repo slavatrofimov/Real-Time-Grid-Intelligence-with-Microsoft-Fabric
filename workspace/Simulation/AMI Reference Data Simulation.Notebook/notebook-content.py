@@ -128,17 +128,16 @@ print(f"  Width: {CITY_WIDTH:.4f}° | Height: {CITY_HEIGHT:.4f}°")
 # Creates hierarchical grid structure: substations → feeders → transformers → meters
 
 # CELL ********************
-
 def generate_network_topology():
     """Generate realistic electrical grid topology with all network elements."""
     
     print("Generating network topology...")
     
     # ═══════════════════════════════════════════════════════════
-    # Substations (12 total)
+    # Substations (18 total)
     # ═══════════════════════════════════════════════════════════
     substations = []
-    substation_count = 12
+    substation_count = 18
     substation_names = [fake.city() + " Sub" for _ in range(substation_count)]
     
     for i, name in enumerate(substation_names):
@@ -147,8 +146,8 @@ def generate_network_topology():
             "substation_name": name,
             "voltage_level": "12.47kV",
             "capacity_mva": random.randint(25, 100),
-            "latitude": CITY_CENTER['lat'] + np.random.normal(-0.10, 0.10),
-            "longitude": CITY_CENTER['lon'] + np.random.normal(-0.12, 0.12),
+            "latitude": CITY_CENTER['lat'] + np.random.normal(-0.1, 0.1),
+            "longitude": CITY_CENTER['lon'] + np.random.normal(-0.1, 0.1),
             "commissioned_date": fake.date_between(start_date='-20y', end_date='-5y').isoformat()
         }
         substations.append(substation)
@@ -156,13 +155,13 @@ def generate_network_topology():
     print(f"  → Created {len(substations)} substations")
     
     # ═══════════════════════════════════════════════════════════
-    # Feeder Lines (5-10 per substation)
+    # Feeder Lines (4-8 per substation)
     # ═══════════════════════════════════════════════════════════
     feeders = []
     counter = 0
     
     for sub in substations:
-        feeder_count = 5 + random.randint(0, 5)
+        feeder_count = 4 + random.randint(0, 4)
         for i in range(feeder_count):
             # Assign a radial angle for this feeder (distribute evenly around substation)
             angle = (2 * np.pi * i) / feeder_count + np.random.uniform(-0.2, 0.2)
@@ -173,7 +172,7 @@ def generate_network_topology():
                 "substation_id": sub["substation_id"],
                 "voltage_level": "12.47kV",
                 "max_load_kw": random.randint(3000, 8000),
-                "length_miles": random.uniform(2.5, 12.0),
+                "length_miles": random.uniform(10.0, 35.0),
                 "conductor_type": random.choice(["ACSR", "Aluminum", "Copper"]),
                 "protection_scheme": random.choice(["OCR", "Distance", "Differential"]),
                 "scada_monitored": random.choice([True, False]),
@@ -188,7 +187,7 @@ def generate_network_topology():
     print(f"  → Created {len(feeders)} feeder lines")
     
     # ═══════════════════════════════════════════════════════════
-    # Transformers (25-100 per feeder)
+    # Transformers (20-80 per feeder)
     # ═══════════════════════════════════════════════════════════
     transformers = []
     counter = 0
@@ -197,7 +196,7 @@ def generate_network_topology():
     substation_lookup = {s["substation_id"]: s for s in substations}
     
     for feeder in feeders:
-        transformer_count = 25 + random.randint(0, 75)
+        transformer_count = 20 + random.randint(0, 60)
         sub = substation_lookup[feeder["substation_id"]]
         base_angle = feeder["_radial_angle"]
         
@@ -434,7 +433,7 @@ print(f"  Meters:       {meters_df.count():,}")
 # CELL ********************
 
 # Configuration: Set to True to overwrite existing tables (use with caution)
-OverwriteExisting = True
+OverwriteExisting = False
 
 # Get existing tables
 existing_tables = [table.name for table in notebookutils.lakehouse.listTables()]
