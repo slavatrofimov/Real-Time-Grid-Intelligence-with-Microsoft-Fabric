@@ -147,7 +147,7 @@ def generate_network_topology():
             "substation_name": name,
             "voltage_level": "12.47kV",
             "capacity_mva": random.randint(25, 100),
-            "latitude": CITY_CENTER['lat'] + np.random.normal(-0.0, 0.09),
+            "latitude": CITY_CENTER['lat'] + np.random.normal(-0.10, 0.10),
             "longitude": CITY_CENTER['lon'] + np.random.normal(-0.12, 0.12),
             "commissioned_date": fake.date_between(start_date='-20y', end_date='-5y').isoformat()
         }
