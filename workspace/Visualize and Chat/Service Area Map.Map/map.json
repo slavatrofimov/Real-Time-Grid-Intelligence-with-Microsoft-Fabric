@@ -1,0 +1,153 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/map/definition/1.0.0/schema.json",
+  "basemap": {
+    "options": "{\"center\":[-86.3128947,39.7372309],\"zoom\":\"10.6\",\"pitch\":\"50\",\"bearing\":\"0\",\"style\":\"grayscale_light\"}",
+    "controls": {
+      "zoom": true,
+      "pitch": true,
+      "compass": true,
+      "scale": true,
+      "traffic": null
+    },
+    "backgroundColor": null,
+    "theme": "classic"
+  },
+  "dataSources": {
+    "lakehouses": [
+      {
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactId": "7247de52-9eff-ad83-4479-242eff897dd5"
+      }
+    ],
+    "kqlDataBases": [
+      {
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactId": "e09969b4-e261-8ecd-44f5-30574ca3a859"
+      }
+    ]
+  },
+  "layerSources": [
+    {
+      "id": "0f47762a-1647-4c38-81a6-0513d5709db3",
+      "name": "Map-Vehicles",
+      "type": "kusto",
+      "options": "{\"cluster\":false}",
+      "parentArtifactId": "e09969b4-e261-8ecd-44f5-30574ca3a859",
+      "relativePath": null,
+      "querysetTabId": "00000000-0000-0000-0000-000000000000_23c27c9a-fa0c-4a87-a14f-4b03a5db5ad9",
+      "latitudeColumnName": "lat",
+      "longitudeColumnName": "lon",
+      "geometryColumnName": null,
+      "refreshIntervalMs": 5000
+    },
+    {
+      "id": "f181d98c-7b51-4a39-a24b-6e2724403e31",
+      "name": "Map-VehicleTracks",
+      "type": "kusto",
+      "options": null,
+      "parentArtifactId": "e09969b4-e261-8ecd-44f5-30574ca3a859",
+      "relativePath": null,
+      "querysetTabId": "00000000-0000-0000-0000-000000000000_6aba641f-06c9-4660-b660-2a9e6070365d",
+      "latitudeColumnName": null,
+      "longitudeColumnName": null,
+      "geometryColumnName": "Route",
+      "refreshIntervalMs": 5000
+    },
+    {
+      "id": "f77ef6cb-90c2-458f-b7d0-9c235fdea759",
+      "name": "Map-Weather",
+      "type": "kusto",
+      "options": null,
+      "parentArtifactId": "e09969b4-e261-8ecd-44f5-30574ca3a859",
+      "relativePath": null,
+      "querysetTabId": "00000000-0000-0000-0000-000000000000_2f222514-6fa2-4279-9945-bc8df068c224",
+      "latitudeColumnName": null,
+      "longitudeColumnName": null,
+      "geometryColumnName": "Polygon",
+      "refreshIntervalMs": 5000
+    },
+    {
+      "id": "df1455fe-b4fa-49d0-8ce9-75759d13c702",
+      "name": "Map-ServiceAreaHealthy",
+      "type": "kusto",
+      "options": null,
+      "parentArtifactId": "e09969b4-e261-8ecd-44f5-30574ca3a859",
+      "relativePath": null,
+      "querysetTabId": "00000000-0000-0000-0000-000000000000_863f3478-54bc-4cb0-8f06-f67af1063b54",
+      "latitudeColumnName": null,
+      "longitudeColumnName": null,
+      "geometryColumnName": "Polygon",
+      "refreshIntervalMs": 30000
+    },
+    {
+      "id": "4ca72728-425d-4862-880e-4bffaa9dce23",
+      "name": "Map-ServiceAreaFailures",
+      "type": "kusto",
+      "options": null,
+      "parentArtifactId": "e09969b4-e261-8ecd-44f5-30574ca3a859",
+      "relativePath": null,
+      "querysetTabId": "00000000-0000-0000-0000-000000000000_ef758492-f2fc-48bc-b075-d5bc238b1da9",
+      "latitudeColumnName": null,
+      "longitudeColumnName": null,
+      "geometryColumnName": "Polygon",
+      "refreshIntervalMs": 30000
+    },
+    {
+      "id": "a64953a1-4f53-4086-b63c-dc8935969fa7",
+      "name": "transmission_lines",
+      "type": "geojson",
+      "options": null,
+      "parentArtifactId": "7247de52-9eff-ad83-4479-242eff897dd5",
+      "relativePath": "Files/data/transmission_lines.geojson",
+      "querysetTabId": null,
+      "latitudeColumnName": null,
+      "longitudeColumnName": null,
+      "geometryColumnName": null,
+      "refreshIntervalMs": 0
+    }
+  ],
+  "layerSettings": [
+    {
+      "id": "d0b4c1e0-0cf7-4fa7-8bb7-36698cc9d747",
+      "name": "Vehicles",
+      "sourceId": "0f47762a-1647-4c38-81a6-0513d5709db3",
+      "sourceLayerId": null,
+      "options": "{\"color\":\"#0171B8\",\"type\":\"vector\",\"visible\":true,\"bubbleOptions\":{\"color\":\"#0171B8\",\"strokeWidth\":2,\"strokeColor\":\"#374649\",\"sizeType\":\"fixed\",\"fixedSize\":8,\"opacity\":0.75},\"lineOptions\":{\"strokeColor\":\"#0171B8\"},\"polygonOptions\":{\"fillColor\":\"#0171B8\"},\"polygonExtrusionOptions\":{\"fillColor\":\"#0171B8\"},\"dataLabelOptions\":{\"enabled\":true,\"size\":11,\"textStrokeWidth\":1.2},\"dataLabelKeys\":[\"VehicleID\"],\"tooltipKeys\":[\"VehicleID\",\"timestamp\",\"lat\",\"lon\",\"DriverID\",\"vehicle_speed\",\"fuel_level\"]}"
+    },
+    {
+      "id": "74a7afbc-d844-49b8-b3a4-340baa41099a",
+      "name": "Vehicle Tracks",
+      "sourceId": "f181d98c-7b51-4a39-a24b-6e2724403e31",
+      "sourceLayerId": null,
+      "options": "{\"color\":\"#0171B8\",\"type\":\"vector\",\"visible\":true,\"bubbleOptions\":{\"color\":\"#0171B8\"},\"lineOptions\":{\"strokeColor\":\"#0171B8\",\"strokeWidth\":6,\"strokeOpacity\":0.58},\"polygonOptions\":{\"fillColor\":\"#0171B8\"},\"polygonExtrusionOptions\":{\"fillColor\":\"#0171B8\"}}"
+    },
+    {
+      "id": "3c3a631e-f030-4a89-82ef-67da91e2959a",
+      "name": "Weather",
+      "sourceId": "f77ef6cb-90c2-458f-b7d0-9c235fdea759",
+      "sourceLayerId": null,
+      "options": "{\"color\":\"#5F6B6D\",\"type\":\"vector\",\"visible\":true,\"dataLabelOptions\":{\"enabled\":false},\"dataLabelKeys\":[\"rainfall_rate\"],\"allowExtrusions\":false,\"polygonOptions\":{\"filter\":[\"all\",[\"any\",[\"==\",[\"geometry-type\"],\"Polygon\"],[\"==\",[\"geometry-type\"],\"MultiPolygon\"]]],\"enableSeriesGroup\":true,\"seriesGroup\":\"PolygonColor\",\"fillColor\":[\"match\",[\"to-string\",[\"get\",\"PolygonColor\"]],\"#32CD32\",\"#68A6A0\",\"#FFD700\",\"#FD625E\",\"#FF8C00\",\"#7968A6\",\"#FF0000\",\"#FDAB5D\",\"#BBFD5D\"],\"fillOpacity\":0.4},\"polygonExtrusionOptions\":{\"filter\":[\"boolean\",false],\"enableSeriesGroup\":true,\"seriesGroup\":\"PolygonColor\",\"fillColor\":[\"match\",[\"to-string\",[\"get\",\"PolygonColor\"]],\"#32CD32\",\"#0FF23C\",\"#FFD700\",\"#615F6D\",\"#FF8C00\",\"#7968A6\",\"#FF0000\",\"#0FF2A5\",\"#BBFD5D\"],\"fillOpacity\":0.4},\"bubbleOptions\":{\"color\":\"#5F6B6D\"},\"lineOptions\":{\"strokeColor\":\"#5F6B6D\"}}"
+    },
+    {
+      "id": "126c3650-be3e-4a43-aa05-51860cc50c0a",
+      "name": "Service Area Failures",
+      "sourceId": "4ca72728-425d-4862-880e-4bffaa9dce23",
+      "sourceLayerId": null,
+      "options": "{\"color\":\"#FD625E\",\"type\":\"vector\",\"visible\":true,\"bubbleOptions\":{\"color\":\"#FD625E\"},\"lineOptions\":{\"strokeColor\":\"#FD625E\"},\"polygonOptions\":{\"fillColor\":\"#FD625E\",\"fillOpacity\":0.5,\"filter\":[\"all\",[\"any\",[\"==\",[\"geometry-type\"],\"Polygon\"],[\"==\",[\"geometry-type\"],\"MultiPolygon\"]],[\"any\",[\"!\",[\"has\",\"Meters\"]],[\"==\",[\"get\",\"Meters\"],0]]]},\"polygonExtrusionOptions\":{\"fillColor\":\"#FD625E\",\"fillOpacity\":0.5,\"filter\":[\"all\",[\"any\",[\"==\",[\"geometry-type\"],\"Polygon\"],[\"==\",[\"geometry-type\"],\"MultiPolygon\"]],[\"all\",[\"has\",\"Meters\"],[\"!=\",[\"get\",\"Meters\"],0]]],\"height\":[\"interpolate\",[\"linear\"],[\"zoom\"],5,[\"interpolate\",[\"linear\"],[\"get\",\"Meters\"],1,10000,88,100000],10,[\"interpolate\",[\"linear\"],[\"get\",\"Meters\"],1,100,88,1000]],\"heightProperty\":\"Meters\"},\"tooltipKeys\":[\"Meters\",\"mtr_h3cell_7\"],\"allowExtrusions\":true}"
+    },
+    {
+      "id": "da10272a-4ef2-41ec-916a-e372384e2aa2",
+      "name": "Service Area Healthy",
+      "sourceId": "df1455fe-b4fa-49d0-8ce9-75759d13c702",
+      "sourceLayerId": null,
+      "options": "{\"color\":\"#0FF23C\",\"type\":\"vector\",\"visible\":true,\"bubbleOptions\":{\"color\":\"#0FF23C\"},\"lineOptions\":{\"strokeColor\":\"#0FF23C\",\"strokeWidth\":3},\"polygonOptions\":{\"fillColor\":\"#0FF23C\",\"filter\":[\"all\",[\"any\",[\"==\",[\"geometry-type\"],\"Polygon\"],[\"==\",[\"geometry-type\"],\"MultiPolygon\"]]],\"fillOpacity\":0.38},\"polygonExtrusionOptions\":{\"fillColor\":\"#0FF23C\",\"filter\":[\"boolean\",false],\"fillOpacity\":0.38},\"allowExtrusions\":false,\"tooltipKeys\":[\"Meters\"]}"
+    },
+    {
+      "id": "22a0bcef-e8dd-4be2-a24b-63595e61f215",
+      "name": "Transmission Lines",
+      "sourceId": "a64953a1-4f53-4086-b63c-dc8935969fa7",
+      "sourceLayerId": null,
+      "options": "{\"color\":\"#FDAB5D\",\"type\":\"vector\",\"visible\":true,\"bubbleOptions\":{\"color\":\"#FDAB5D\"},\"lineOptions\":{\"strokeColor\":\"#FDAB5D\",\"strokeOpacity\":0.8,\"strokeWidth\":3,\"enableSeriesGroup\":false},\"polygonOptions\":{\"fillColor\":\"#FDAB5D\"},\"polygonExtrusionOptions\":{\"fillColor\":\"#FDAB5D\"},\"dataLabelOptions\":{\"enabled\":false,\"size\":10},\"tooltipKeys\":[\"OBJECTID\",\"TYPE\",\"VOLTAGE\",\"VOLT_CLASS\"],\"dataLabelKeys\":[]}"
+    }
+  ]
+}

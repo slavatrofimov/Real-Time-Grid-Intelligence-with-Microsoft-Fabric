@@ -18,6 +18,36 @@
       }
     ],
     "tabs": [
+      {
+        "id": "23c27c9a-fa0c-4a87-a14f-4b03a5db5ad9",
+        "content": "VehicleTelemetryRaw\n| summarize arg_max(timestamp, lat, lon, DriverID, vehicle_speed, fuel_level) by VehicleID",
+        "title": "Map-Vehicles",
+        "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
+      },
+      {
+        "id": "6aba641f-06c9-4660-b660-2a9e6070365d",
+        "content": "VehicleTelemetry\n| where timestamp > ago(10min)\n| project VehicleID, timestamp, lat = round(toreal(lat), 9), lon = round(toreal(lon), 9)\n| order by VehicleID asc, timestamp asc\n| summarize coordinates = make_list(pack_array(pack_array(lon, lat))) by VehicleID\n| extend Route = tostring(pack(\"type\", \"LineString\", \"coordinates\", coordinates))\n| project-away coordinates",
+        "title": "Map-VehicleTracks",
+        "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
+      },
+      {
+        "id": "863f3478-54bc-4cb0-8f06-f67af1063b54",
+        "content": "let OutageMeters = AMITelemetryOutageLastGasp\n    | where timestamp > ago(10min)\n    | summarize by meter_id;\nMeterContextualization\n| join kind =  leftanti OutageMeters on $left.mtr_meter_id == $right.meter_id\n| summarize Meters = count() by mtr_h3cell_7\n| extend\n    Polygon = tostring(geo_h3cell_to_polygon(mtr_h3cell_7))\n",
+        "title": "Map-ServiceAreaHealthy",
+        "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
+      },
+      {
+        "id": "2f222514-6fa2-4279-9945-bc8df068c224",
+        "content": "WeatherCurrent \n    | where EventEnqueuedUtcTime >= ago(2min)\n    | project PolygonColor = color, Polygon = tostring(todynamic(features).geometry), rainfall_rate\n    | order by rainfall_rate asc\n",
+        "title": "Map-Weather",
+        "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
+      },
+      {
+        "id": "ef758492-f2fc-48bc-b075-d5bc238b1da9",
+        "content": "let OutageMeters = AMITelemetryOutageLastGasp\n    | where timestamp > ago(10min)\n    | summarize by meter_id;\nMeterContextualization\n| join kind =  inner OutageMeters on $left.mtr_meter_id == $right.meter_id\n| summarize Meters = count() by mtr_h3cell_7\n| extend\n    Polygon = tostring(geo_h3cell_to_polygon(mtr_h3cell_7))\n",
+        "title": "Map-ServiceAreaFailures",
+        "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
+      }
     ]
   }
 }

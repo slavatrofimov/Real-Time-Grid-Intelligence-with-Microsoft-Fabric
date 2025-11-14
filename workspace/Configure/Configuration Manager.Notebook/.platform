@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "KQLDashboard",
-    "displayName": "Meter Status Summary",
-    "description": "AMI Meter Statuses"
+    "type": "Notebook",
+    "displayName": "Configuration Manager",
+    "description": "New notebook"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "2cfb7a6d-03af-8228-4eeb-e26a38246a6c"
+    "logicalId": "1a83a302-6b19-98d9-46e3-d7759cdcf83d"
   }
 }

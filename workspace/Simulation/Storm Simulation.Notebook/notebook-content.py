@@ -693,7 +693,7 @@ def get_eventstream_connection_string(eventstream_name, eventstream_source_name)
     workspace_id = fabric.resolve_workspace_id()
     
     #Get Eventstream Id
-    eventstream_id = eventhouse_id = fabric.resolve_item_id(eventstream_name)
+    eventstream_id = fabric.resolve_item_id(eventstream_name)
     
     # Get Source Id
     client = fabric.FabricRestClient()

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Map",
+    "displayName": "Service Area Map",
+    "description": "Composite map of the service area, which displays transmission lines, meter health and vehicle locations."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e740e515-d242-96cc-4f6b-7ed896a838f7"
+  }
+}

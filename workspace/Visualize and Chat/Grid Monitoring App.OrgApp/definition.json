@@ -1,0 +1,78 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/orgapp/definition/orgAppDefinition/1.0.0/schema.json",
+  "settings": {
+    "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAzUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKMFRskAAAARdFJOUwBAz78wIO//r3AQ34BQj59gMXYg1AAAAAlwSFlzAAAOwwAADsMBx2+oZAAAA9xJREFUaEPtmtl25CAMRL20TRv39v9fO6fEJoR6bDB5mcl9yIndLG4VJYSTYfjPGKf5Ju/1ZFmNWRd5tyN3Y4yZ5d1+bBjfmE3e78VtdROYH5LBzsaYdTfG7PKjPjzw8M8RP+/ysx7QyK9heNM88tPr2AmxscNgEaTVys8v84oPfvuRtfrxAQJpro4gQFOICy5W0eAqeOgxXCy46qsC4s5WP75CX7dhjTJdYbmeItgHHlmwesmvs7xCDpK8emTu8evw4B6Fb2RUYpMzf2Sf89hPGJ6+BHtYi2ukDDA1TmEfYYR5o/zDAk4TDJ/QIFi8hqTsjCenARn40A7Dk1IrTVGnd1R2dUUEfDbxBogdhewWp6jQOyq7Prxdhc+c03zord+pz+rNlN1iukEuffNWSKhp798q9B6jcG2sR4E6XPdHHKVx2b4eOaJANq9HjijQmwifBacV6Hcz1Ca0g+W3vNMEZbsCtUnhM+a0DLV3zl4MpfnM1dnlold754y74sfCZ9JpAbX3CZAMRMJEofrIb10ACU082bNrCYyAiyICshyF+zxf8tNRVjjLb1XxnbT3FD7zBx3ixC6jkqoKxEj4zB8SAherCpiqGIJudqoqFJ9Fp3WpKhSfMactdLwF5/RWqopiu6F2zGm/VUUdckSBbF6PHFGgNMF2U/jMOU1uOUpvidJE9Zm7LedVekuUJqrP9D1N6S1R6gLVZ8XZnFB6S5S6QPWZq8bkmlR6H0NlXZHMfDJUJq4mpBo+RUyGUuUG6IDpuPuvz7Y5GaMGsFjirjx9eDLE7fqQS7CGXilfxsnmzcJqR4vmEJIYGfKJg2WEDs90SLgqMyT2TxmPq7HsxZxXZUZokHFsXsC45Y6q+6LMJLFlb6T2IMaOb4GLazJD4jerMDbLX4Esl2Umiaf8vcUwjLGSoF+uyBwLBvbeAqRi5aLMafWn9xaeLbrvgsyQGCD0JdF87TLTn2zM9787efM1y+wS9fdqKi7eVpmTxHI3AOxk0iozL/Lu+aZpx5kdfBplJhenNc8ilYy9zrd2N5OLh2FJC9JFKsVmfSyuPmqSOSZqtiDN/ZOSnl+8zUmbJWqeHTwxb7QnbRnbFCnEhjmvMWn7RB3JNoS8+pGPcg63FwfSkdMzsXc5TTIzifm62bckeHRfk8xJYhab+YmYpe0/FEotMoe4suP4O66btB3sdEJokNlLzGOTZ+w8UvUyk4tlbHJ4pKplxj8HRFhsclKkqittthfL2OSkSNXJHLvN49+GBylSFTL7rSwrJL4TI3V0yE+Qc/SdXsdF6vwEwzjfD2OT85wneWj+V/gDloBHVJEHJWgAAAAASUVORK5CYII=",
+    "experienceSettings": {
+      "navigationPane": {
+        "isHidden": false,
+        "isCollapsed": false,
+        "independentPageNavigation": false
+      }
+    }
+  },
+  "elements": [
+    {
+      "elementType": "item",
+      "elementId": "5ec4fa56-8496-4ecc-9797-fda9235aa2cd",
+      "itemType": "Map",
+      "itemLogicalId": "e740e515-d242-96cc-4f6b-7ed896a838f7",
+      "displayName": "ServiceAreaMap"
+    },
+    {
+      "elementType": "item",
+      "elementId": "ada88d30-a1f0-4f6d-b45d-b76f4c8678b1",
+      "itemType": "KQLDashboard",
+      "itemLogicalId": "2cfb7a6d-03af-8228-4eeb-e26a38246a6c",
+      "displayName": "Meter Status Summary"
+    },
+    {
+      "elementType": "item",
+      "elementId": "c9bc28ac-6b1f-48f6-bd84-55e5c38cb51e",
+      "itemType": "Report",
+      "itemLogicalId": "b52f7edc-21c9-95a6-4ec6-e013dcac209f",
+      "displayName": "Meter Exploration"
+    },
+    {
+      "elementType": "item",
+      "elementId": "166c2929-2bc5-4b48-9725-fec49c7ff5f1",
+      "itemType": "Report",
+      "itemLogicalId": "0fc9cb68-59be-97f6-4ce6-9ebb6aa6c26e",
+      "displayName": "Meter Telemetry - Time Series Analysis"
+    },
+    {
+      "elementType": "item",
+      "elementId": "d905a563-7c62-449b-af3e-8561c3787345",
+      "itemType": "KQLDashboard",
+      "itemLogicalId": "cc02c381-d97a-bf62-4f0b-7f7cb728889c",
+      "displayName": "Vehicle Tracking"
+    },
+    {
+      "elementType": "item",
+      "elementId": "e25ddd2a-e632-413b-a037-7f17dc2e0499",
+      "itemType": "Report",
+      "itemLogicalId": "002f762e-a818-a5a1-426a-c8d99937328e",
+      "displayName": "Vehicle Telemetry - Time Series Analysis"
+    },
+    {
+      "elementType": "item",
+      "elementId": "07ecfe35-882b-4b54-a1cd-4dd7e61b5f9e",
+      "itemType": "SemanticModel",
+      "itemLogicalId": "e1f39259-9128-9540-47ce-4d9e0edaa870",
+      "displayName": "c9bc28ac-6b1f-48f6-bd84-55e5c38cb51e"
+    },
+    {
+      "elementType": "item",
+      "elementId": "30f50d7a-ec76-4b51-9694-9dfe8af0f4c9",
+      "itemType": "SemanticModel",
+      "itemLogicalId": "4cefb2a0-8a1e-8337-4196-e240ce05ccdd",
+      "displayName": "166c2929-2bc5-4b48-9725-fec49c7ff5f1"
+    },
+    {
+      "elementType": "item",
+      "elementId": "c0858f91-084b-41de-88f0-51619d948c55",
+      "itemType": "SemanticModel",
+      "itemLogicalId": "7e48e21a-8f46-8c3a-4cff-f43b2aa29f17",
+      "displayName": "e25ddd2a-e632-413b-a037-7f17dc2e0499"
+    }
+  ]
+}

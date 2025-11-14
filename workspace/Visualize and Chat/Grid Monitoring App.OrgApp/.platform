@@ -1,12 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "KQLDashboard",
-    "displayName": "Meter Status Summary",
-    "description": "AMI Meter Statuses"
+    "type": "OrgApp",
+    "displayName": "Real-Time Grid Intelligence App"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "2cfb7a6d-03af-8228-4eeb-e26a38246a6c"
+    "logicalId": "82176188-12f7-b704-4321-46a7e976f22f"
   }
 }

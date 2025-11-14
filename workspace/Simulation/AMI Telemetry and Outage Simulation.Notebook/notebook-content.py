@@ -121,7 +121,7 @@ def get_eventstream_connection_string(eventstream_name, eventstream_source_name)
     workspace_id = fabric.resolve_workspace_id()
     
     #Get Eventstream Id
-    eventstream_id = eventhouse_id = fabric.resolve_item_id(eventstream_name)
+    eventstream_id = fabric.resolve_item_id(eventstream_name)
     
     # Get Source Id
     client = fabric.FabricRestClient()
@@ -526,7 +526,7 @@ class MeterFailureSimulator:
                     print(f"WARNING: {meter_id} - battery low at {timestamp}")
         
         return warning_messages
-    
+
 # Initialize failure simulator
 failure_simulator = MeterFailureSimulator()
 
@@ -855,7 +855,6 @@ class AMIEventHubClient:
 # Configuration for Azure Event Hub
 EVENT_HUB_CONFIG = {
     "connection_string": AZURE_EVENTHUB_CONNECTION_STRING,
-    #"event_hub_name": AZURE_EVENTHUB_NAME,
     "batch_size": 500,  # Messages per batch
     "send_interval_seconds": 1,  # Send every 5 seconds
     "retry_attempts": 3,
@@ -977,7 +976,7 @@ class AMITelemetryOrchestrator:
         try:
             kusto_uri = kusto_query_uri
             kusto_database = "PowerUtilitiesEH"
-            kusto_access_token = mssparkutils.credentials.getToken('kusto')
+            kusto_access_token = notebookutils.credentials.getToken('kusto')
 
             # Query for affected transformers
             transformers_query = 'GetTransformersAffectedByLatestStorm(10)'
