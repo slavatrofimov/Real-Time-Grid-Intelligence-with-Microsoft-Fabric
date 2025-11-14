@@ -128,6 +128,7 @@ print(f"  Width: {CITY_WIDTH:.4f}° | Height: {CITY_HEIGHT:.4f}°")
 # Creates hierarchical grid structure: substations → feeders → transformers → meters
 
 # CELL ********************
+
 def generate_network_topology():
     """Generate realistic electrical grid topology with all network elements."""
     
