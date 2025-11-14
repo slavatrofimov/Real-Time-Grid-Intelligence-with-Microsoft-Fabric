@@ -67,6 +67,12 @@ Note that this diagram represents a hypothetical real-world solution. This solut
 - **Power BI Semantic Models**: DirectQuery mode connection to the eventhouse for real-time reporting
 - **Data Agent**: AI-powered natural language interface to query grid data
 
+#### Visualization
+- **Maps**: Real-time visualization of streaming and reference data.
+- **Real-Time Dashboards**: Real-time visibility for key operational metrics.
+- **Power BI Reports**: Time-series analysis, aggregations, and self-service analytics.
+
+
 #### Action
 - **Activator**: Event data is continuously analyzed and automated notification or actions are initiated when triger conditions are satisfied.
 
@@ -110,6 +116,7 @@ The installer will:
 - ✅ Deploy all Fabric items (Eventhouses, Lakehouses, Eventstreams, Notebooks, Reports)
 - ✅ Configure item dependencies and relationships
 - ✅ Import sample data files
+- ✅ Configure credentials and refresh all semantic models
 
 
 ### Step 4: Generate Reference Data
@@ -121,22 +128,6 @@ The installer will:
 This generates:
 - Meter metadata 
 - Network topology (substations, feeder lines, transformers)
-
-### Step 5: Edit Credentials for Power BI Semantic Models
-1. Navigate to the **Visualize and Chat** folder in your workspace
-1. Hover over the **Meter Analytics** semantic model and click on the **...** symbol used to access more options.
-1. Click on **Settings** in the drop-down menu
-1. Expand the section titled "**Data source credentials**
-1. Click on the **Edit credentials** link
-1. Set "Privacy level setting for this data source" to "Organizational" and click on the **Sign in** button
-1. Follow the prompts to complete the Sign-in process with your Entra Id credentials.
-
-[Note: this process needs to be performed for only one of the semantic models, and does not need to be repeated for other semantic models.]
-
-### Step 6: Perform a One-time Refresh of Power BI Semantic Models
-1. Navigate to the **Visualize and Chat** folder in your workspace
-1. Hover over the **Meter Analytics** semantic model and click on the **⟳** symbol, which will trigger a one-time refresh of reference data in the semantic model.
-1. Repeat this process for the remaining semantic models: **Tag Telemetry - Time Series Analysis** and **Vehicle Telemetry - Time Series Analysis**
 
 
 ## 📖 Usage Instructions
@@ -189,7 +180,17 @@ Data Generated: geospatial data representing the progression of a severe thunder
 
 ### Viewing Reports and Dashboards
 
-#### KQL Dashboards
+#### Maps
+
+**Service Area Map**
+- Visualize the health of meters across the service area
+- Visualize weather data
+- Visualize locations of service vehicles
+- Diplay location of electrical transmission lines
+
+Access: Navigate to **Visualize and Chat** → **Service Area Map**
+
+#### Real Time Dashboards
 
 **Meter Statuses Dashboard**
 - Real-time meter health monitoring
@@ -207,12 +208,11 @@ Access: Navigate to **Visualize and Chat** → **Vehicle Tracking**
 
 #### Power BI Reports
 
-**Meter Analytics Report**
+**Meter Exploration Report**
 - Customer consumption patterns
 - Recent trends in power consumption and quality metrics
-- Outage statuses and weather events across the service area
 
-**Tag Telemetry - Time Series Analysis**
+**Meter Telemetry - Time Series Analysis**
 - Multi-meter comparison views
 - Flexible time series analysis of metrics from individual meters
 - Anomaly detection
@@ -284,10 +284,8 @@ Built with Microsoft Fabric's powerful real-time intelligence platform:
 - **Eventstreams**: For seamless data ingestion
 - **Eventhouse**: For lightning-fast KQL queries
 - **Lakehouse**: For unified data storage
-- **Power BI**: For stunning visualizations
-- **Data Activator**: For intelligent alerting
-
-Advanced geospatial visualizations in Power BI reports are built using the **Icon Map PRO** visual from [Tekantis](https://www.tekantis.com/). Icon Map Pro is commercially-licensed software. Reach out to Tekantis to license the software for production use cases.
-
+- **Power BI**: For dynamic visualizations
+- **Maps**: For stunning real-time geospatial visualizations
+- **Activator**: For intelligent alerting
 
 ---
