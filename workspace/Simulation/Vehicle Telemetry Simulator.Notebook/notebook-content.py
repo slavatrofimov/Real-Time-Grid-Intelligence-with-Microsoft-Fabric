@@ -541,6 +541,8 @@ def send_telemetry_to_eventhub(connection_str, routes, duration_minutes: int = 1
             
             # Wait before sending next batch
             time.sleep(2)
+            # Update current time
+            current_time = datetime.now()
             
     except KeyboardInterrupt:
         print("Telemetry generation stopped")
