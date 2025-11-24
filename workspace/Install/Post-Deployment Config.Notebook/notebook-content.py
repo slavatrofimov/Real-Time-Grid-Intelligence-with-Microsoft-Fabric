@@ -13,7 +13,6 @@
 
 # # ⚙️ Post-Deployment Configuration
 # 
-# This notebook per
 # - Sets data source credentials for semantic models to use the current user's OAuth token with SSO enabled
 # - Triggers refresh of semantic models to ensure data is up-to-date after deployment
 
