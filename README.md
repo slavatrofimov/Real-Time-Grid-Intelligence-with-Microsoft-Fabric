@@ -31,6 +31,9 @@ The solution simulates a realistic utility grid environment with:
 - **Operational Efficiency**: Track field service vehicles and optimize crew dispatch
 - **Predictive Maintenance**: Detect meter failures, battery issues, and tamper events before they escalate
 
+### Demonstration Video
+[![Real-Time Grid Intelligence Video](/media/RTI-Grid-Intelligence-Video-Screenshot.png)](https://www.youtube.com/watch?v=6xjQD-g2nd0)
+
 ## ✨ Key Features
 
 - **🚀 One-Click Deployment**: Automated installation notebook deploys all Fabric items with dependency management
@@ -44,7 +47,7 @@ The solution simulates a realistic utility grid environment with:
 ## 🏛️ Solution Architecture
 
 ### High-Level Architectural Diagram
-![High-Level Solution Architecture](/media/RTI-Grid-Intelligenec-Solution-Diagram.png)
+![High-Level Solution Architecture](/media/RTI-Grid-Intelligence-Solution-Diagram.png)
 
 Note that this diagram represents a hypothetical real-world solution. This solution accelerator replaces source systems with Spark notebooks that generate synthetic data.
 
