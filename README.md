@@ -103,23 +103,32 @@ Note that this diagram represents a hypothetical real-world solution. This solut
 5. Click **Apply**
 
 
-### Step 2: Download and the Solution Installer notebook
-1. Download the [Solution Installer notebook](/deploy/Solution%20Installer.ipynb) to a local folder on your computer.
+### Step 2: Install the solution 
+1. In your Fabric workspace, click **+ New** → **Notebook**
+2. Add the following code snippet to a code cell:
+```python
+pip install fabric-jumpstart
+import fabric_jumpstart as jumpstart
 
-
-### Step 3: Import and Run Solution Installer
-1. In your Fabric workspace, click **+ New** → **Import notebook**
-2. On your local computer, navigate to the folder where you saved the **Solution Installer.ipynb** notebook.
-3. Upload and open the **Solution Installer** notebook
-4. Click **Run all** to execute the deployment
+jumpstart.install("grid-intelligence")
+```
+3. Run the notebook
 
 The installer will:
-- ✅ Install required Python packages
 - ✅ Download solution files from GitHub
 - ✅ Deploy all Fabric items (Eventhouses, Lakehouses, Eventstreams, Notebooks, Reports)
-- ✅ Configure item dependencies and relationships
 - ✅ Import sample data files
+
+
+### Step 3: Run the post-deployment notebook
+1. In your Fabric workspace, navigate to **+ grid-intelligence** → **Install** → **PostDeploymentConfig** and open the notebook
+2. Run the notebook
+
+The notebook will:
+- ✅ Deploy an additional item (Fabric Map)
 - ✅ Configure credentials and refresh all semantic models
+- ✅ Post-process sample data
+- ✅ Configure shortcuts in the KQL Database
 
 
 ### Step 4: Generate Reference Data

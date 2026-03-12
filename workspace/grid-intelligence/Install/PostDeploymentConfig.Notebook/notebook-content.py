@@ -41,17 +41,22 @@ from fabric_launcher import create_or_update_fabric_item, get_folder_id_by_name,
 from fabric_launcher import FabricLauncher
 
 # Download source code from GitHub
+launcher = FabricLauncher(notebookutils,
+    api_root_url = "https://api.fabric.microsoft.com" #Default is https://api.fabric.microsoft.com, but may vary depending on your environment
+    )
 
+extract_to = 'src'
 launcher.download_repository(
     repo_owner="slavatrofimov",
     repo_name="Real-Time-Grid-Intelligence-with-Microsoft-Fabric",
-    extract_to="workspace",
-    branch="main"
+    extract_to=extract_to,
+    branch="adopt-jumpstart",
 )
 
 # Initialize Fabric client and workspace
 client = fabric.FabricRestClient()
 workspace_id = fabric.get_workspace_id()
+repository_directory = f"./{extract_to}/workspace/"
 
 # METADATA ********************
 
@@ -63,8 +68,8 @@ workspace_id = fabric.get_workspace_id()
 # CELL ********************
 
 ## Deploy the Service Area Map item
-def deploy_map(item_name="ServiceAreaMap", item_type="Map", item_relative_path="VisualizeAndChat/ServiceAreaMap.Map", 
-               folder_name="VisualizeAndChat", endpoint="maps", repository_directory = launcher.repository_path,
+def deploy_map(item_name="ServiceAreaMap", item_type="Map", item_relative_path="grid-intelligence/VisualizeAndChat/ServiceAreaMap.Map", 
+               folder_name="VisualizeAndChat", endpoint="maps", repository_directory = repository_directory,
                description="Service Area Map for Real-Time Grid Intelligence solution",
                client = client, workspace_id = workspace_id):
     """Use fabric_launcher utilities to deploy an additional item: Map"""
