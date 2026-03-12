@@ -105,13 +105,14 @@ Note that this diagram represents a hypothetical real-world solution. This solut
 
 ### Step 2: Install the solution 
 1. In your Fabric workspace, click **+ New** → **Notebook**
-2. Add the following code snippet to a code cell:
-```python
-pip install fabric-jumpstart
-import fabric_jumpstart as jumpstart
-
-jumpstart.install("grid-intelligence")
-```
+2. Add the following code snippets to two separate code cells:
+    ```python
+    pip install fabric-jumpstart
+    ```
+    ```python
+    import fabric_jumpstart as jumpstart
+    jumpstart.install("grid-intelligence")
+    ```
 3. Run the notebook
 
 The installer will:
