@@ -132,17 +132,6 @@ The notebook will:
 - ✅ Configure shortcuts in the KQL Database
 
 
-### Step 4: Generate Reference Data
-
-1. Navigate to the **Simulation** folder in your workspace
-2. Open the **AMIReferenceDataSimulation** notebook
-3. Click **Run all**
-
-This generates:
-- Meter metadata 
-- Network topology (substations, feeder lines, transformers)
-
-
 ## 📖 Usage Instructions
 
 ### Running Simulations
