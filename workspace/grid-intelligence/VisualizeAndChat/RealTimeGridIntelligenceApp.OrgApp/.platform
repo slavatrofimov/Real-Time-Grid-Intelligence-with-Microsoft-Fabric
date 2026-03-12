@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "OrgApp",
+    "displayName": "RealTimeGridIntelligenceApp"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "82176188-12f7-b704-4321-46a7e976f22f"
+  }
+}

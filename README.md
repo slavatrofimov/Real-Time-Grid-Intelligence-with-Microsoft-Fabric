@@ -125,7 +125,7 @@ The installer will:
 ### Step 4: Generate Reference Data
 
 1. Navigate to the **Simulation** folder in your workspace
-2. Open the **AMI Reference Data Simulation** notebook
+2. Open the **AMIReferenceDataSimulation** notebook
 3. Click **Run all**
 
 This generates:
@@ -140,12 +140,12 @@ This generates:
 #### 1. Start AMI Telemetry Simulation
 
 ```
-Location: Simulation/AMI Telemetry and Outage Simulation
+Location: Simulation/AMITelemetryAndOutageSimulation
 Duration: 2 hours (configurable)
 Data Generated: ~120 batches of telemetry + outage events
 ```
 
-1. Open the **AMI Telemetry and Outage Simulation** notebook
+1. Open the **AMITelemetryAndOutageSimulation** notebook
 2. Click **Run all**
 3. Monitor progress in the output (status printed every minute)
 
@@ -158,76 +158,76 @@ Data Generated: ~120 batches of telemetry + outage events
 #### 2. Start Vehicle Tracking Simulation
 
 ```
-Location: Simulation/Vehicle Telemetry Simulator
+Location: Simulation/VehicleTelemetrySimulator
 Duration: Continuous route playback
 Data Generated: GPS coordinates and operational vehicle telemetry every 10 seconds
 ```
 
-1. Open the **Vehicle Telemetry Simulator** notebook
+1. Open the **VehicleTelemetrySimulator** notebook
 2. Click **Run all**
 3. Vehicles will follow predefined routes with realistic GPS tracking
 
 #### 3. Start Storm Simulation
 
 ```
-Location: Simulation/Storm Simulation
+Location: Simulation/StormSimulation
 Duration: approximately 2 minutes (triggers outages)
 Data Generated: geospatial data representing the progression of a severe thunderstorm through the service area.
 ```
 
-1. Open the **Storm Simulation** notebook
+1. Open the **StormSimulation** notebook
 2. Click **Run all**
 3. Observe progression of the storm by opening the **Meter Analytics** report and navigating to the **Meter Outages + Weather** page. Note that storm progression is accelerated -- it will take ~2 minutes for the storm to pass through the service area.
-4. Storm events will trigger correlated meter outages in the AMI simulation (when **AMI Telemetry and Outage Simulation** notebook is running)
+4. Storm events will trigger correlated meter outages in the AMI simulation (when **AMITelemetryAndOutageSimulation** notebook is running)
 
 
 ### Viewing Reports and Dashboards
 
 #### Maps
 
-**Service Area Map**
+**ServiceAreaMap**
 - Visualize the health of meters across the service area
 - Visualize weather data
 - Visualize locations of service vehicles
 - Diplay location of electrical transmission lines
 
-Access: Navigate to **Visualize and Chat** → **Service Area Map**
+Access: Navigate to **Visualize and Chat** → **ServiceAreaMap**
 
 #### Real Time Dashboards
 
-**Meter Statuses Dashboard**
+**MeterStatuses Dashboard**
 - Real-time meter health monitoring
 - Outage maps and timelines
 - Power quality monitoring
 
-Access: Navigate to **Visualize and Chat** → **Meter Statuses**
+Access: Navigate to **Visualize and Chat** → **MeterStatuses**
 
-**Vehicle Tracking Dashboard**
+**VehicleTracking Dashboard**
 - Live vehicle locations on map
 - Route history and playback
 - Speed and vehicle telemetry metrics
 
-Access: Navigate to **Visualize and Chat** → **Vehicle Tracking**
+Access: Navigate to **Visualize and Chat** → **VehicleTracking**
 
 #### Power BI Reports
 
-**Meter Exploration Report**
+**MeterExploration Report**
 - Customer consumption patterns
 - Recent trends in power consumption and quality metrics
 
-**Meter Telemetry - Time Series Analysis**
+**MeterTelemetryTimeSeriesAnalysis**
 - Multi-meter comparison views
 - Flexible time series analysis of metrics from individual meters
 - Anomaly detection
 - Descriptive statistics and correlation analysis between selected tags
 
-**Vehicle Telemetry - Time Series Analysis**
+**VehicleTelemetryTimeSeriesAnalysis**
 - Fleet performance metrics
 - Vehicle health and performance monitoring
 
 ### Using the Data Agent (AI Copilot)
 
-The **Meter_Data_Agent** enables natural language queries:
+The **MeterDataAgent** enables natural language queries:
 
 Example queries:
 - "Show me all meters with outages in the last hour"
@@ -236,15 +236,15 @@ Example queries:
 - "What's the average power consumption by feeder line and service class?"
 - "Which meters have low battery warnings?"
 
-Access: Navigate to **Visualize and Chat** → **Meter_Data_Agent**
+Access: Navigate to **Visualize and Chat** → **MeterDataAgent**
 
 ### Using Activator (for automated alerts and actions)
 
-The **Meter Activator** enables automatic alerts when trigger conditions are met.
+The **MeterActivator** enables automatic alerts when trigger conditions are met.
 
 By default, the Activator is configured to generate alerts when the level of total harmonic distortions exceeds a specified threshold and stays at that level for an extended period of time. You may configure other triggers using the no-code authoring interface.
 
-Access: Navigate to **Act** → **Meter Activator**
+Access: Navigate to **Act** → **MeterActivator**
 
 ## 🔧 Troubleshooting
 If you encounter challenges with the solution, consider the following steps:
