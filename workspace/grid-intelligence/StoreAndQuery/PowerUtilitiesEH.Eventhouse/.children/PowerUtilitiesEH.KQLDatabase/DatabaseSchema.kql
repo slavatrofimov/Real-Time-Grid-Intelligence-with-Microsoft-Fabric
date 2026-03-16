@@ -38,9 +38,8 @@
 .create-or-alter function with (folder = "Weather", docstring = "Gets top N transformers affected by the latest storm.", skipvalidation = "true") GetTransformersAffectedByLatestStorm(RecordsToReturn:int) {
     let StormH3Cells =
         WeatherRaw
-        | where EventEnqueuedUtcTime >= ago(10min)
+        | where EventEnqueuedUtcTime >= ago(90sec)
         | order by EventEnqueuedUtcTime
-        | take 35
         | project    
             center_lat = todouble(properties.storm_center.lat), 
             center_lon = todouble(properties.storm_center.lon)
