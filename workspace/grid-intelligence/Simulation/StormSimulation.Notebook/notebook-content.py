@@ -27,8 +27,8 @@
 # Generates realistic GeoJSON polygons representing a severe thunderstorm system with nested intensity zones (light → moderate → heavy → extra heavy rain) that move across the city and dissipate.
 # 
 # **Features**: Irregular storm shapes with smooth curves, nested intensity polygons with heavy rain at leading edge, realistic movement and growth/dissipation patterns  
-# **Output**: GeoJSON FeatureCollections streamed to Azure Event Hub every 2 seconds  
-# **Duration**: 140 seconds total (120s progression + 20s dissipation = 70 frames)  
+# **Output**: GeoJSON FeatureCollections streamed to Azure Event Hub every 1 second  
+# **Duration**: 70 seconds total (60s progression + 10s dissipation = 70 frames)  
 # **Progress**: Status printed for every frame with percentage, phase, intensity, and position
 
 # MARKDOWN ********************
@@ -127,10 +127,10 @@ print(f"  City dimensions: {CITY_WIDTH:.3f}° x {CITY_HEIGHT:.3f}°")
 # Storm system configuration
 STORM_CONFIG = {
     # Timing parameters
-    'total_duration_seconds': 140,  
-    'progression_duration_seconds': 120,  
-    'dissipation_duration_seconds': 20,   
-    'frame_interval_seconds': 2,         
+    'total_duration_seconds': 70,  
+    'progression_duration_seconds': 60,  
+    'dissipation_duration_seconds': 10,  
+    'frame_interval_seconds': 1,         
     
     # Storm size parameters (in degrees)
     'initial_storm_width': 0.005,    # Initial storm width
@@ -927,21 +927,66 @@ def run_storm_simulation(send_to_event_hub: bool = True,
 # MARKDOWN ********************
 
 # ## 9. Execute Simulation
+# 
+# Runs the storm simulation continuously. After each cycle completes, waits 5 seconds and starts a new cycle.  
+# The overall continuous simulation runs for a maximum of **120 minutes**.
 
 # CELL ********************
 
-# Run the complete storm simulation
-print("🚀 Starting storm simulation...")
+# Continuous simulation configuration
+CONTINUOUS_SIMULATION_DURATION_MINUTES = 120
+PAUSE_BETWEEN_CYCLES_SECONDS = 5
+
+print("🚀 Starting continuous storm simulation...")
+print(f"⏱️  Overall duration limit: {CONTINUOUS_SIMULATION_DURATION_MINUTES} minutes")
+print(f"⏸️  Pause between cycles: {PAUSE_BETWEEN_CYCLES_SECONDS} seconds")
 print("⏸️  Press Ctrl+C to stop early\n")
 
+continuous_start_time = time.time()
+continuous_end_time = continuous_start_time + CONTINUOUS_SIMULATION_DURATION_MINUTES * 60
+cycle_count = 0
+
 try:
-    full_simulation_frames = run_storm_simulation(
-        send_to_event_hub=True,   # Send to Event Hub
-        accelerated=False         # Real-time simulation (2s per frame)
-    )
-    print(f"\n✅ Simulation generated {len(full_simulation_frames)} GeoJSON frames")
+    while time.time() < continuous_end_time:
+        cycle_count += 1
+        elapsed_minutes = (time.time() - continuous_start_time) / 60
+        remaining_minutes = CONTINUOUS_SIMULATION_DURATION_MINUTES - elapsed_minutes
+
+        print(f"\n{'#'*70}")
+        print(f"### CYCLE {cycle_count} | Elapsed: {elapsed_minutes:.1f} min | Remaining: {remaining_minutes:.1f} min")
+        print(f"{'#'*70}\n")
+
+        # Reinitialize storm starting position with fresh randomness each cycle
+        global storm_movement, STORM_START_POSITION
+        STORM_START_POSITION = {
+            'lat': CITY_CENTER['lat'] + random.uniform(-0.15, 0.15),
+            'lon': CITY_BOUNDS['west'] - 0.35
+        }
+        storm_movement = StormMovement(STORM_START_POSITION['lat'], STORM_START_POSITION['lon'])
+
+        full_simulation_frames = run_storm_simulation(
+            send_to_event_hub=True,
+            accelerated=False
+        )
+        print(f"\n✅ Cycle {cycle_count} generated {len(full_simulation_frames)} GeoJSON frames")
+
+        # Check if there is enough time remaining before pausing for the next cycle
+        if time.time() >= continuous_end_time:
+            break
+
+        print(f"\n⏸️  Waiting {PAUSE_BETWEEN_CYCLES_SECONDS} seconds before next cycle...")
+        time.sleep(PAUSE_BETWEEN_CYCLES_SECONDS)
+
+    total_elapsed = (time.time() - continuous_start_time) / 60
+    print(f"\n{'='*70}")
+    print(f"✅ CONTINUOUS SIMULATION FINISHED")
+    print(f"   Total cycles completed: {cycle_count}")
+    print(f"   Total elapsed time: {total_elapsed:.1f} minutes")
+    print(f"{'='*70}")
+
 except KeyboardInterrupt:
-    print("\n⚠️  Simulation stopped by user")
+    total_elapsed = (time.time() - continuous_start_time) / 60
+    print(f"\n⚠️  Simulation stopped by user after {cycle_count} cycles ({total_elapsed:.1f} minutes)")
 except Exception as e:
     print(f"\n❌ Simulation error: {e}")
 

@@ -308,14 +308,14 @@ def generate_telemetry_reading(meter: Dict, timestamp: datetime, season: str) ->
     )
     
     # Energy accumulation (simplified)
-    energy_kwh_delivered = power_kw * (15/60)  # 15-minute interval
+    energy_kwh_delivered = power_kw * (15/3600)  # 15-second interval
     energy_kwh_received = 0  # Assume no generation for most meters
     
     # Occasionally simulate solar generation for residential meters
     if meter["meter_type"] == "residential" and random.random() < 0.15:  # 15% have solar
         if 8 <= hour <= 17 and season in ["spring", "summer"]:  # Daylight hours
             solar_generation = random.uniform(0.5, 4.0)  # kW
-            energy_kwh_received = solar_generation * (15/60)
+            energy_kwh_received = solar_generation * (15/3600)
             if solar_generation > power_kw:
                 electrical_params["active_power_kw"] = -(solar_generation - power_kw)  # Net export
     
@@ -332,7 +332,7 @@ def generate_telemetry_reading(meter: Dict, timestamp: datetime, season: str) ->
         "meter_id": meter["meter_id"],
         "timestamp": timestamp.isoformat(),
         "message_type": "interval_reading",
-        "interval_minutes": 1,
+        "interval_seconds": 15,
         
         # Power measurements
         **electrical_params,
@@ -1087,16 +1087,16 @@ class AMITelemetryOrchestrator:
         return result
     
     def run_continuous_simulation(self, duration_minutes: int = 60, 
-                                interval_minutes: int = 1, sample_size: int = None):
+                                interval_seconds: int = 15, sample_size: int = None):
         """Run continuous telemetry simulation with progress tracking"""
         
         print(f"\n{'='*70}")
         print(f"STARTING CONTINUOUS AMI TELEMETRY SIMULATION")
         print(f"{'='*70}")
         print(f"Duration: {duration_minutes} minutes ({duration_minutes/60:.1f} hours)")
-        print(f"Interval: {interval_minutes} minute(s)")
+        print(f"Interval: {interval_seconds} second(s)")
         print(f"Sample size: {sample_size or 'All meters'}")
-        print(f"Expected cycles: {duration_minutes // interval_minutes}")
+        print(f"Expected cycles: {(duration_minutes * 60) // interval_seconds}")
         print(f"{'='*70}\n")
 
         
@@ -1108,7 +1108,7 @@ class AMITelemetryOrchestrator:
         current_time = start_time
         
         cycle_count = 0
-        expected_cycles = duration_minutes // interval_minutes
+        expected_cycles = (duration_minutes * 60) // interval_seconds
         
         try:
             while current_time < end_time and self.simulation_running:
@@ -1141,17 +1141,17 @@ class AMITelemetryOrchestrator:
                     # Continue to next cycle despite error
                 
                 # Move to next interval
-                current_time += timedelta(minutes=interval_minutes)
+                current_time += timedelta(seconds=interval_seconds)
                 
                 # Sleep until next interval (adjusted for processing time)
                 if self.simulation_running and current_time < end_time:
                     cycle_elapsed = time.time() - cycle_start_time
-                    sleep_seconds = builtins.max(0, interval_minutes * 60 - cycle_elapsed)
+                    sleep_time = builtins.max(0, interval_seconds - cycle_elapsed)
                     
-                    if sleep_seconds > 5:
+                    if sleep_time > 0:
                         remaining_time = end_time - datetime.now()
-                        print(f"⏸️  Waiting {sleep_seconds:.1f}s until next cycle... (ETA: {str(remaining_time).split('.')[0]} remaining)")
-                        time.sleep(sleep_seconds)
+                        print(f"⏸️  Waiting {sleep_time:.1f}s until next cycle... (ETA: {str(remaining_time).split('.')[0]} remaining)")
+                        time.sleep(sleep_time)
                 
         except KeyboardInterrupt:
             print("\n\n⚠️  Simulation interrupted by user")
@@ -1208,13 +1208,13 @@ print(f"Ready to simulate telemetry from {meters_df.count()} meters")
 
 # ## 9. Run Simulation
 # 
-# Execute the complete 2-hour simulation with progress tracking every minute.
+# Execute the complete 2-hour simulation with progress tracking every 15 seconds.
 
 # CELL ********************
 
-# Run the simulation for 2 hours generating telemetry every minute
+# Run the simulation for 2 hours generating telemetry every 15 seconds
 print("\n🚀 Starting extended 2-hour simulation...")
-print("📝 Progress will be printed every minute")
+print("📝 Progress will be printed every 15 seconds")
 
 def run_extended_simulation(duration_hours: float = 2.0, sample_percentage: float = 1.0):
     """Run an extended simulation with full monitoring"""
@@ -1228,7 +1228,7 @@ def run_extended_simulation(duration_hours: float = 2.0, sample_percentage: floa
     # Run the simulation with progress tracking
     orchestrator.run_continuous_simulation(
         duration_minutes=int(duration_hours * 60),
-        interval_minutes=1,
+        interval_seconds=15,
         sample_size=sample_size
     )
     

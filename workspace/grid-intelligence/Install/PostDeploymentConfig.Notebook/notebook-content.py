@@ -320,6 +320,37 @@ print('✅ Loaded data into the MeterContextualiazation table')
 # META   "language_group": "jupyter_python"
 # META }
 
+# CELL ********************
+
+# Initiate event simulation notebooks to populate telemetry and outage data, vehicle telemetry and weather data. 
+# These notebooks will run asynchronously.
+result = launcher.run_notebook(
+    notebook_name="AMITelemetryAndOutageSimulation",
+    parameters={},
+    timeout_seconds=7200
+)
+
+result = launcher.run_notebook(
+    notebook_name="VehicleTelemetrySimulator",
+    parameters={},
+    timeout_seconds=7200
+)
+
+result = launcher.run_notebook(
+    notebook_name="StormSimulation",
+    parameters={},
+    timeout_seconds=7200
+)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "jupyter_python"
+# META }
+
+
+
 # MARKDOWN ********************
 
 # ## Next Steps
