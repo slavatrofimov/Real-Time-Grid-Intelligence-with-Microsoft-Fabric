@@ -42,8 +42,8 @@
 # CELL ********************
 
 # Install required packages
-%pip install pyspark faker azure-eventhub pandas numpy --quiet
-%pip install semantic-link-labs --quiet
+!pip install pyspark faker azure-eventhub pandas numpy --quiet
+!pip install semantic-link-labs --quiet
 
 # METADATA ********************
 
@@ -308,14 +308,14 @@ def generate_telemetry_reading(meter: Dict, timestamp: datetime, season: str) ->
     )
     
     # Energy accumulation (simplified)
-    energy_kwh_delivered = power_kw * (15/3600)  # 15-second interval
+    energy_kwh_delivered = power_kw * (30/3600)  # 30-second interval
     energy_kwh_received = 0  # Assume no generation for most meters
     
     # Occasionally simulate solar generation for residential meters
     if meter["meter_type"] == "residential" and random.random() < 0.15:  # 15% have solar
         if 8 <= hour <= 17 and season in ["spring", "summer"]:  # Daylight hours
             solar_generation = random.uniform(0.5, 4.0)  # kW
-            energy_kwh_received = solar_generation * (15/3600)
+            energy_kwh_received = solar_generation * (30/3600)
             if solar_generation > power_kw:
                 electrical_params["active_power_kw"] = -(solar_generation - power_kw)  # Net export
     
@@ -332,7 +332,7 @@ def generate_telemetry_reading(meter: Dict, timestamp: datetime, season: str) ->
         "meter_id": meter["meter_id"],
         "timestamp": timestamp.isoformat(),
         "message_type": "interval_reading",
-        "interval_seconds": 15,
+        "interval_seconds": 30,
         
         # Power measurements
         **electrical_params,
@@ -856,7 +856,7 @@ class AMIEventHubClient:
 EVENT_HUB_CONFIG = {
     "connection_string": AZURE_EVENTHUB_CONNECTION_STRING,
     "batch_size": 500,  # Messages per batch
-    "send_interval_seconds": 1,  # Send every 5 seconds
+    "send_interval_seconds": 0,  # No delay between batches for real-time simulation
     "retry_attempts": 3,
     "timeout_seconds": 1
 }
@@ -1087,7 +1087,7 @@ class AMITelemetryOrchestrator:
         return result
     
     def run_continuous_simulation(self, duration_minutes: int = 60, 
-                                interval_seconds: int = 15, sample_size: int = None):
+                                interval_seconds: int = 30, sample_size: int = None):
         """Run continuous telemetry simulation with progress tracking"""
         
         print(f"\n{'='*70}")
@@ -1208,13 +1208,13 @@ print(f"Ready to simulate telemetry from {meters_df.count()} meters")
 
 # ## 9. Run Simulation
 # 
-# Execute the complete 2-hour simulation with progress tracking every 15 seconds.
+# Execute the complete 2-hour simulation with progress tracking every 30 seconds.
 
 # CELL ********************
 
-# Run the simulation for 2 hours generating telemetry every 15 seconds
+# Run the simulation for 2 hours generating telemetry every 30 seconds
 print("\n🚀 Starting extended 2-hour simulation...")
-print("📝 Progress will be printed every 15 seconds")
+print("📝 Progress will be printed every 30 seconds")
 
 def run_extended_simulation(duration_hours: float = 2.0, sample_percentage: float = 1.0):
     """Run an extended simulation with full monitoring"""
@@ -1228,7 +1228,7 @@ def run_extended_simulation(duration_hours: float = 2.0, sample_percentage: floa
     # Run the simulation with progress tracking
     orchestrator.run_continuous_simulation(
         duration_minutes=int(duration_hours * 60),
-        interval_seconds=15,
+        interval_seconds=30,
         sample_size=sample_size
     )
     

@@ -32,7 +32,7 @@
       },
       {
         "id": "863f3478-54bc-4cb0-8f06-f67af1063b54",
-        "content": "let OutageMeters = AMITelemetryOutageLastGasp\n    | where timestamp > ago(10min)\n    | summarize by meter_id;\nMeterContextualization\n| join kind =  leftanti OutageMeters on $left.mtr_meter_id == $right.meter_id\n| summarize Meters = count() by mtr_h3cell_7\n| extend\n    Polygon = tostring(geo_h3cell_to_polygon(mtr_h3cell_7))\n",
+        "content": "let OutageMeters = AMITelemetryOutageLastGasp\n    | where timestamp > ago(70sec)\n    | summarize by meter_id;\nMeterContextualization\n| join kind =  leftanti OutageMeters on $left.mtr_meter_id == $right.meter_id\n| summarize Meters = count() by mtr_h3cell_7\n| extend\n    Polygon = tostring(geo_h3cell_to_polygon(mtr_h3cell_7))\n",
         "title": "Map-ServiceAreaHealthy",
         "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
       },
@@ -44,7 +44,7 @@
       },
       {
         "id": "ef758492-f2fc-48bc-b075-d5bc238b1da9",
-        "content": "let OutageMeters = AMITelemetryOutageLastGasp\n    | where timestamp > ago(10min)\n    | summarize by meter_id;\nMeterContextualization\n| join kind =  inner OutageMeters on $left.mtr_meter_id == $right.meter_id\n| summarize Meters = count() by mtr_h3cell_7\n| extend\n    Polygon = tostring(geo_h3cell_to_polygon(mtr_h3cell_7))\n",
+        "content": "let OutageMeters = AMITelemetryOutageLastGasp\n    | where timestamp > ago(70sec)\n    | summarize by meter_id;\nMeterContextualization\n| join kind =  inner OutageMeters on $left.mtr_meter_id == $right.meter_id\n| summarize Meters = count() by mtr_h3cell_7\n| extend\n    Polygon = tostring(geo_h3cell_to_polygon(mtr_h3cell_7))\n",
         "title": "Map-ServiceAreaFailures",
         "dataSourceId": "dcc5e6a1-e625-4af6-a67b-e612d5e42e98"
       }

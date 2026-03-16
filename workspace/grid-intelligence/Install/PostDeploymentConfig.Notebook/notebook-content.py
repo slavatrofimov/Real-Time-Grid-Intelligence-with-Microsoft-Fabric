@@ -74,6 +74,12 @@ def deploy_map(item_name="ServiceAreaMap", item_type="Map", item_relative_path="
                client = client, workspace_id = workspace_id):
     """Use fabric_launcher utilities to deploy an additional item: Map"""
 
+    # Check if the map item already exists in the workspace
+    existing_items = fabric.list_items(type=item_type)
+    if not existing_items.empty and item_name in existing_items['Display Name'].values:
+        print(f"ℹ️ '{item_name}' already exists in the workspace. Skipping deployment.")
+        return
+
     # Step 1: Scan logical IDs
     print("1. Scanning logical IDs in repository...")
     logical_id_map = scan_logical_ids(

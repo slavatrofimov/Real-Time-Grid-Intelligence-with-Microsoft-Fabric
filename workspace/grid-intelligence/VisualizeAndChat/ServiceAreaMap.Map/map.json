@@ -64,7 +64,7 @@
       "latitudeColumnName": null,
       "longitudeColumnName": null,
       "geometryColumnName": "Polygon",
-      "refreshIntervalMs": 1000
+      "refreshIntervalMs": 5000
     },
     {
       "id": "df1455fe-b4fa-49d0-8ce9-75759d13c702",
@@ -77,7 +77,7 @@
       "latitudeColumnName": null,
       "longitudeColumnName": null,
       "geometryColumnName": "Polygon",
-      "refreshIntervalMs": 15000
+      "refreshIntervalMs": 30000
     },
     {
       "id": "4ca72728-425d-4862-880e-4bffaa9dce23",
@@ -90,7 +90,7 @@
       "latitudeColumnName": null,
       "longitudeColumnName": null,
       "geometryColumnName": "Polygon",
-      "refreshIntervalMs": 15000
+      "refreshIntervalMs": 30000
     },
     {
       "id": "a64953a1-4f53-4086-b63c-dc8935969fa7",

@@ -37,7 +37,7 @@
 
 # CELL ********************
 
-%pip install shapely geojson azure-eventhub matplotlib numpy --quiet
+!pip install shapely geojson azure-eventhub matplotlib numpy --quiet
 
 # METADATA ********************
 
