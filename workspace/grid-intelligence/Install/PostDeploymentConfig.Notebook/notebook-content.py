@@ -58,6 +58,21 @@ client = fabric.FabricRestClient()
 workspace_id = fabric.get_workspace_id()
 repository_directory = f"./{extract_to}/workspace/"
 
+def is_notebook_running(notebook_name, workspace_id=workspace_id, client=client):
+    """Check if a notebook has an InProgress job instance using the Fabric Job Scheduler API."""
+    notebooks = fabric.list_items(type="Notebook")
+    match = notebooks[notebooks['Display Name'] == notebook_name]
+    if match.empty:
+        return False
+    item_id = match.iloc[0]['Id']
+    url = f"v1/workspaces/{workspace_id}/items/{item_id}/jobs/instances"
+    response = client.get(url)
+    if response.status_code == 200:
+        for instance in response.json().get('value', []):
+            if instance.get('status') in ('InProgress', 'NotStarted'):
+                return True
+    return False
+
 # METADATA ********************
 
 # META {
@@ -242,12 +257,34 @@ else:
 
 # CELL ********************
 
-# Load AMIReferenceDataSimulation notebook to populate reference data
-result = launcher.run_notebook_synchronous(
-    notebook_name="AMIReferenceDataSimulation",
-    parameters={},
-    timeout_seconds=3600
+# Load AMIReferenceDataSimulation notebook to populate reference data (skip if data already exists)
+from fabric_launcher.post_deployment_utils import (
+    get_kusto_query_uri,
+    exec_kql_command
 )
+
+skip_reference_data = False
+try:
+    _query_uri = get_kusto_query_uri(fabric.resolve_workspace_id(), 'PowerUtilitiesEH', client)
+    _result = exec_kql_command(_query_uri, 'PowerUtilitiesEH', 'MeterContextualization | count', notebookutils)
+    _count = _result['Tables'][0]['Rows'][0][0]
+    if _count > 0:
+        print(f"ℹ️ MeterContextualization table already contains {_count} row(s). Skipping reference data generation.")
+        skip_reference_data = True
+except Exception as e:
+    # Table likely does not exist yet — proceed with reference data generation
+    print(f"ℹ️ MeterContextualization table not found or empty ({e}). Proceeding with reference data generation.")
+
+if skip_reference_data:
+    pass
+elif is_notebook_running("AMIReferenceDataSimulation"):
+    print("ℹ️ 'AMIReferenceDataSimulation' is already running. Skipping execution.")
+else:
+    result = launcher.run_notebook_synchronous(
+        notebook_name="AMIReferenceDataSimulation",
+        parameters={},
+        timeout_seconds=3600
+    )
 
 # METADATA ********************
 
@@ -274,30 +311,33 @@ source_lakehouse_name = 'ReferenceDataLH'
 # Create shortcuts for required tables
 tables = ['feeders', 'meters', 'substations', 'transformers']
 
-for table in tables:
-    source_path = f"Tables/{table}" 
-    target_shortcut_name = table.capitalize()
-    
-    print(f"Creating accelerated shortcut for table: {table}")
-    
-    try:
-        create_accelerated_shortcut_in_kql_db(
-            notebookutils=notebookutils,
-            target_workspace_id=target_workspace_id,
-            target_eventhouse_name=target_eventhouse_name,
-            target_kql_db_name=target_kql_db_name,
-            target_shortcut_name=target_shortcut_name,
-            source_workspace_id=source_workspace_id,
-            source_lakehouse_name=source_lakehouse_name,
-            source_path=source_path,
-            client=client
-        )
-        print(f"✅ Successfully created accelerated shortcut for '{table}'")
+if skip_reference_data:
+    print("ℹ️ Skipping accelerated shortcut creation since reference data generation was skipped.")
+else:    
+    for table in tables:
+        source_path = f"Tables/{table}" 
+        target_shortcut_name = table.capitalize()
         
-    except Exception as e:
-        print(f"❌ Failed to create shortcut for '{table}': {str(e)}")
-        # Continue with next table instead of stopping
-        continue
+        print(f"Creating accelerated shortcut for table: {table}")
+        
+        try:
+            create_accelerated_shortcut_in_kql_db(
+                notebookutils=notebookutils,
+                target_workspace_id=target_workspace_id,
+                target_eventhouse_name=target_eventhouse_name,
+                target_kql_db_name=target_kql_db_name,
+                target_shortcut_name=target_shortcut_name,
+                source_workspace_id=source_workspace_id,
+                source_lakehouse_name=source_lakehouse_name,
+                source_path=source_path,
+                client=client
+            )
+            print(f"✅ Successfully created accelerated shortcut for '{table}'")
+            
+        except Exception as e:
+            print(f"❌ Failed to create shortcut for '{table}': {str(e)}")
+            # Continue with next table instead of stopping
+            continue
 
 # METADATA ********************
 
@@ -314,10 +354,13 @@ from fabric_launcher.post_deployment_utils import (
     exec_kql_command
 )
 
-kusto_query_uri = get_kusto_query_uri(target_workspace_id, target_eventhouse_name, client)
-kql_command = f""".set-or-replace MeterContextualization <| MeterContextualizationFunction()"""
-exec_kql_command(kusto_query_uri, target_kql_db_name, kql_command, notebookutils)
-print('✅ Loaded data into the MeterContextualiazation table')
+if skip_reference_data:
+    print("ℹ️ Skipping data load into MeterContextualization table since reference data generation was skipped.")
+else:
+    kusto_query_uri = get_kusto_query_uri(target_workspace_id, target_eventhouse_name, client)
+    kql_command = f""".set-or-replace MeterContextualization <| MeterContextualizationFunction()"""
+    exec_kql_command(kusto_query_uri, target_kql_db_name, kql_command, notebookutils)
+    print('✅ Loaded data into the MeterContextualiazation table')
 
 # METADATA ********************
 
@@ -330,23 +373,15 @@ print('✅ Loaded data into the MeterContextualiazation table')
 
 # Initiate event simulation notebooks to populate telemetry and outage data, vehicle telemetry and weather data. 
 # These notebooks will run asynchronously.
-result = launcher.run_notebook(
-    notebook_name="AMITelemetryAndOutageSimulation",
-    parameters={},
-    timeout_seconds=7200
-)
-
-result = launcher.run_notebook(
-    notebook_name="VehicleTelemetrySimulator",
-    parameters={},
-    timeout_seconds=7200
-)
-
-result = launcher.run_notebook(
-    notebook_name="StormSimulation",
-    parameters={},
-    timeout_seconds=7200
-)
+for nb_name in ["AMITelemetryAndOutageSimulation", "VehicleTelemetrySimulator", "StormSimulation"]:
+    if is_notebook_running(nb_name):
+        print(f"ℹ️ '{nb_name}' is already running. Skipping execution.")
+    else:
+        result = launcher.run_notebook(
+            notebook_name=nb_name,
+            parameters={},
+            timeout_seconds=7200
+        )
 
 # METADATA ********************
 
