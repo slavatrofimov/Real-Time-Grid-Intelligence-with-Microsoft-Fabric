@@ -50,7 +50,7 @@ launcher.download_repository(
     repo_owner="slavatrofimov",
     repo_name="Real-Time-Grid-Intelligence-with-Microsoft-Fabric",
     extract_to=extract_to,
-    branch="adopt-jumpstart",
+    branch="continuous-simulation",
 )
 
 # Initialize Fabric client and workspace
@@ -266,7 +266,7 @@ from fabric_launcher.post_deployment_utils import (
 skip_reference_data = False
 try:
     _query_uri = get_kusto_query_uri(fabric.resolve_workspace_id(), 'PowerUtilitiesEH', client)
-    _result = exec_kql_command(_query_uri, 'PowerUtilitiesEH', 'MeterContextualization | count', notebookutils)
+    _result = exec_kql_command(_query_uri, 'PowerUtilitiesEH', '.show table MeterContextualization data statistics | summarize max(PresentRowCount)', notebookutils)
     _count = _result['Tables'][0]['Rows'][0][0]
     if _count > 0:
         print(f"ℹ️ MeterContextualization table already contains {_count} row(s). Skipping reference data generation.")
