@@ -295,10 +295,10 @@ else:
 
 # CELL ********************
 
-# Create accelerated shortcuts in the KQL Database
+# Create shortcuts (external tables) in the KQL Database
 from fabric_launcher.post_deployment_utils import (
     get_kusto_query_uri,
-    create_accelerated_shortcut_in_kql_db
+    exec_kql_command
 )
 
 # Configuration Parameters
@@ -308,36 +308,26 @@ target_kql_db_name = 'PowerUtilitiesEH'
 source_workspace_id = target_workspace_id 
 source_lakehouse_name = 'ReferenceDataLH'
 
+kusto_query_uri = get_kusto_query_uri(target_workspace_id, target_eventhouse_name, client)
+source_path = notebookutils.lakehouse.getWithProperties(source_lakehouse_name).properties["oneLakeTablesPath"]
+
 # Create shortcuts for required tables
 tables = ['feeders', 'meters', 'substations', 'transformers']
 
-if skip_reference_data:
-    print("ℹ️ Skipping accelerated shortcut creation since reference data generation was skipped.")
-else:    
-    for table in tables:
-        source_path = f"Tables/{table}" 
-        target_shortcut_name = table.capitalize()
+for table in tables:
+    target_shortcut_name = table.capitalize()
+    
+    print(f"Creating shortcut for table: {table}")
+    
+    try:
+        kql_command = f""".create-or-alter external table {target_shortcut_name} kind=delta (h@'{source_path}/{table};impersonate')"""
+        exec_kql_command(kusto_query_uri, target_kql_db_name, kql_command, notebookutils)
+        print(f"✅ Successfully created shortcut for '{table}'")
         
-        print(f"Creating accelerated shortcut for table: {table}")
-        
-        try:
-            create_accelerated_shortcut_in_kql_db(
-                notebookutils=notebookutils,
-                target_workspace_id=target_workspace_id,
-                target_eventhouse_name=target_eventhouse_name,
-                target_kql_db_name=target_kql_db_name,
-                target_shortcut_name=target_shortcut_name,
-                source_workspace_id=source_workspace_id,
-                source_lakehouse_name=source_lakehouse_name,
-                source_path=source_path,
-                client=client
-            )
-            print(f"✅ Successfully created accelerated shortcut for '{table}'")
-            
-        except Exception as e:
-            print(f"❌ Failed to create shortcut for '{table}': {str(e)}")
-            # Continue with next table instead of stopping
-            continue
+    except Exception as e:
+        print(f"❌ Failed to create shortcut for '{table}': {str(e)}")
+        # Continue with next table instead of stopping
+        continue
 
 # METADATA ********************
 
@@ -349,15 +339,9 @@ else:
 # CELL ********************
 
 # Execute a KQL Query to load data into the MeterContextualization table
-from fabric_launcher.post_deployment_utils import (
-    get_kusto_query_uri,
-    exec_kql_command
-)
-
 if skip_reference_data:
     print("ℹ️ Skipping data load into MeterContextualization table since reference data generation was skipped.")
 else:
-    kusto_query_uri = get_kusto_query_uri(target_workspace_id, target_eventhouse_name, client)
     kql_command = f""".set-or-replace MeterContextualization <| MeterContextualizationFunction()"""
     exec_kql_command(kusto_query_uri, target_kql_db_name, kql_command, notebookutils)
     print('✅ Loaded data into the MeterContextualiazation table')
