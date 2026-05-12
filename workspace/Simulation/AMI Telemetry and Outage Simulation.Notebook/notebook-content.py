@@ -98,7 +98,7 @@ Faker.seed(42)
 # Get Kusto Query URI for a given eventhouse
 def get_kusto_query_uri(eventhouse_name):
     workspace_id = fabric.resolve_workspace_id()
-    eventhouse_id = fabric.resolve_item_id('PowerUtilitiesEH')
+    eventhouse_id = fabric.resolve_item_id(eventhouse_name)
     client = fabric.FabricRestClient()
     url = f"v1/workspaces/{workspace_id}/eventhouses/{eventhouse_id}"
     response = client.get(url)
