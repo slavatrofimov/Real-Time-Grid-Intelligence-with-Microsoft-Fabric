@@ -330,6 +330,49 @@ AMITelemetryIntervalReadings
     | join kind=inner meters on join_key
     | project tag = strcat(meter, '_', metric), meter, metric
  }
+.create-or-alter function with (folder = "MapLayers", docstring = "Vehicle Locations", skipvalidation = "true") MapVehicles() {
+     VehicleTelemetryRaw
+    | summarize arg_max(timestamp, lat, lon, DriverID, vehicle_speed, fuel_level) by VehicleID
+    | project todatetime(timestamp), todouble(lat), todouble(lon), tostring(DriverID), todouble(vehicle_speed), todouble(fuel_level)
+ }
+.create-or-alter function with (folder = "MapLayers", docstring = "Vehicle Tracks", skipvalidation = "true") MapVehicleTracks() {
+     VehicleTelemetry
+    | where timestamp > ago(10min)
+    | project VehicleID, timestamp, lat = round(toreal(lat), 9), lon = round(toreal(lon), 9)
+    | order by VehicleID asc, timestamp asc
+    | summarize coordinates = make_list(pack_array(pack_array(lon, lat))) by VehicleID
+    | extend Route = tostring(pack("type", "LineString", "coordinates", coordinates))
+    | project-away coordinates
+ }
+.create-or-alter function with (folder = "MapLayers", docstring = "Weather - polygons with storm layers", skipvalidation = "true") Weather() {
+     WeatherCurrent 
+    | where EventEnqueuedUtcTime >= ago(2min)
+    | project
+        PolygonColor = color,
+        Polygon = tostring(todynamic(features).geometry),
+        rainfall_rate
+    | order by rainfall_rate asc
+ }
+.create-or-alter function with (folder = "MapLayers", docstring = "Meter service area healthy", skipvalidation = "true") MeterServiceAreaHealthy() {
+     let OutageMeters = AMITelemetryOutageLastGasp
+        | where timestamp > ago(70sec)
+        | summarize by meter_id;
+     MeterContextualization
+    | join kind =  leftanti OutageMeters on $left.mtr_meter_id == $right.meter_id
+    | summarize Meters = count() by mtr_h3cell_7
+    | extend
+        Polygon = tostring(geo_h3cell_to_polygon(mtr_h3cell_7))
+ }
+.create-or-alter function with (folder = "MapLayers", docstring = "Meter service area outages", skipvalidation = "true") MeterServiceAreaOutages() {
+     let OutageMeters = AMITelemetryOutageLastGasp
+        | where timestamp > ago(70sec)
+        | summarize by meter_id;
+     MeterContextualization
+    | join kind =  inner OutageMeters on $left.mtr_meter_id == $right.meter_id
+    | summarize Meters = count() by mtr_h3cell_7
+    | extend
+        Polygon = tostring(geo_h3cell_to_polygon(mtr_h3cell_7))
+ }
 .create-or-alter materialized-view  WeatherCurrent on table WeatherRaw { WeatherRaw
 | mv-expand features
 | extend color = tostring(features.properties.color),
@@ -342,9 +385,9 @@ AMITelemetryIntervalReadings
 .alter column VehicleTelemetryRaw.['EventID'] policy encoding type = 'Identifier'
 .alter column VehicleTelemetryRaw.['timestamp'] policy encoding type = 'Identifier'
 .alter column VehicleTelemetry.['EventID'] policy encoding type = 'Identifier'
-.alter table AMITelemetryIntervalReadings policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseIntervalReadings\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
-.alter table AMITelemetryLastGasp policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseLastGasp\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
-.alter table AMITelemetryOutageLastGasp policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseOutageLastGasp\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
-.alter table AMITelemetryWarnings policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseWarnings\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
-.alter table VehicleTelemetry policy update "[{\"IsEnabled\":true,\"Source\":\"VehicleTelemetryRaw\",\"Query\":\"VehicleTelemetryParse()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
-.alter table TagTelemetry policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryIntervalReadings\",\"Query\":\"AMIIntervalReadingsToTags\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table AMITelemetryIntervalReadings policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseIntervalReadings\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null,\"OwnerPrincipalDetails\":\"09eedbe5-8d1d-4a9e-8523-dad8ea1a9925;7d07cb33-12e3-44de-b5e7-5b2828723fbd\"}]"
+.alter table AMITelemetryLastGasp policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseLastGasp\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null,\"OwnerPrincipalDetails\":\"09eedbe5-8d1d-4a9e-8523-dad8ea1a9925;7d07cb33-12e3-44de-b5e7-5b2828723fbd\"}]"
+.alter table AMITelemetryOutageLastGasp policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseOutageLastGasp\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null,\"OwnerPrincipalDetails\":\"09eedbe5-8d1d-4a9e-8523-dad8ea1a9925;7d07cb33-12e3-44de-b5e7-5b2828723fbd\"}]"
+.alter table AMITelemetryWarnings policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryRaw\",\"Query\":\"AMITelemetryParseWarnings\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null,\"OwnerPrincipalDetails\":\"09eedbe5-8d1d-4a9e-8523-dad8ea1a9925;7d07cb33-12e3-44de-b5e7-5b2828723fbd\"}]"
+.alter table VehicleTelemetry policy update "[{\"IsEnabled\":true,\"Source\":\"VehicleTelemetryRaw\",\"Query\":\"VehicleTelemetryParse()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null,\"OwnerPrincipalDetails\":\"09eedbe5-8d1d-4a9e-8523-dad8ea1a9925;7d07cb33-12e3-44de-b5e7-5b2828723fbd\"}]"
+.alter table TagTelemetry policy update "[{\"IsEnabled\":true,\"Source\":\"AMITelemetryIntervalReadings\",\"Query\":\"AMIIntervalReadingsToTags\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null,\"OwnerPrincipalDetails\":\"09eedbe5-8d1d-4a9e-8523-dad8ea1a9925;7d07cb33-12e3-44de-b5e7-5b2828723fbd\"}]"
